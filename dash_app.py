@@ -15,49 +15,47 @@ load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 openai_org_id = os.getenv("OPENAI_ORG_ID")
 
-llm = OpenAI(api_key=openai_api_key, 
-             organization=openai_org_id)
-
+llm = OpenAI(api_key=openai_api_key, organization=openai_org_id)
 
 app.layout = html.Div([
-    html.H1("Fala Português"),
-    html.Div(id='conversation', style={'whiteSpace': 'pre-line'}),
-    dcc.Input(id='user-input', type='text', placeholder='Fala aqui...', style={'width': '80%'}, n_submit=0),
-    dcc.Store(id='conversation-store', data=[]),  # Store to hold the conversation history
-], style={'width': '50%', 'margin': '0 auto'})  # Use only the left half of the screen
+    html.H1("Fala Português!", style={'textAlign': 'center'}),  
+    html.Div(id='conversation', style={'whiteSpace': 'pre-line', 'marginBottom': '20px'}),
+    html.Div([
+        dcc.Input(id='user-input', type='text', placeholder='Fala aqui...', style={'width': '80%'}, n_submit=0),
+    ], style={'textAlign': 'right'}),
+    dcc.Store(id='conversation-store', data=[]),
+], style={'width': '50%', 'margin': '0 auto'}) 
 
-# Define the callback to update the conversation and clear the input field
 @app.callback(
     [Output('conversation', 'children'),
-     Output('user-input', 'value'),  # Clear the input field
+     Output('user-input', 'value'),  
      Output('conversation-store', 'data')],
     [Input('user-input', 'n_submit')],
     [State('user-input', 'value'), State('conversation-store', 'data')]
 )
 def update_conversation(n_submit, user_input, conversation_store):
     if n_submit > 0 and user_input:
-        # Append the user's message to the conversation store
         conversation_store.append({'role': 'user', 'text': user_input})
         
-        # Get the LLM's response
-        response = llm.invoke(user_input)
+        conversation_history = "\n".join([f"{entry['role'].capitalize()}: {entry['text']}" for entry in conversation_store])
+        
+        response = llm.invoke(conversation_history)
         conversation_store.append({'role': 'llm', 'text': response})
         
-        # Clear the input box and reset n_submit
-        return format_conversation(conversation_store), '', conversation_store  # Clear the input field and update the store
-    return format_conversation(conversation_store), '', conversation_store  # Ensure the input field is cleared
+        return format_conversation(conversation_store), '', conversation_store  
+    return format_conversation(conversation_store), '', conversation_store  
 
-
+# make this a seperate file eventually
 def format_conversation(conversation_store):
     formatted_conversation = []
     for entry in conversation_store:
         if entry['role'] == 'user':
-            formatted_conversation.append(html.Div(f"User: {entry['text']}", className='user-text'))
+            formatted_conversation.append(html.Div(f"{entry['text']}", className='user-text'))
         else:
-            formatted_conversation.append(html.Div(f"LLM: {entry['text']}", className='llm-text'))
+            formatted_conversation.append(html.Div(f"{entry['text']}", className='llm-text'))
     return formatted_conversation
 
-# Add custom CSS
+# make this a seperate file eventually
 app.index_string = '''
 <!DOCTYPE html>
 <html>
@@ -65,11 +63,11 @@ app.index_string = '''
         <title>Fala Português</title>
         <style>
             .user-text {
-                color: darkblue;
+                color: red;
                 text-align: right;
             }
             .llm-text {
-                color: darkgreen;
+                color: green;
                 text-align: left;
             }
             body {
