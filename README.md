@@ -37,8 +37,6 @@ poetry add -dev <package-name>
 ### Using OpenAI
 First create a `.env` file to include the relevant keys.
 
-Add your `OPENAI_API_KEY` and ``
-
 Then add OpenAI credentials:
 ```bash
 OPENAI_API_KEY=<your OpenAI API key>
@@ -46,15 +44,6 @@ OPENAI_ORG_ID=<your OpenAI Org ID>
 ```
 
 ## Using the app 
-### to run Jupyter notebooks:
 ```bash
-poetry run jupyter lab
-```
-
-### to run Python files: 
-```bash
-poetry run python <filename> 
-
-# to run the dash_app.py app
 poetry run python pt_tutor/dash_app.py
 ```
