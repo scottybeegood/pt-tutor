@@ -45,5 +45,5 @@ OPENAI_ORG_ID=<your OpenAI Org ID>
 
 ## Using the app 
 ```bash
-poetry run python pt_tutor/dash_app.py
+streamlit run pt_tutor/dash_app.py
 ```
