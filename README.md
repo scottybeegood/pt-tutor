@@ -26,6 +26,11 @@ poetry install
 ```
 
 ### Updating virtual env
+Update packages with: 
+```bash
+poetry update
+```
+
 Add new package dependencies with: 
 ```bash
 poetry add <package-name>  
