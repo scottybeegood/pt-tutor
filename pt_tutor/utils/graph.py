@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import re
 from dotenv import load_dotenv
 from pydantic import BaseModel
 
@@ -20,10 +21,12 @@ from langgraph.prebuilt import InjectedState, ToolNode
 from langchain_openai import OpenAI, ChatOpenAI
 from langchain_core.tools import tool
 
-
 from utils.instructions import (
     chatbot_instructions,
     corrector_instructions
+)
+from utils.functions import (
+    clean_message
 )
 
 
@@ -80,11 +83,13 @@ def scorer(state: State):
         (m.content for m in reversed(state['core_convo']) if isinstance(m, HumanMessage)),
         None
     )
+    user_message = clean_message(user_message)
     # user_message = 'Aquilo está bem. Eu gosto de comer lá. Mas eu não gosto de comer cá.'
     corrector_message = next(
         (m.content for m in reversed(state['corrections']) if isinstance(m, AIMessage)),
         None
     )
+    corrector_message = clean_message(corrector_message)
     # corrector_message = 'Essa está mal. Eu gosto de comer x. Mas eu x gosto de comer y.'
 
     state.setdefault("correct_words", {})
