@@ -64,8 +64,8 @@ streamlit run pt_tutor/dash_app.py
 ## Roadmap 
 ### Outstanding tasks for Release 1
 - [ ] Improve primary chat window interface
--- [ ] Chat input at the bottom, chat history of size 500 pixes above
--- [ ] User is dark red; Bot is dark green
+  - [ ] Chat input at the bottom, chat history of size 500 pixes above
+  - [ ] User is dark red; Bot is dark green
 - [ ] Update corrector so feedback lines up with user submission in primary chat window
 - [ ] Collect vocab words by topic [PT Tutor vocab](https://docs.google.com/spreadsheets/d/15A-ee4YKTUvd9vptD1-wfwPkyFaGftiOaIzQfeDx9F8/edit?gid=1330781019#gid=1330781019)
 - [ ] Update scorer to check against category vocab (3 successful uses = mastery)
