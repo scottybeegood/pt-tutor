@@ -47,13 +47,17 @@ class State(TypedDict):
     core_convo: Annotated[list, add_messages]
     corrections: Annotated[list, add_messages]
     correct_words: dict
+    topic: str 
+    user: str
 
 
-topic = "Dining out" # TODO: make into a parameter
+# topic = "Dining out" 
 language = "European Portuguese" 
 
 
 def chatbot(state: State):
+    topic = state["topic"]
+
     system_message = chatbot_instructions.format(topic=topic, language=language)
     response = llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
@@ -120,3 +124,24 @@ graph_builder.add_edge("chatbot", END)
 
 memory = MemorySaver()
 graph = graph_builder.compile(checkpointer=memory)
+
+
+# def build_graph(topic: str):
+#     chatbot_with_topic = chatbot(topic)
+
+#     graph_builder = StateGraph(State)
+#     graph_builder.add_node("chatbot", chatbot_with_topic)
+#     graph_builder.add_node("corrector", corrector)
+#     graph_builder.add_node("scorer", scorer)
+
+#     graph_builder.add_edge(START, "chatbot")
+#     graph_builder.add_edge("chatbot", "corrector")
+#     graph_builder.add_edge("corrector", "scorer")
+#     graph_builder.add_edge("chatbot", END)
+
+#     memory = MemorySaver()
+#     graph = graph_builder.compile(checkpointer=memory)
+
+#     return graph
+
+

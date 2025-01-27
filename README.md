@@ -73,6 +73,8 @@ streamlit run pt_tutor/app.py
 - [ ] Add progress bar (mastered words / total vocab)
 - [ ] Add ability to see unmastered vocab
 - [ ] Update prompt to focus on mastered vocab to re-enforce learning
+- [ ] Parameterize topic 
+- [ ] Parameterize user 
 
 ### Planned for Release 2
 - [ ] Add voice option
