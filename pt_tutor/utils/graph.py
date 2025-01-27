@@ -37,7 +37,7 @@ openai_org_id = os.getenv("OPENAI_ORG_ID")
 llm = ChatOpenAI(
     api_key=openai_api_key,
     organization=openai_org_id,
-    model="gpt-4o",
+    model="gpt-4o-mini",
     temperature=0.8
 )
 
@@ -50,7 +50,7 @@ class State(TypedDict):
 
 
 topic = "Dining out" # TODO: make into a parameter
-language = "European Portuguese" # TODO: make into a parameter
+language = "European Portuguese" 
 
 
 def chatbot(state: State):
@@ -120,4 +120,3 @@ graph_builder.add_edge("chatbot", END)
 
 memory = MemorySaver()
 graph = graph_builder.compile(checkpointer=memory)
-

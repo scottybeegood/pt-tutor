@@ -4,6 +4,7 @@ from langchain_community.callbacks.streamlit import (
     StreamlitCallbackHandler,
 )
 from utils.graph import graph 
+# from utils.graph import build_graph 
 
 st.set_page_config(layout="wide", page_title="Fala Português!")
 
@@ -11,14 +12,14 @@ st.write("## Fala Português!")
 
 st.sidebar.radio(
     "Select your name or add a new one:",
-    key="visibility",
+    key="user",
     options=["Scott", "Bianca", "New user"],
 )
 
-st.sidebar.text_input(
+st.sidebar.radio(
     "Select the topic you'd like to discuss:",
-    "eg, Dining out",
-    # key=["Dining out"],
+    key="topic",
+    options=["Dining out", "Weekend recap", "Weather"],
 )
 
 # st.sidebar.title("Word use frequency")
