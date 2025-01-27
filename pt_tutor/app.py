@@ -4,7 +4,10 @@ from langchain_community.callbacks.streamlit import (
     StreamlitCallbackHandler,
 )
 from utils.graph import graph 
-# from utils.graph import build_graph 
+# from utils.graph import(
+#     #State, 
+#     build_graph
+# )
 
 st.set_page_config(layout="wide", page_title="Fala Português!")
 
@@ -16,11 +19,13 @@ st.sidebar.radio(
     options=["Scott", "Bianca", "New user"],
 )
 
-st.sidebar.radio(
+topic = st.sidebar.radio(
     "Select the topic you'd like to discuss:",
     key="topic",
     options=["Dining out", "Weekend recap", "Weather"],
 )
+
+# graph = build_graph(topic)
 
 # st.sidebar.title("Word use frequency")
 
@@ -38,7 +43,8 @@ if prompt := col1.chat_input():
         response = graph.invoke(
             {
                 "messages": [prompt], 
-                "core_convo": [prompt]
+                "core_convo": [prompt],
+                "topic": topic
             },
             config = {
                 "configurable": {"thread_id": 42}, 
