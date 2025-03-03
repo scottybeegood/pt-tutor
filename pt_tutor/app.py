@@ -41,6 +41,7 @@ if prompt := col1.chat_input():
             {
                 "messages": [prompt], 
                 "core_convo": [prompt],
+                "mastered_words": {}, #TODO: pipe in mastered words
                 "topic": topic
             },
             config = {
