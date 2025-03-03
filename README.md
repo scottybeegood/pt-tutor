@@ -67,13 +67,16 @@ streamlit run pt_tutor/app.py
   - [ ] Chat input at the bottom, chat history of size 500 pixes above
   - [ ] User is dark red; Bot is dark green
 - [ ] Update corrector so feedback lines up with user submission in primary chat window
-- [ ] Collect vocab words by topic [PT Tutor vocab](https://docs.google.com/spreadsheets/d/15A-ee4YKTUvd9vptD1-wfwPkyFaGftiOaIzQfeDx9F8/edit?gid=1330781019#gid=1330781019)
+- [X] Collect vocab words by topic [PT Tutor vocab](https://docs.google.com/spreadsheets/d/15A-ee4YKTUvd9vptD1-wfwPkyFaGftiOaIzQfeDx9F8/edit?gid=1330781019#gid=1330781019)
+  - [X] Dining out 
+  - [X] Weekend recap 
+  - [X] Weather
 - [ ] Update scorer to check against category vocab (3 successful uses = mastery)
 - [ ] Add progress saver by user 
 - [ ] Add progress bar (mastered words / total vocab)
 - [ ] Add ability to see unmastered vocab
-- [ ] Update prompt to focus on mastered vocab to re-enforce learning
-- [ ] Parameterize topic 
+- [X] Update prompt to focus on mastered vocab to reinforce learning
+- [X] Parameterize topic 
 - [ ] Parameterize user 
 
 ### Planned for Release 2
@@ -81,3 +84,6 @@ streamlit run pt_tutor/app.py
 - [ ] Add toggle so user can choose text or voice interaction
 - [ ] Add 2 more categories (5 total)
 - [ ] Include non-present verb vocab 
+
+### Planned for Release 3
+- [ ] Add "Beginner Mode" where you speak English and response is in Portuguese 

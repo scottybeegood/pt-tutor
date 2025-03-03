@@ -4,28 +4,22 @@ from langchain_community.callbacks.streamlit import (
     StreamlitCallbackHandler,
 )
 from utils.graph import graph 
-# from utils.graph import(
-#     #State, 
-#     build_graph
-# )
 
 st.set_page_config(layout="wide", page_title="Fala Português!")
 
 st.write("## Fala Português!")
 
-st.sidebar.radio(
+user = st.sidebar.text_input(
     "Select your name or add a new one:",
     key="user",
-    options=["Scott", "Bianca", "New user"],
 )
+st.sidebar.write("Active user:", user)
 
 topic = st.sidebar.radio(
     "Select the topic you'd like to discuss:",
     key="topic",
     options=["Dining out", "Weekend recap", "Weather"],
 )
-
-# graph = build_graph(topic)
 
 # st.sidebar.title("Word use frequency")
 
@@ -34,11 +28,14 @@ col1, col2 = st.columns(2)
 col1.write("Fala aqui...")
 col2.write("Feedback on responses here...")
 
-if prompt := col1.chat_input():
-    col1.chat_message("user").write(prompt)
+messages_container1 = col1.container(height=500)
+messages_container2 = col2.container(height=500)
 
-    with col1.chat_message("assistant"):
-        st_callback = StreamlitCallbackHandler(col1.container())
+if prompt := col1.chat_input():
+    messages_container1.chat_message("user").write(prompt)
+
+    with messages_container1.chat_message("assistant"):
+        # st_callback = StreamlitCallbackHandler(col1.container())
 
         response = graph.invoke(
             {
@@ -48,13 +45,15 @@ if prompt := col1.chat_input():
             },
             config = {
                 "configurable": {"thread_id": 42}, 
-                "callbacks": [st_callback]
+                # "callbacks": [st_callback]
             }
         )
-        col1.write(response["core_convo"][-1].content)
-        col2.write(response["corrections"][-1].content)
+        messages_container1.write(response["core_convo"][-1].content)
+        # col2.write(response["corrections"][-1].content)
+        messages_container2.write(response["corrections"][-1].content)
 
 
+# SIDEBAR 
         words = list(response["correct_words"].keys())
         counts = list(response["correct_words"].values())
 

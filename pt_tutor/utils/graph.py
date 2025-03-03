@@ -47,18 +47,16 @@ class State(TypedDict):
     core_convo: Annotated[list, add_messages]
     corrections: Annotated[list, add_messages]
     correct_words: dict
+    mastered_words: dict
     topic: str 
     user: str
 
 
-# topic = "Dining out" 
-language = "European Portuguese" 
-
-
 def chatbot(state: State):
     topic = state["topic"]
+    mastered_words = state["mastered_words"]
 
-    system_message = chatbot_instructions.format(topic=topic, language=language)
+    system_message = chatbot_instructions.format(topic=topic, mastered_words=mastered_words)
     response = llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
     state["messages"] = [response]
@@ -88,26 +86,27 @@ def scorer(state: State):
         None
     )
     user_message = clean_message(user_message)
-    # user_message = 'Aquilo está bem. Eu gosto de comer lá. Mas eu não gosto de comer cá.'
     corrector_message = next(
         (m.content for m in reversed(state['corrections']) if isinstance(m, AIMessage)),
         None
     )
     corrector_message = clean_message(corrector_message)
-    # corrector_message = 'Essa está mal. Eu gosto de comer x. Mas eu x gosto de comer y.'
 
     state.setdefault("correct_words", {})
 
-    for user_word in user_message.split():
-        if user_word in corrector_message.split():
+    for user_word in corrector_message.split():
+        if user_word in user_message.split():
+            # update correct_words dict
             if user_word in state["correct_words"]:
                 state["correct_words"][user_word] += 1
             else:
                 state["correct_words"][user_word] = 1
+                
+            # paint that user_word in corrector_message green
+        # else paint that user_word in corrector_message red
 
     print (f'last user message words: {user_message.split()}')
     print (f'last corrector message words: {corrector_message.split()}')
-    # print(state)
 
     return state
 
@@ -124,24 +123,3 @@ graph_builder.add_edge("chatbot", END)
 
 memory = MemorySaver()
 graph = graph_builder.compile(checkpointer=memory)
-
-
-# def build_graph(topic: str):
-#     chatbot_with_topic = chatbot(topic)
-
-#     graph_builder = StateGraph(State)
-#     graph_builder.add_node("chatbot", chatbot_with_topic)
-#     graph_builder.add_node("corrector", corrector)
-#     graph_builder.add_node("scorer", scorer)
-
-#     graph_builder.add_edge(START, "chatbot")
-#     graph_builder.add_edge("chatbot", "corrector")
-#     graph_builder.add_edge("corrector", "scorer")
-#     graph_builder.add_edge("chatbot", END)
-
-#     memory = MemorySaver()
-#     graph = graph_builder.compile(checkpointer=memory)
-
-#     return graph
-
-
