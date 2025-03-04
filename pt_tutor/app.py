@@ -7,35 +7,56 @@ from utils.graph import graph
 
 st.set_page_config(layout="wide", page_title="Fala Português!")
 
+st.markdown("""
+    <style>  
+    .tutor-style {
+        color: darkgreen !important;
+        font-size: 20px !important;
+        text-align: left !important;
+    }
+    .student-style {
+        color: darkred !important;
+        font-size: 20px !important;
+        text-align: right !important;
+    }
+    .student-correction-style {
+        color: grey !important;
+        font-style: italic !important;
+        font-size: 16px !important;
+        text-align: right !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 st.write("## Fala Português!")
 
-user = st.sidebar.text_input(
-    "Select your name or add a new one:",
-    key="user",
-)
-st.sidebar.write("Active user:", user)
+sidebar = st.sidebar
+sidebar_col = st.columns([1, 2])[0]
 
-topic = st.sidebar.radio(
-    "Select the topic you'd like to discuss:",
-    key="topic",
-    options=["Dining out", "Weekend recap", "Weather"],
-)
+with sidebar:
+    user = st.sidebar.text_input(
+        "Select your name or add a new one:",
+        key="user",
+    )
+    st.sidebar.write("Active user:", user)
 
-# st.sidebar.title("Word use frequency")
+    topic = st.sidebar.radio(
+        "Select the topic you'd like to discuss:",
+        key="topic",
+        options=["Dining out", "Weekend recap", "Weather"],
+    )
 
-col1, col2 = st.columns(2)
+    # st.sidebar.title("Word use frequency")
 
-col1.write("Fala aqui...")
-col2.write("Feedback on responses here...")
+main_container = st.container()
 
-messages_container1 = col1.container(height=500)
-messages_container2 = col2.container(height=500)
+with main_container:
+    messages_container1 = st.container()
+    chat_area = messages_container1.container(height=400)
 
-if prompt := col1.chat_input():
-    messages_container1.chat_message("user").write(prompt)
-
-    with messages_container1.chat_message("assistant"):
-        # st_callback = StreamlitCallbackHandler(col1.container())
+if prompt := st.chat_input("Fala aqui..."):
+    with chat_area.chat_message("student", avatar=None):
+        st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
 
         response = graph.invoke(
             {
@@ -49,9 +70,19 @@ if prompt := col1.chat_input():
                 # "callbacks": [st_callback]
             }
         )
-        messages_container1.write(response["core_convo"][-1].content)
-        # col2.write(response["corrections"][-1].content)
-        messages_container2.write(response["corrections"][-1].content)
+        student_correction = response["corrections"][-1].content
+
+        # st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
+        st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
+
+    with chat_area.chat_message("tutor", avatar=None):
+        # st_callback = StreamlitCallbackHandler(col1.container())
+
+
+        tutor_response = response["core_convo"][-1].content
+        st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
+        
+        # feedback_area.write(response["corrections"][-1].content)
 
 
 # SIDEBAR 
