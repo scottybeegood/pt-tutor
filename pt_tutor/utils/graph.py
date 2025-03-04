@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import re
 from dotenv import load_dotenv
 from pydantic import BaseModel
 
@@ -20,10 +21,12 @@ from langgraph.prebuilt import InjectedState, ToolNode
 from langchain_openai import OpenAI, ChatOpenAI
 from langchain_core.tools import tool
 
-
 from utils.instructions import (
     chatbot_instructions,
     corrector_instructions
+)
+from utils.functions import (
+    clean_message
 )
 
 
@@ -34,7 +37,7 @@ openai_org_id = os.getenv("OPENAI_ORG_ID")
 llm = ChatOpenAI(
     api_key=openai_api_key,
     organization=openai_org_id,
-    model="gpt-4o",
+    model="gpt-4o-mini",
     temperature=0.8
 )
 
@@ -44,14 +47,16 @@ class State(TypedDict):
     core_convo: Annotated[list, add_messages]
     corrections: Annotated[list, add_messages]
     correct_words: dict
-
-
-topic = "Dining out" # TODO: make into a parameter
-language = "European Portuguese" # TODO: make into a parameter
+    mastered_words: dict
+    topic: str 
+    user: str
 
 
 def chatbot(state: State):
-    system_message = chatbot_instructions.format(topic=topic, language=language)
+    topic = state["topic"]
+    mastered_words = state["mastered_words"]
+
+    system_message = chatbot_instructions.format(topic=topic, mastered_words=mastered_words)
     response = llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
     state["messages"] = [response]
@@ -80,25 +85,28 @@ def scorer(state: State):
         (m.content for m in reversed(state['core_convo']) if isinstance(m, HumanMessage)),
         None
     )
-    # user_message = 'Aquilo está bem. Eu gosto de comer lá. Mas eu não gosto de comer cá.'
+    user_message = clean_message(user_message)
     corrector_message = next(
         (m.content for m in reversed(state['corrections']) if isinstance(m, AIMessage)),
         None
     )
-    # corrector_message = 'Essa está mal. Eu gosto de comer x. Mas eu x gosto de comer y.'
+    corrector_message = clean_message(corrector_message)
 
     state.setdefault("correct_words", {})
 
-    for user_word in user_message.split():
-        if user_word in corrector_message.split():
+    for user_word in corrector_message.split():
+        if user_word in user_message.split():
+            # update correct_words dict
             if user_word in state["correct_words"]:
                 state["correct_words"][user_word] += 1
             else:
                 state["correct_words"][user_word] = 1
+                
+            # paint that user_word in corrector_message green
+        # else paint that user_word in corrector_message red
 
     print (f'last user message words: {user_message.split()}')
     print (f'last corrector message words: {corrector_message.split()}')
-    # print(state)
 
     return state
 
@@ -115,4 +123,3 @@ graph_builder.add_edge("chatbot", END)
 
 memory = MemorySaver()
 graph = graph_builder.compile(checkpointer=memory)
-
