@@ -62,28 +62,32 @@ streamlit run pt_tutor/app.py
 ```
 
 ## Roadmap 
-### Outstanding tasks for Release 1
+### Outstanding tasks for Release 1 (March 2025)
 - [ ] Improve primary chat window interface
   - [X] Chat input at the bottom, chat history of size 500 pixes above
-  - [ ] User is dark red; Bot is dark green
-- [ ] Update corrector so current feedback (only) is in large font to the right
+  - [X] User is dark red; Bot is dark green
+  - [X] Adding corrections under user input in slightly different font
+  - [ ] Improve (remove?) icons
+  - [ ] Show rolling message history
 - [X] Collect vocab words by topic [PT Tutor vocab](https://docs.google.com/spreadsheets/d/15A-ee4YKTUvd9vptD1-wfwPkyFaGftiOaIzQfeDx9F8/edit?gid=1330781019#gid=1330781019)
   - [X] Dining out 
   - [X] Weekend recap 
   - [X] Weather
-- [ ] Update scorer to check against category vocab (3 successful uses = mastery)
-- [ ] Add progress saver by user 
-- [ ] Add progress bar (mastered words / total vocab)
-- [ ] Add ability to see unmastered vocab
+- [ ] Scorecard
+  - [ ] Update scorer to check against category vocab (3 successful uses = mastery)
+  - [ ] Add progress saver
+  - [ ] Add progress bar (mastered words / total vocab)
+  - [ ] Add ability to see unmastered vocab
 - [X] Update prompt to focus on mastered vocab to reinforce learning
 - [X] Parameterize topic 
-- [ ] Parameterize user 
 
-### Planned for Release 2
+### Planned for Release 2 (April 2025)
 - [ ] Add voice option
 - [ ] Add toggle so user can choose text or voice interaction
 - [ ] Add 2 more categories (5 total)
 - [ ] Include non-present verb vocab 
 
-### Planned for Release 3
+### Planned for Release 3 (May 2025)
 - [ ] Add "Beginner Mode" where you speak English and response is in Portuguese 
+- [ ] Parameterize user 
+- [ ] Host on website
