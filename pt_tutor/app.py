@@ -1,9 +1,16 @@
 import streamlit as st 
+import uuid
 import plotly.graph_objects as go
 from langchain_community.callbacks.streamlit import (
     StreamlitCallbackHandler,
 )
 from utils.graph import graph 
+from langchain_core.messages import (
+    AIMessage, 
+    BaseMessage, 
+    HumanMessage, 
+    SystemMessage
+)
 
 st.set_page_config(layout="wide", page_title="Fala Português!")
 
@@ -28,6 +35,17 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+if "student_messages" not in st.session_state:
+    st.session_state.student_messages = []
+if "student_correction_messages" not in st.session_state:
+    st.session_state.student_correction_messages = []
+if "tutor_messages" not in st.session_state:
+    st.session_state.tutor_messages = []
+if "thread_id" not in st.session_state:
+    st.session_state["thread_id"] = str(uuid.uuid4())
+
 st.write("## Fala Português!")
 
 sidebar = st.sidebar
@@ -38,7 +56,6 @@ with sidebar:
         "Select your name or add a new one:",
         key="user",
     )
-    st.sidebar.write("Active user:", user)
 
     topic = st.sidebar.radio(
         "Select the topic you'd like to discuss:",
@@ -46,17 +63,43 @@ with sidebar:
         options=["Dining out", "Weekend recap", "Weather"],
     )
 
-    # st.sidebar.title("Word use frequency")
-
 main_container = st.container()
 
 with main_container:
-    messages_container1 = st.container()
-    chat_area = messages_container1.container(height=400)
+    messages_container = st.container()
+    chat_area = messages_container.container(height=400)
+
+    # replace logic below with a counter i from 1 that scans that the keys in st.session_state (core_convo and corrections)
+    for i in range(len(st.session_state.student_messages)):
+        with chat_area.chat_message("student", avatar="😊"):
+            st.markdown(f"<div class='student-style'>{st.session_state.student_messages[i]}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='student-correction-style'>{st.session_state.student_correction_messages[i]}</div>", unsafe_allow_html=True)
+        with chat_area.chat_message("tutor", avatar="🤖"):
+            st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
+
+
+    
+    # for message in st.session_state.messages:
+    #     if type(message) is AIMessage:
+    #         chat_area.chat_message("tutor", avatar="🤖").markdown(f"<div class='tutor-style'>{message.content}</div>", unsafe_allow_html=True)
+    #     if type(message) is HumanMessage:
+    #         chat_area.chat_message("student", avatar="😊").markdown(f"<div class='student-style'>{message.content}</div>", unsafe_allow_html=True)
+    #     if type(message) is SystemMessage:
+    #         chat_area.chat_message("corrector", avatar="✅").markdown(f"<div class='student-correction-style'>{message.content}</div>", unsafe_allow_html=True)
+
+    # for message in st.session_state.core_convo:
+    #     if type(message) is AIMessage:
+    #         chat_area.chat_message("tutor", avatar="🤖").markdown(f"<div class='tutor-style'>{message.content}</div>", unsafe_allow_html=True)
+    #     if type(message) is HumanMessage:
+    #         chat_area.chat_message("student", avatar="😊").markdown(f"<div class='student-style'>{message.content}</div>", unsafe_allow_html=True)
+
+    # for message in st.session_state.corrections:
+
 
 if prompt := st.chat_input("Fala aqui..."):
-    with chat_area.chat_message("student", avatar=None):
+    with chat_area.chat_message("student", avatar="😊"):
         st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
+        st.session_state.student_messages.append(prompt)
 
         response = graph.invoke(
             {
@@ -72,17 +115,17 @@ if prompt := st.chat_input("Fala aqui..."):
         )
         student_correction = response["corrections"][-1].content
 
-        # st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
+        # st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True) #move up to display earlier
         st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
+        st.session_state.student_correction_messages.append(student_correction)
 
-    with chat_area.chat_message("tutor", avatar=None):
+    with chat_area.chat_message("tutor", avatar="🤖"):
         # st_callback = StreamlitCallbackHandler(col1.container())
 
 
         tutor_response = response["core_convo"][-1].content
+        st.session_state.tutor_messages.append(tutor_response)
         st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
-        
-        # feedback_area.write(response["corrections"][-1].content)
 
 
 # SIDEBAR 
