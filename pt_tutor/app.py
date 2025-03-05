@@ -69,32 +69,12 @@ with main_container:
     messages_container = st.container()
     chat_area = messages_container.container(height=400)
 
-    # replace logic below with a counter i from 1 that scans that the keys in st.session_state (core_convo and corrections)
     for i in range(len(st.session_state.student_messages)):
         with chat_area.chat_message("student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{st.session_state.student_messages[i]}</div>", unsafe_allow_html=True)
             st.markdown(f"<div class='student-correction-style'>{st.session_state.student_correction_messages[i]}</div>", unsafe_allow_html=True)
         with chat_area.chat_message("tutor", avatar="🤖"):
             st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
-
-
-    
-    # for message in st.session_state.messages:
-    #     if type(message) is AIMessage:
-    #         chat_area.chat_message("tutor", avatar="🤖").markdown(f"<div class='tutor-style'>{message.content}</div>", unsafe_allow_html=True)
-    #     if type(message) is HumanMessage:
-    #         chat_area.chat_message("student", avatar="😊").markdown(f"<div class='student-style'>{message.content}</div>", unsafe_allow_html=True)
-    #     if type(message) is SystemMessage:
-    #         chat_area.chat_message("corrector", avatar="✅").markdown(f"<div class='student-correction-style'>{message.content}</div>", unsafe_allow_html=True)
-
-    # for message in st.session_state.core_convo:
-    #     if type(message) is AIMessage:
-    #         chat_area.chat_message("tutor", avatar="🤖").markdown(f"<div class='tutor-style'>{message.content}</div>", unsafe_allow_html=True)
-    #     if type(message) is HumanMessage:
-    #         chat_area.chat_message("student", avatar="😊").markdown(f"<div class='student-style'>{message.content}</div>", unsafe_allow_html=True)
-
-    # for message in st.session_state.corrections:
-
 
 if prompt := st.chat_input("Fala aqui..."):
     with chat_area.chat_message("student", avatar="😊"):
@@ -109,24 +89,17 @@ if prompt := st.chat_input("Fala aqui..."):
                 "topic": topic
             },
             config = {
-                "configurable": {"thread_id": 42}, 
-                # "callbacks": [st_callback]
+                "configurable": {"thread_id": 42},
             }
         )
         student_correction = response["corrections"][-1].content
-
-        # st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True) #move up to display earlier
         st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
         st.session_state.student_correction_messages.append(student_correction)
 
     with chat_area.chat_message("tutor", avatar="🤖"):
-        # st_callback = StreamlitCallbackHandler(col1.container())
-
-
         tutor_response = response["core_convo"][-1].content
         st.session_state.tutor_messages.append(tutor_response)
         st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
-
 
 # SIDEBAR 
         words = list(response["correct_words"].keys())
