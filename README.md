@@ -63,12 +63,12 @@ streamlit run pt_tutor/app.py
 
 ## Roadmap 
 ### Outstanding tasks for Release 1 (March 2025)
-- [ ] Improve primary chat window interface
+- [X] Improve primary chat window interface
   - [X] Chat input at the bottom, chat history of size 500 pixes above
   - [X] User is dark red; Bot is dark green
   - [X] Adding corrections under user input in slightly different font
-  - [ ] Improve (remove?) icons
-  - [ ] Show rolling message history
+  - [X] Improve (remove?) icons
+  - [X] Show rolling message history
 - [X] Collect vocab words by topic [PT Tutor vocab](https://docs.google.com/spreadsheets/d/15A-ee4YKTUvd9vptD1-wfwPkyFaGftiOaIzQfeDx9F8/edit?gid=1330781019#gid=1330781019)
   - [X] Dining out 
   - [X] Weekend recap 
