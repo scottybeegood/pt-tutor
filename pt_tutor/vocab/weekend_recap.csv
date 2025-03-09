@@ -1,0 +1,101 @@
+﻿id,full vocab,( start,) start,portuguese,english
+1,fim de semana (weekend),15,23,fim de semana,weekend
+2,descansar (to rest),11,19,descansar,to rest
+3,dormir (to sleep),8,17,dormir,to sleep
+4,acordar (to wake up),9,20,acordar,to wake up
+5,fixe (cool),6,11,fixe,cool
+6,almoço (lunch),8,14,almoço,lunch
+7,jantar (dinner),8,15,jantar,dinner
+8,passear (to take a walk),9,24,passear,to take a walk
+9,parque (park),8,13,parque,park
+10,praia (beach),7,13,praia,beach
+11,cinema (movie theater),8,22,cinema,movie theater
+12,filme (movie),7,13,filme,movie
+13,restaurante (restaurant),13,24,restaurante,restaurant
+14,prato (plate/dish),7,18,prato,plate/dish
+15,comboio (train),9,15,comboio,train
+16,giro (nice/cute),6,16,giro,nice/cute
+17,amigos (friends),8,16,amigos,friends
+18,encontro (meeting/date),10,23,encontro,meeting/date
+19,festa (party),7,13,festa,party
+20,dançar (to dance),8,17,dançar,to dance
+21,música (music),8,14,música,music
+22,diversão (fun),10,14,diversão,fun
+23,relaxar (to relax),9,18,relaxar,to relax
+24,descanso (rest),10,15,descanso,rest
+25,fazer compras (go shopping),15,27,fazer compras,go shopping
+26,turma (group/gang),7,18,turma,group/gang
+27,noite (night),7,13,noite,night
+28,vou sair (I went out),10,21,vou sair,I went out
+29,corrida (race/run),9,18,corrida,race/run
+30,aula (class),6,12,aula,class
+31,loja (store),6,12,loja,store
+32,casamento (wedding),11,19,casamento,wedding
+33,aniversário (birthday),13,22,aniversário,birthday
+34,igreja (church),8,15,igreja,church
+35,missa (mass),7,12,missa,mass
+36,culto (worship service),7,23,culto,worship service
+37,churrasco (barbecue),11,20,churrasco,barbecue
+38,cerveja (beer),9,14,cerveja,beer
+39,vinho (wine),7,12,vinho,wine
+40,celebração (celebration),12,24,celebração,celebration
+41,conversar (to talk),11,19,conversar,to talk
+42,rir (to laugh),5,14,rir,to laugh
+43,piquenique (picnic),12,19,piquenique,picnic
+44,exercícios (exercises),12,22,exercícios,exercises
+45,livro (book),7,12,livro,book
+46,caminhar (to walk),10,18,caminhar,to walk
+47,correr (to run),8,15,correr,to run
+48,exercício (exercise),11,20,exercício,exercise
+49,ajudar (to help),8,16,ajudar,to help
+50,piscina (pool),9,14,piscina,pool
+51,nadar (to swim),7,15,nadar,to swim
+52,sol (sun),5,9,sol,sun
+53,chuva (rain),7,12,chuva,rain
+54,tempo (weather),7,15,tempo,weather
+55,quente (hot),8,12,quente,hot
+56,frio (cold),6,11,frio,cold
+57,agradável (pleasant),11,20,agradável,pleasant
+58,cansado (tired),9,15,cansado,tired
+59,entusiasmado (excited),14,22,entusiasmado,excited
+60,feliz (happy),7,13,feliz,happy
+61,divertido (fun),11,15,divertido,fun
+62,aborrecido (bored),12,18,aborrecido,bored
+63,ocupado (busy),9,14,ocupado,busy
+64,livre (free),7,12,livre,free
+65,programação (schedule),13,22,programação,schedule
+66,planos (plans),8,14,planos,plans
+67,viagem (trip),8,13,viagem,trip
+68,passeio (outing),9,16,passeio,outing
+69,carro (car),7,11,carro,car
+70,bilhete (ticket),9,16,bilhete,ticket
+71,metrô (subway),7,14,metrô,subway
+72,atividade (activity),11,20,atividade,activity
+73,família (family),9,16,família,family
+74,telemóvel (cell phone),11,22,telemóvel,cell phone
+75,fotos (photos),7,14,fotos,photos
+76,pais (parents),6,14,pais,parents
+77,memórias (memories),10,19,memórias,memories
+78,tradição (tradition),10,20,tradição,tradition
+79,experiência (experience),13,24,experiência,experience
+80,aventura (adventure),10,20,aventura,adventure
+81,descoberta (discovery),12,22,descoberta,discovery
+82,novidade (news/novelty),10,23,novidade,news/novelty
+83,surpresa (surprise),10,19,surpresa,surprise
+84,conversa (conversation),10,23,conversa,conversation
+85,companhia (company),11,19,companhia,company
+86,sozinho (alone),9,15,sozinho,alone
+87,acompanhado (accompanied),13,25,acompanhado,accompanied
+88,grupo (group),7,13,grupo,group
+89,conviver (to spend time together),10,33,conviver,to spend time together
+90,vizinhos (neighbors),10,20,vizinhos,neighbors
+91,bairro (neighborhood),8,21,bairro,neighborhood
+92,cidade (city),8,13,cidade,city
+93,centro (downtown),8,17,centro,downtown
+94,praça (square),7,14,praça,square
+95,partilhar (to share),11,20,partilhar,to share
+96,cozinhar (to cook),10,18,cozinhar,to cook
+97,mercado (market),9,16,mercado,market
+98,brincar (to play),9,17,brincar,to play
+99,feriado (holiday),9,17,feriado,holiday
+100,rotina (routine),8,16,rotina,routine
