@@ -26,7 +26,8 @@ from utils.instructions import (
     corrector_instructions
 )
 from utils.functions import (
-    clean_message
+    clean_message,
+    # import_gsheet_tab
 )
 
 
@@ -41,15 +42,15 @@ llm = ChatOpenAI(
     temperature=0.8
 )
 
-
 class State(TypedDict):
     messages: Annotated[list, add_messages]
     core_convo: Annotated[list, add_messages]
     corrections: Annotated[list, add_messages]
+    topic_vocab: list
     correct_words: dict
-    mastered_words: dict
+    mastered_words: set #list
     topic: str 
-    user: str
+    # user: str
 
 
 def chatbot(state: State):
@@ -95,18 +96,21 @@ def scorer(state: State):
     state.setdefault("correct_words", {})
 
     for user_word in corrector_message.split():
-        if user_word in user_message.split():
+        if user_word in user_message.split() and user_word in state["topic_vocab"]:
             # update correct_words dict
             if user_word in state["correct_words"]:
                 state["correct_words"][user_word] += 1
+                if state["correct_words"][user_word] >= 3:
+                    state["mastered_words"].add(user_word)
             else:
                 state["correct_words"][user_word] = 1
                 
             # paint that user_word in corrector_message green
         # else paint that user_word in corrector_message red
 
-    print (f'last user message words: {user_message.split()}')
-    print (f'last corrector message words: {corrector_message.split()}')
+    # print(f'topic vocab words: {state["topic_vocab"]}')
+    # print (f'last user message words: {user_message.split()}')
+    # print (f'last corrector message words: {corrector_message.split()}')
 
     return state
 

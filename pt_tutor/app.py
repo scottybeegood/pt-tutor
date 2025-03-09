@@ -11,6 +11,7 @@ from langchain_core.messages import (
     HumanMessage, 
     SystemMessage
 )
+from utils.functions import get_topic_vocab
 
 st.set_page_config(layout="wide", page_title="Fala Português!")
 
@@ -52,16 +53,17 @@ sidebar = st.sidebar
 sidebar_col = st.columns([1, 2])[0]
 
 with sidebar:
-    user = st.sidebar.text_input(
-        "Select your name or add a new one:",
-        key="user",
-    )
+    # user = st.sidebar.text_input(
+    #     "Select your name or add a new one:",
+    #     key="user",
+    # )
 
     topic = st.sidebar.radio(
         "Select the topic you'd like to discuss:",
         key="topic",
         options=["Dining out", "Weekend recap", "Weather"],
     )
+    topic_vocab = get_topic_vocab(topic)
 
 main_container = st.container()
 
@@ -85,7 +87,8 @@ if prompt := st.chat_input("Fala aqui..."):
             {
                 "messages": [prompt], 
                 "core_convo": [prompt],
-                "mastered_words": {}, #TODO: pipe in mastered words
+                "topic_vocab": topic_vocab,
+                "mastered_words": set(), #TODO: pipe in mastered words
                 "topic": topic
             },
             config = {
@@ -119,7 +122,7 @@ if prompt := st.chat_input("Fala aqui..."):
         ))
 
         fig.update_layout(
-            title="Word Frequencies",
+            title="Correct words",
             xaxis_title="Count",
             yaxis_title="Words",
             height=400,
@@ -127,3 +130,5 @@ if prompt := st.chat_input("Fala aqui..."):
         )
 
         st.sidebar.plotly_chart(fig, use_container_width=True)
+
+        st.sidebar.write(response["mastered_words"])
