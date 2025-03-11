@@ -28,8 +28,9 @@ def get_filpath(topic):
 def get_topic_vocab(topic):
     filepath = get_filpath(topic)
     df = pd.read_csv(filepath)
+    topic_vocab = set(df['portuguese'].str.strip())
 
-    return set(df['portuguese'].str.strip())
+    return topic_vocab
 
 
 def get_mastered_words(topic):
