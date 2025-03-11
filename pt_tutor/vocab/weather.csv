@@ -1,0 +1,101 @@
+﻿id,full vocab,( start,) start,portuguese,english,flag_mastered
+1,tempo (weather),7,15,tempo,weather,0
+2,quente (hot),8,12,quente,hot,0
+3,lá fora (outside),9,17,lá fora,outside,0
+4,frio (cold),6,11,frio,cold,0
+5,vento (wind),7,12,vento,wind,0
+6,céu limpo (clear sky),11,21,céu limpo,clear sky,0
+7,nuvem (cloud),7,13,nuvem,cloud,0
+8,sol (sun),5,9,sol,sun,0
+9,pôr-do-sol (sunset),12,19,pôr-do-sol,sunset,0
+10,nublado (cloudy),9,16,nublado,cloudy,0
+11,chuva (rain),7,12,chuva,rain,0
+12,está a chover (it is raining),15,29,está a chover,it is raining,0
+13,neve (snow),6,11,neve,snow,0
+14,está a nevar (it is snowing),14,28,está a nevar,it is snowing,0
+15,tempestade (storm),12,18,tempestade,storm,0
+16,danos (damage),7,14,danos,damage,0
+17,trovões (thunder),9,17,trovões,thunder,0
+18,relâmpagos (lightning),12,22,relâmpagos,lightning,0
+19,previsão do tempo (weather forecast),19,36,previsão do tempo,weather forecast,0
+20,morno (warm),7,12,morno,warm,0
+21,ameno (mild),7,12,ameno,mild,0
+22,abafado (muggy),9,15,abafado,muggy,0
+23,húmido (humid),8,14,húmido,humid,0
+24,seco (dry),6,10,seco,dry,0
+25,brisa (breeze),7,14,brisa,breeze,0
+26,furacão (hurricane),9,19,furacão,hurricane,0
+27,nevoeiro (fog),10,14,nevoeiro,fog,0
+28,neblina (mist),9,14,neblina,mist,0
+29,nascer do sol (sunrise),15,23,nascer do sol,sunrise,0
+30,encoberto (overcast),11,20,encoberto,overcast,0
+31,arco-íris (rainbow),11,19,arco-íris,rainbow,0
+32,centígrados (Celsius),13,21,centígrados,Celsius,0
+33,calor (heat),7,12,calor,heat,0
+34,guarda-sol (parasol/beach umbrella),12,35,guarda-sol,parasol/beach umbrella,0
+35,chapéu de chuva (umbrella),17,26,chapéu de chuva,umbrella,0
+36,galochas (rain boots),10,21,galochas,rain boots,0
+37,casaco (jacket/coat),8,20,casaco,jacket/coat,0
+38,cachecol (scarf),10,16,cachecol,scarf,0
+39,luvas (gloves),7,14,luvas,gloves,0
+40,gorro (winter hat/beanie),7,25,gorro,winter hat/beanie,0
+41,óculos de sol (sunglasses),15,26,óculos de sol,sunglasses,0
+42,botas (boots),7,13,botas,boots,0
+43,sandálias (sandals),11,19,sandálias,sandals,0
+44,protetor solar (sunscreen),16,26,protetor solar,sunscreen,0
+45,guarda-vento (windbreaker),14,26,guarda-vento,windbreaker,0
+46,camisola (sweater),10,18,camisola,sweater,0
+47,cobertor (blanket),10,18,cobertor,blanket,0
+48,aquecedor (heater),11,18,aquecedor,heater,0
+49,ar condicionado (air conditioning),17,34,ar condicionado,air conditioning,0
+50,ventoinha (fan),11,15,ventoinha,fan,0
+51,lareira (fireplace),9,19,lareira,fireplace,0
+52,praia (beach),7,13,praia,beach,0
+53,piscina (pool),9,14,piscina,pool,0
+54,ficar em casa (stay home),15,25,ficar em casa,stay home,0
+55,ficar dentro (stay inside),14,26,ficar dentro,stay inside,0
+56,tempo fechado (gloomy weather),15,30,tempo fechado,gloomy weather,0
+57,ar livre (outdoors),10,19,ar livre,outdoors,0
+58,gripe (flu),7,11,gripe,flu,0
+59,constipação (cold),13,18,constipação,cold,0
+60,alergia (allergy),9,17,alergia,allergy,0
+61,tosse (cough),7,13,tosse,cough,0
+62,febre (fever),7,13,febre,fever,0
+63,queimadura solar (sunburn),18,26,queimadura solar,sunburn,0
+64,acidente (accident),10,19,acidente,accident,0
+65,queda (fall),7,12,queda,fall,0
+66,inundação (flooding),11,20,inundação,flooding,0
+67,árvore caída (fallen tree),14,26,árvore caída,fallen tree,0
+68,ramo partido (broken branch),14,28,ramo partido,broken branch,0
+69,apagão (blackout),8,17,apagão,blackout,0
+70,cheia (flood),7,13,cheia,flood,0
+71,incêndio (fire),10,15,incêndio,fire,0
+72,gelo negro (black ice),12,22,gelo negro,black ice,0
+73,buraco (pothole),8,16,buraco,pothole,0
+74,dia de baixa (sick day),14,23,dia de baixa,sick day,0
+75,teletrabalho (remote work),14,26,teletrabalho,remote work,0
+76,cancelamento (cancellation),14,27,cancelamento,cancellation,0
+77,encerramento (closure),14,22,encerramento,closure,0
+78,bombeiros (firefighters),11,24,bombeiros,firefighters,0
+79,ambulância (ambulance),12,22,ambulância,ambulance,0
+80,socorro (rescue),9,16,socorro,rescue,0
+81,emergência (emergency),12,22,emergência,emergency,0
+82,aviso (warning),7,15,aviso,warning,0
+83,gelado (ice cream),8,18,gelado,ice cream,0
+84,água fresca (cold water),13,24,água fresca,cold water,0
+85,cerveja (beer),9,14,cerveja,beer,0
+86,limonada (lemonade),10,19,limonada,lemonade,0
+87,bifana (pork sandwich),8,22,bifana,pork sandwich,0
+88,pão quente (warm bread),12,23,pão quente,warm bread,0
+89,chá quente (hot tea),12,20,chá quente,hot tea,0
+90,sopa (soup),6,11,sopa,soup,0
+91,bronzeado (tanned),11,18,bronzeado,tanned,0
+92,queimado do sol (sunburnt),17,26,queimado do sol,sunburnt,0
+93,engripado (having the flu),11,26,engripado,having the flu,0
+94,constipado (having a cold),12,26,constipado,having a cold,0
+95,apanhar sol (get some sun),13,26,apanhar sol,get some sun,0
+96,tempo de praia (beach weather),16,30,tempo de praia,beach weather,0
+97,tempo de Natal (Christmas weather),16,34,tempo de Natal,Christmas weather,0
+98,desfrutar (to enjoy),11,20,desfrutar,to enjoy,0
+99,observar (observe),10,18,observar,observe,0
+100,acompanhar (monitor),12,20,acompanhar,monitor,0

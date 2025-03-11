@@ -1,0 +1,101 @@
+id,full vocab,( start,) start,portuguese,english,flag_mastered
+1,prato (plate),7,13,prato,plate,0
+2,copo (glass),6,12,copo,glass,0
+3,garfo (fork),7,12,garfo,fork,0
+4,faca (knife),6,12,faca,knife,0
+5,colher (spoon),8,14,colher,spoon,0
+6,guardanapo (napkin),12,19,guardanapo,napkin,0
+7,entrada (appetizer),9,19,entrada,appetizer,0
+8,prato principal (main course),17,29,prato principal,main course,0
+9,sobremesa (dessert),11,19,sobremesa,dessert,0
+10,acompanhamento (side dish),16,26,acompanhamento,side dish,0
+11,salada (salad),8,14,salada,salad,0
+12,conta (bill),7,12,conta,bill,0
+13,água (water),6,12,água,water,0
+14,vinho (wine),7,12,vinho,wine,0
+15,cerveja (beer),9,14,cerveja,beer,0
+16,café (coffee),6,13,café,coffee,0
+17,grelhado (grilled),10,18,grelhado,grilled,0
+18,assado (roasted),8,16,assado,roasted,0
+19,frito (fried),7,13,frito,fried,0
+20,reserva (reservation),9,21,reserva,reservation,0
+21,mesa (table),6,12,mesa,table,0
+22,molho (sauce),7,13,molho,sauce,0
+23,pedido (order),8,14,pedido,order,0
+24,desconto (discount),10,19,desconto,discount,0
+25,cartão (card),8,13,cartão,card,0
+26,dinheiro (money),10,16,dinheiro,money,0
+27,troco (change),7,14,troco,change,0
+28,recibo (receipt),8,16,recibo,receipt,0
+29,comer (to eat),7,14,comer,to eat,0
+30,beber (to drink),7,16,beber,to drink,0
+31,pedir (to order),7,16,pedir,to order,0
+32,reservar (to reserve),10,21,reservar,to reserve,0
+33,pagar (to pay),7,14,pagar,to pay,0
+34,servir (to serve),8,17,servir,to serve,0
+35,provar (to try),8,15,provar,to try,0
+36,picante (spicy),9,15,picante,spicy,0
+37,reservado (reserved),11,20,reservado,reserved,0
+38,ocupado (occupied),9,18,ocupado,occupied,0
+39,disponível (available),12,22,disponível,available,0
+40,bebidas (beverages),9,19,bebidas,beverages,0
+41,vinhos (wines),8,14,vinhos,wines,0
+42,carnes (meats),8,14,carnes,meats,0
+43,peixes (fish),8,13,peixes,fish,0
+44,massas (pasta),8,14,massas,pasta,0
+45,vegetariano (vegetarian),13,24,vegetariano,vegetarian,0
+46,bife (steak),6,12,bife,steak,0
+47,frango assado (roast chicken),15,29,frango assado,roast chicken,0
+48,lombo (pork loin),7,17,lombo,pork loin,0
+49,petiscos (snacks/appetizers),10,28,petiscos,snacks/appetizers,0
+50,filé mignon (tenderloin),13,24,filé mignon,tenderloin,0
+51,alcatra (rump steak),9,20,alcatra,rump steak,0
+52,peito de peru (turkey breast),15,29,peito de peru,turkey breast,0
+53,carne moída (ground beef),13,25,carne moída,ground beef,0
+54,camarão (shrimp),9,16,camarão,shrimp,0
+55,salmão (salmon),8,15,salmão,salmon,0
+56,bacalhau (codfish),10,18,bacalhau,codfish,0
+57,polvo (octopus),7,15,polvo,octopus,0
+58,lagosta (lobster),9,17,lagosta,lobster,0
+59,caranguejo (crab),12,17,caranguejo,crab,0
+60,mexilhão (mussel),10,17,mexilhão,mussel,0
+61,atum (tuna),6,11,atum,tuna,0
+62,arroz (rice),7,12,arroz,rice,0
+63,feijão (beans),8,14,feijão,beans,0
+64,batata frita (french fries),14,27,batata frita,french fries,0
+65,purê de batata (mashed potatoes),16,32,purê de batata,mashed potatoes,0
+66,legumes (vegetables),9,20,legumes,vegetables,0
+67,brócolis (broccoli),10,19,brócolis,broccoli,0
+68,espinafre (spinach),11,19,espinafre,spinach,0
+69,milho (corn),7,12,milho,corn,0
+70,alface (lettuce),8,16,alface,lettuce,0
+71,tomate (tomato),8,15,tomate,tomato,0
+72,pepino (cucumber),8,17,pepino,cucumber,0
+73,cenoura (carrot),9,16,cenoura,carrot,0
+74,cebola (onion),8,14,cebola,onion,0
+75,pimentão (bell pepper),10,22,pimentão,bell pepper,0
+76,azeitona (olive),10,16,azeitona,olive,0
+77,queijo (cheese),8,15,queijo,cheese,0
+78,ovo (egg),5,9,ovo,egg,0
+79,manteiga (butter),10,17,manteiga,butter,0
+80,mel (honey),5,11,mel,honey,0
+81,azeite (olive oil),8,18,azeite,olive oil,0
+82,vinagre (vinegar),9,17,vinagre,vinegar,0
+83,pimenta (pepper),9,16,pimenta,pepper,0
+84,imperial (small beer),10,21,imperial,small beer,0
+85,escolher (to choose),10,20,escolher,to choose,0
+86,aguardar (to wait),10,18,aguardar,to wait,0
+87,cancelar (to cancel),10,20,cancelar,to cancel,0
+88,sugerir (to suggest),9,20,sugerir,to suggest,0
+89,recomendar (to recommend),12,25,recomendar,to recommend,0
+90,trazer (to bring),8,17,trazer,to bring,0
+91,levar (to take),7,15,levar,to take,0
+92,recolher (to collect),10,21,recolher,to collect,0
+93,preparar (to prepare),10,21,preparar,to prepare,0
+94,cozinhar (to cook),10,18,cozinhar,to cook,0
+95,cortar (to cut),8,15,cortar,to cut,0
+96,dividir (to split),9,18,dividir,to split,0
+97,incluir (to include),9,20,incluir,to include,0
+98,avisar (to notify),8,18,avisar,to notify,0
+99,agradecer (to thank),11,20,agradecer,to thank,0
+100,finalizar (to finish),11,21,finalizar,to finish,0
