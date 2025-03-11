@@ -46,11 +46,11 @@ class State(TypedDict):
     messages: Annotated[list, add_messages]
     core_convo: Annotated[list, add_messages]
     corrections: Annotated[list, add_messages]
-    topic_vocab: list
+    topic_vocab: set #list
     correct_words: dict
     mastered_words: set #list
+    last_mastered_word: str
     topic: str 
-    # user: str
 
 
 def chatbot(state: State):
@@ -102,6 +102,7 @@ def scorer(state: State):
                 state["correct_words"][user_word] += 1
                 if state["correct_words"][user_word] >= 3:
                     state["mastered_words"].add(user_word)
+                    state["last_mastered_word"] = user_word
             else:
                 state["correct_words"][user_word] = 1
                 

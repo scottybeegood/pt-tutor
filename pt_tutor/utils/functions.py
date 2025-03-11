@@ -1,4 +1,5 @@
 # import llm
+import streamlit as st 
 import re
 import os
 import unicodedata
@@ -13,21 +14,50 @@ def clean_message(message):
     return cleaned
 
 
-def get_topic_vocab(topic):
+def get_filpath(topic):
     if topic == 'Dining out':
-        df = pd.read_csv('pt_tutor/vocab/dining_out.csv')
+        filepath = 'pt_tutor/vocab/dining_out.csv'
     elif topic == 'Weekend recap':
-        df = pd.read_csv('pt_tutor/vocab/weekend_recap.csv')
+        filepath = 'pt_tutor/vocab/weekend_recap.csv'
     elif topic == 'Weather':
-        df = pd.read_csv('pt_tutor/vocab/weather.csv')
-    
-    return df['portuguese'].str.strip().tolist()
+        filepath = 'pt_tutor/vocab/weather.csv'
+
+    return filepath 
+
+
+def get_topic_vocab(topic):
+    filepath = get_filpath(topic)
+    df = pd.read_csv(filepath)
+
+    return set(df['portuguese'].str.strip())
+
+
+def get_mastered_words(topic):
+    filepath = get_filpath(topic)
+    df = pd.read_csv(filepath)
+    mastered_words = set(df[df['flag_mastered'] == 1]['portuguese'])
+
+    return mastered_words
+
+
+def click_button():
+    st.session_state.clicked = True
+
+
+def reset_button():
+    st.session_state.clicked = False
+
+
+def save_mastered_words(topic, mastered_words):
+    filepath = get_filpath(topic)
+    df = pd.read_csv(filepath)
+    df.loc[df['portuguese'].isin(mastered_words), 'flag_mastered'] = 1
+
+    df.to_csv(filepath, index=False)
+    #print(f'Mastered words saved for {topic}')
 
 
 def update_topic_vocab(sheet_url, topic_name):
-    """
-    Download Google Sheet as CSV using the export URL
-    """
     export_url = sheet_url.replace('/edit#gid=', '/export?format=csv&gid=')
     
     df = pd.read_csv(export_url)

@@ -1,6 +1,7 @@
 import streamlit as st 
 import uuid
-import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 from langchain_community.callbacks.streamlit import (
     StreamlitCallbackHandler,
 )
@@ -11,7 +12,13 @@ from langchain_core.messages import (
     HumanMessage, 
     SystemMessage
 )
-from utils.functions import get_topic_vocab
+from utils.functions import (
+    get_topic_vocab,
+    get_mastered_words,
+    click_button,
+    reset_button,
+    save_mastered_words,
+)
 
 st.set_page_config(layout="wide", page_title="Fala Português!")
 
@@ -46,24 +53,61 @@ if "tutor_messages" not in st.session_state:
     st.session_state.tutor_messages = []
 if "thread_id" not in st.session_state:
     st.session_state["thread_id"] = str(uuid.uuid4())
+if "clicked" not in st.session_state:
+    st.session_state.clicked = False
+if "mastered_words" not in st.session_state:
+    st.session_state.mastered_words = set()
+if "last_mastered_word" not in st.session_state:
+    st.session_state.last_mastered_word = ""
 
 st.write("## Fala Português!")
 
 sidebar = st.sidebar
-sidebar_col = st.columns([1, 2])[0]
+# sidebar_col = st.columns([1, 2])[0]
 
 with sidebar:
-    # user = st.sidebar.text_input(
-    #     "Select your name or add a new one:",
-    #     key="user",
-    # )
-
     topic = st.sidebar.radio(
         "Select the topic you'd like to discuss:",
         key="topic",
         options=["Dining out", "Weekend recap", "Weather"],
     )
     topic_vocab = get_topic_vocab(topic)
+    if st.session_state.mastered_words == set():
+        st.session_state.mastered_words = get_mastered_words(topic)
+
+    st.sidebar.write('Remaining Unmastered Words:')
+    unmastered_word_set = topic_vocab - st.session_state.mastered_words
+    unmastered_word_dict = {word: 1 for word in unmastered_word_set}
+    unmastered_wordcloud = WordCloud(width=900, 
+                                    height=350,
+                                    background_color='white',
+                                    min_font_size=20,
+                                    max_font_size=20,
+                                    random_state=42).generate_from_frequencies(unmastered_word_dict)
+    st.sidebar.image(unmastered_wordcloud.to_image(), use_container_width=True)
+
+    st.sidebar.write(f'Last Mastered Word: {st.session_state.last_mastered_word}')
+
+    st.sidebar.write('Mastered Words:')
+    if len(st.session_state.mastered_words) > 0:
+        mastered_word_dict = {word: 1 for word in st.session_state.mastered_words}
+        mastered_wordcloud = WordCloud(width=900, 
+                                    height=350,
+                                    background_color='white',
+                                    min_font_size=20,
+                                    max_font_size=20,
+                                    random_state=42).generate_from_frequencies(mastered_word_dict)
+        st.sidebar.image(mastered_wordcloud.to_image(), use_container_width=True)
+
+    score = len(st.session_state.mastered_words) / len(topic_vocab)
+    st.sidebar.write(f'Topic Score: {score}')
+
+    st.sidebar.button("SAVE", key='launch', type="primary", on_click=click_button)
+    if st.session_state.clicked:
+        save_mastered_words(topic, st.session_state.mastered_words)
+        st.sidebar.write("Saved!")
+        reset_button()
+
 
 main_container = st.container()
 
@@ -88,7 +132,8 @@ if prompt := st.chat_input("Fala aqui..."):
                 "messages": [prompt], 
                 "core_convo": [prompt],
                 "topic_vocab": topic_vocab,
-                "mastered_words": set(), #TODO: pipe in mastered words
+                "mastered_words": st.session_state.mastered_words,
+                "last_mastered_word": "",
                 "topic": topic
             },
             config = {
@@ -97,38 +142,14 @@ if prompt := st.chat_input("Fala aqui..."):
         )
         student_correction = response["corrections"][-1].content
         st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
-        st.session_state.student_correction_messages.append(student_correction)
 
     with chat_area.chat_message("tutor", avatar="🤖"):
         tutor_response = response["core_convo"][-1].content
         st.session_state.tutor_messages.append(tutor_response)
         st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
 
-# SIDEBAR 
-        words = list(response["correct_words"].keys())
-        counts = list(response["correct_words"].values())
-
-        if len(words) > 0:
-            sorted_data = sorted(zip(counts, words), reverse=False)
-            counts, words = zip(*sorted_data)
-
-        fig = go.Figure()
-
-        fig.add_trace(go.Bar(
-            y=words, 
-            x=counts,
-            orientation='h',
-            marker=dict(color='blue')
-        ))
-
-        fig.update_layout(
-            title="Correct words",
-            xaxis_title="Count",
-            yaxis_title="Words",
-            height=400,
-            margin=dict(l=0, r=0, t=30, b=30)
-        )
-
-        st.sidebar.plotly_chart(fig, use_container_width=True)
-
-        st.sidebar.write(response["mastered_words"])
+        st.session_state.student_correction_messages.append(student_correction)
+        st.session_state.mastered_words = response["mastered_words"]
+        if response["last_mastered_word"] != st.session_state.last_mastered_word:
+            st.session_state.last_mastered_word = response["last_mastered_word"]
+            st.rerun()
