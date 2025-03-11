@@ -2,16 +2,7 @@ import streamlit as st
 import uuid
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
-from langchain_community.callbacks.streamlit import (
-    StreamlitCallbackHandler,
-)
 from utils.graph import graph 
-from langchain_core.messages import (
-    AIMessage, 
-    BaseMessage, 
-    HumanMessage, 
-    SystemMessage
-)
 from utils.functions import (
     get_topic_vocab,
     get_mastered_words,
@@ -51,6 +42,8 @@ if "student_correction_messages" not in st.session_state:
     st.session_state.student_correction_messages = []
 if "tutor_messages" not in st.session_state:
     st.session_state.tutor_messages = []
+if "topic_vocab" not in st.session_state:
+    st.session_state.topic_vocab = set()
 if "thread_id" not in st.session_state:
     st.session_state["thread_id"] = str(uuid.uuid4())
 if "clicked" not in st.session_state:
@@ -63,7 +56,6 @@ if "last_mastered_word" not in st.session_state:
 st.write("## Fala Português!")
 
 sidebar = st.sidebar
-# sidebar_col = st.columns([1, 2])[0]
 
 with sidebar:
     topic = st.sidebar.radio(
@@ -72,31 +64,36 @@ with sidebar:
         options=["Dining out", "Weekend recap", "Weather"],
     )
     topic_vocab = get_topic_vocab(topic)
-    if st.session_state.mastered_words == set():
+    print(f'get_topic_vocabs: {topic_vocab}')
+    print(f'ss topic vocab: {st.session_state.topic_vocab}')
+    if topic_vocab != st.session_state.topic_vocab:
         st.session_state.mastered_words = get_mastered_words(topic)
+    # print(f'ss mastered words post: {st.session_state.mastered_words}')
+    st.session_state.topic_vocab = topic_vocab
 
     st.sidebar.write('Remaining Unmastered Words:')
     unmastered_word_set = topic_vocab - st.session_state.mastered_words
     unmastered_word_dict = {word: 1 for word in unmastered_word_set}
-    unmastered_wordcloud = WordCloud(width=900, 
-                                    height=350,
-                                    background_color='white',
-                                    min_font_size=20,
-                                    max_font_size=20,
-                                    random_state=42).generate_from_frequencies(unmastered_word_dict)
+    unmastered_wordcloud = WordCloud(width=800, 
+                                     height=350,
+                                     background_color='white',
+                                     min_font_size=20,
+                                     max_font_size=20,
+                                     random_state=42).generate_from_frequencies(unmastered_word_dict)
     st.sidebar.image(unmastered_wordcloud.to_image(), use_container_width=True)
 
     st.sidebar.write(f'Last Mastered Word: {st.session_state.last_mastered_word}')
 
     st.sidebar.write('Mastered Words:')
+    print(f'ss mastered words: {st.session_state.mastered_words}')
     if len(st.session_state.mastered_words) > 0:
         mastered_word_dict = {word: 1 for word in st.session_state.mastered_words}
-        mastered_wordcloud = WordCloud(width=900, 
-                                    height=350,
-                                    background_color='white',
-                                    min_font_size=20,
-                                    max_font_size=20,
-                                    random_state=42).generate_from_frequencies(mastered_word_dict)
+        mastered_wordcloud = WordCloud(width=800, 
+                                       height=350,
+                                       background_color='white',
+                                       min_font_size=20,
+                                       max_font_size=20,
+                                       random_state=42).generate_from_frequencies(mastered_word_dict)
         st.sidebar.image(mastered_wordcloud.to_image(), use_container_width=True)
 
     score = len(st.session_state.mastered_words) / len(topic_vocab)
@@ -141,6 +138,7 @@ if prompt := st.chat_input("Fala aqui..."):
             }
         )
         student_correction = response["corrections"][-1].content
+        st.session_state.student_correction_messages.append(student_correction)
         st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
 
     with chat_area.chat_message("tutor", avatar="🤖"):
@@ -148,7 +146,6 @@ if prompt := st.chat_input("Fala aqui..."):
         st.session_state.tutor_messages.append(tutor_response)
         st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
 
-        st.session_state.student_correction_messages.append(student_correction)
         st.session_state.mastered_words = response["mastered_words"]
         if response["last_mastered_word"] != st.session_state.last_mastered_word:
             st.session_state.last_mastered_word = response["last_mastered_word"]
