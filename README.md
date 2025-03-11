@@ -76,8 +76,8 @@ streamlit run pt_tutor/app.py
 - [ ] Scorecard
   - [X] Update scorer to check against category vocab 
   - [X] 3 successful uses = mastery
-  - [ ] Add progress bar (mastered words / total vocab)
-  - [ ] Add ability to see unmastered vocab
+  - [X] Add progress bar (mastered words / total vocab)
+  - [X] Add ability to see unmastered vocab
   - [ ] Add progress saver
 - [X] Update prompt to focus on mastered vocab to reinforce learning
 - [X] Parameterize topic 
