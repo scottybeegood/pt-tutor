@@ -5,10 +5,10 @@ from wordcloud import WordCloud
 from utils.graph import graph 
 from utils.functions import (
     get_topic_vocab,
-    get_mastered_words,
+    get_correct_words,
     click_button,
     reset_button,
-    save_mastered_words,
+    save_correct_words,
 )
 
 st.set_page_config(layout="wide", page_title="Fala Português!")
@@ -31,11 +31,16 @@ st.markdown("""
         font-size: 16px !important;
         text-align: right !important;
     }
+    .box-style {
+        border: 2px solid green !important;
+        padding: 10px !important;
+        border-radius: 5px !important;
+        text-align: center !important;
+        margin-bottom: 15px !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
 if "student_messages" not in st.session_state:
     st.session_state.student_messages = []
 if "student_correction_messages" not in st.session_state:
@@ -43,15 +48,13 @@ if "student_correction_messages" not in st.session_state:
 if "tutor_messages" not in st.session_state:
     st.session_state.tutor_messages = []
 if "topic_vocab" not in st.session_state:
-    st.session_state.topic_vocab = set()
-if "thread_id" not in st.session_state:
-    st.session_state["thread_id"] = str(uuid.uuid4())
+    st.session_state.topic_vocab = set() # needed to recognize topic changes 
+if "correct_words" not in st.session_state:
+    st.session_state.correct_words = {}
+if "last_correct_word" not in st.session_state:
+    st.session_state.last_correct_word = ""
 if "clicked" not in st.session_state:
     st.session_state.clicked = False
-if "mastered_words" not in st.session_state:
-    st.session_state.mastered_words = set()
-if "last_mastered_word" not in st.session_state:
-    st.session_state.last_mastered_word = ""
 
 st.write("## Fala Português!")
 
@@ -59,52 +62,46 @@ sidebar = st.sidebar
 
 with sidebar:
     topic = st.sidebar.radio(
-        "Select the topic you'd like to discuss:",
+        "Escolhe o tema que queres discutir:",
         key="topic",
-        options=["Dining out", "Weekend recap", "Weather"],
+        options=["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅"],
     )
     topic_vocab = get_topic_vocab(topic)
-    print(f'get_topic_vocabs: {topic_vocab}')
-    print(f'ss topic vocab: {st.session_state.topic_vocab}')
     if topic_vocab != st.session_state.topic_vocab:
-        st.session_state.mastered_words = get_mastered_words(topic)
-    # print(f'ss mastered words post: {st.session_state.mastered_words}')
+        st.session_state.correct_words = get_correct_words(topic)
+
     st.session_state.topic_vocab = topic_vocab
 
-    st.sidebar.write('Remaining Unmastered Words:')
-    unmastered_word_set = topic_vocab - st.session_state.mastered_words
-    unmastered_word_dict = {word: 1 for word in unmastered_word_set}
-    unmastered_wordcloud = WordCloud(width=800, 
-                                     height=350,
-                                     background_color='white',
-                                     min_font_size=20,
-                                     max_font_size=20,
-                                     random_state=42).generate_from_frequencies(unmastered_word_dict)
-    st.sidebar.image(unmastered_wordcloud.to_image(), use_container_width=True)
+    remaining_words = topic_vocab - set(st.session_state.correct_words)
+    remaining_word_dict = {word: 1 for word in remaining_words}
+    remaining_word_wordcloud = WordCloud(
+        width=800, 
+        height=400,
+        background_color='white',
+        min_font_size=20,
+        max_font_size=20,
+        random_state=42).generate_from_frequencies(remaining_word_dict)
+    st.sidebar.image(remaining_word_wordcloud.to_image(), use_container_width=True)
 
-    st.sidebar.write(f'Last Mastered Word: {st.session_state.last_mastered_word}')
+    col1, col2 = st.sidebar.columns(2)
+    col1.markdown(f"<div class='box-style'>Última palavra: <strong style='font-size:1.4em'>{st.session_state.last_correct_word}</strong></div>", unsafe_allow_html=True)
+    col2.markdown(f"<div class='box-style'>Palavras totais: <strong style='font-size:1.4em'>{len(st.session_state.correct_words)}</strong></div>", unsafe_allow_html=True)
+ 
+    if len(st.session_state.correct_words) > 0:
+        correct_word_wordcloud = WordCloud(
+            width=800, 
+            height=400,
+            background_color='white',
+            min_font_size=5,
+            max_font_size=100,
+            random_state=42).generate_from_frequencies(st.session_state.correct_words)
+        st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
-    st.sidebar.write('Mastered Words:')
-    print(f'ss mastered words: {st.session_state.mastered_words}')
-    if len(st.session_state.mastered_words) > 0:
-        mastered_word_dict = {word: 1 for word in st.session_state.mastered_words}
-        mastered_wordcloud = WordCloud(width=800, 
-                                       height=350,
-                                       background_color='white',
-                                       min_font_size=20,
-                                       max_font_size=20,
-                                       random_state=42).generate_from_frequencies(mastered_word_dict)
-        st.sidebar.image(mastered_wordcloud.to_image(), use_container_width=True)
-
-    score = len(st.session_state.mastered_words) / len(topic_vocab)
-    st.sidebar.write(f'Topic Score: {score}')
-
-    st.sidebar.button("SAVE", key='launch', type="primary", on_click=click_button)
+    st.sidebar.button("GUARDAR", key='launch', type="primary", on_click=click_button)
     if st.session_state.clicked:
-        save_mastered_words(topic, st.session_state.mastered_words)
-        st.sidebar.write("Saved!")
+        save_correct_words(topic, st.session_state.correct_words)
+        st.sidebar.write("Guardado!")
         reset_button()
-
 
 main_container = st.container()
 
@@ -129,8 +126,8 @@ if prompt := st.chat_input("Fala aqui..."):
                 "messages": [prompt], 
                 "core_convo": [prompt],
                 "topic_vocab": topic_vocab,
-                "mastered_words": st.session_state.mastered_words,
-                "last_mastered_word": "",
+                "correct_words": st.session_state.correct_words,
+                "last_correct_word": st.session_state.last_correct_word,
                 "topic": topic
             },
             config = {
@@ -146,7 +143,7 @@ if prompt := st.chat_input("Fala aqui..."):
         st.session_state.tutor_messages.append(tutor_response)
         st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
 
-        st.session_state.mastered_words = response["mastered_words"]
-        if response["last_mastered_word"] != st.session_state.last_mastered_word:
-            st.session_state.last_mastered_word = response["last_mastered_word"]
+        st.session_state.correct_words = response["correct_words"]
+        if response["last_correct_word"] != st.session_state.last_correct_word:
+            st.session_state.last_correct_word = response["last_correct_word"]
             st.rerun()
