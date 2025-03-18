@@ -1,4 +1,3 @@
-# import llm
 import streamlit as st 
 import re
 import os
@@ -15,11 +14,11 @@ def clean_message(message):
 
 
 def get_filpath(topic):
-    if topic == 'Dining out':
+    if topic == 'Comer fora 🍽️':
         filepath = 'pt_tutor/vocab/dining_out.csv'
-    elif topic == 'Weekend recap':
+    elif topic == 'Resumo do fim de semana 🍺':
         filepath = 'pt_tutor/vocab/weekend_recap.csv'
-    elif topic == 'Weather':
+    elif topic == 'Tempo ⛅':
         filepath = 'pt_tutor/vocab/weather.csv'
 
     return filepath 
@@ -33,12 +32,12 @@ def get_topic_vocab(topic):
     return topic_vocab
 
 
-def get_mastered_words(topic):
+def get_correct_words(topic):
     filepath = get_filpath(topic)
     df = pd.read_csv(filepath)
-    mastered_words = set(df[df['flag_mastered'] == 1]['portuguese'])
+    correct_words = {word: 1 for word in df[df['flag_correct'] == 1]['portuguese']}
 
-    return mastered_words
+    return correct_words
 
 
 def click_button():
@@ -49,13 +48,12 @@ def reset_button():
     st.session_state.clicked = False
 
 
-def save_mastered_words(topic, mastered_words):
+def save_correct_words(topic, correct_words):
     filepath = get_filpath(topic)
     df = pd.read_csv(filepath)
-    df.loc[df['portuguese'].isin(mastered_words), 'flag_mastered'] = 1
+    df.loc[df['portuguese'].isin(correct_words), 'flag_correct'] = 1
 
     df.to_csv(filepath, index=False)
-    #print(f'Mastered words saved for {topic}')
 
 
 def update_topic_vocab(sheet_url, topic_name):
@@ -66,26 +64,3 @@ def update_topic_vocab(sheet_url, topic_name):
 
     df.to_csv(output_file, index=False)
     print(f'Data saved to {output_file}')
-
-
-# def update_conversation(n_submit, user_input, conversation_store):
-#     if n_submit > 0 and user_input:
-#         conversation_store.append({'role': 'user', 'text': user_input})
-        
-#         conversation_history = "\n".join([f"{entry['role'].capitalize()}: {entry['text']}" for entry in conversation_store])
-        
-#         response = llm.invoke(conversation_history)
-#         conversation_store.append({'role': 'llm', 'text': response})
-        
-#         return format_conversation(conversation_store), '', conversation_store  
-#     return format_conversation(conversation_store), '', conversation_store  
-
-# # make this a seperate file eventually
-# def format_conversation(conversation_store):
-#     formatted_conversation = []
-#     for entry in conversation_store:
-#         if entry['role'] == 'user':
-#             formatted_conversation.append(html.Div(f"{entry['text']}", className='user-text'))
-#         else:
-#             formatted_conversation.append(html.Div(f"{entry['text']}", className='llm-text'))
-#     return formatted_conversation

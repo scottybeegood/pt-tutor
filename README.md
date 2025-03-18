@@ -73,14 +73,16 @@ streamlit run pt_tutor/app.py
   - [X] Dining out 
   - [X] Weekend recap 
   - [X] Weather
-- [ ] Scorecard
+- [X] Scorecard
   - [X] Update scorer to check against category vocab 
   - [X] 3 successful uses = mastery
   - [X] Add progress bar (mastered words / total vocab)
   - [X] Add ability to see unmastered vocab
-  - [ ] Add progress saver
+  - [X] Add progress saver
 - [X] Update prompt to focus on mastered vocab to reinforce learning
 - [X] Parameterize topic 
+- [ ] Accommodate multiple word vocab
+- [ ] Save last correct word
 
 ### Planned for Release 2 (April 2025)
 - [ ] Add voice option
