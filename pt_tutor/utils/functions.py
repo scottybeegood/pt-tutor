@@ -32,12 +32,19 @@ def get_topic_vocab(topic):
     return topic_vocab
 
 
-def get_correct_words(topic):
+def load_progress(topic):
     filepath = get_filpath(topic)
     df = pd.read_csv(filepath)
-    correct_words = {word: 1 for word in df[df['flag_correct'] == 1]['portuguese']}
 
-    return correct_words
+    correct_count = df.set_index('portuguese')['correct_count'].to_dict()
+    correct_count = {k: v for k, v in correct_count.items() if v > 0}
+
+    try:
+        last_correct_word = df.loc[df['flag_last_correct_word'] == 1, 'portuguese'].iloc[0]
+    except IndexError:
+        last_correct_word = ''
+    
+    return (correct_count, last_correct_word)
 
 
 def click_button():
@@ -48,10 +55,13 @@ def reset_button():
     st.session_state.clicked = False
 
 
-def save_correct_words(topic, correct_words):
+def save_progress(topic, correct_count, last_correct_word):
     filepath = get_filpath(topic)
     df = pd.read_csv(filepath)
-    df.loc[df['portuguese'].isin(correct_words), 'flag_correct'] = 1
+    df['correct_count'] = df['portuguese'].map(correct_count)
+
+    df['flag_last_correct_word'] = 0 # reset before saving
+    df.loc[df['portuguese']==last_correct_word, 'flag_last_correct_word'] = 1
 
     df.to_csv(filepath, index=False)
 

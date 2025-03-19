@@ -43,7 +43,7 @@ class State(TypedDict):
     core_convo: Annotated[list, add_messages]
     corrections: Annotated[list, add_messages]
     topic_vocab: set
-    correct_words: dict
+    correct_count: dict
     last_correct_word: str
     topic: str 
 
@@ -51,7 +51,7 @@ class State(TypedDict):
 def chatbot(state: State):
     topic = state["topic"]
     topic_vocab = state["topic_vocab"]
-    correct_words = state["correct_words"]
+    correct_words = set(state["correct_count"])
 
     system_message = chatbot_instructions.format(topic=topic, 
                                                  topic_vocab=topic_vocab,
@@ -91,15 +91,15 @@ def scorer(state: State):
     )
     corrector_message = clean_message(corrector_message)
 
-    state.setdefault("correct_words", {})
+    state.setdefault("correct_count", {})
 
     for user_word in corrector_message.split():
         if user_word in user_message.split() and user_word in state["topic_vocab"]:
-            if user_word in state["correct_words"]:
-                state["correct_words"][user_word] += 1
+            if user_word in state["correct_count"]:
+                state["correct_count"][user_word] += 1
                 state["last_correct_word"] = user_word
             else:
-                state["correct_words"][user_word] = 1
+                state["correct_count"][user_word] = 1
                 state["last_correct_word"] = user_word
  
     return state

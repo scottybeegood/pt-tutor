@@ -5,10 +5,10 @@ from wordcloud import WordCloud
 from utils.graph import graph 
 from utils.functions import (
     get_topic_vocab,
-    get_correct_words,
+    load_progress,
     click_button,
     reset_button,
-    save_correct_words,
+    save_progress,
 )
 
 st.set_page_config(layout="wide", page_title="Fala Português!")
@@ -49,8 +49,8 @@ if "tutor_messages" not in st.session_state:
     st.session_state.tutor_messages = []
 if "topic_vocab" not in st.session_state:
     st.session_state.topic_vocab = set() # needed to recognize topic changes 
-if "correct_words" not in st.session_state:
-    st.session_state.correct_words = {}
+if "correct_count" not in st.session_state:
+    st.session_state.correct_count = {}
 if "last_correct_word" not in st.session_state:
     st.session_state.last_correct_word = ""
 if "clicked" not in st.session_state:
@@ -68,15 +68,16 @@ with sidebar:
     )
     topic_vocab = get_topic_vocab(topic)
     if topic_vocab != st.session_state.topic_vocab:
-        st.session_state.correct_words = get_correct_words(topic)
+        st.session_state.correct_count = load_progress(topic)[0]
+        st.session_state.last_correct_word = load_progress(topic)[1]
 
     st.session_state.topic_vocab = topic_vocab
 
-    remaining_words = topic_vocab - set(st.session_state.correct_words)
+    remaining_words = topic_vocab - set(st.session_state.correct_count)
     remaining_word_dict = {word: 1 for word in remaining_words}
     remaining_word_wordcloud = WordCloud(
         width=800, 
-        height=400,
+        height=425,
         background_color='white',
         min_font_size=20,
         max_font_size=20,
@@ -85,21 +86,21 @@ with sidebar:
 
     col1, col2 = st.sidebar.columns(2)
     col1.markdown(f"<div class='box-style'>Última palavra: <strong style='font-size:1.4em'>{st.session_state.last_correct_word}</strong></div>", unsafe_allow_html=True)
-    col2.markdown(f"<div class='box-style'>Palavras totais: <strong style='font-size:1.4em'>{len(st.session_state.correct_words)}</strong></div>", unsafe_allow_html=True)
+    col2.markdown(f"<div class='box-style'>Palavras totais: <strong style='font-size:1.4em'>{len(st.session_state.correct_count)}</strong></div>", unsafe_allow_html=True)
  
-    if len(st.session_state.correct_words) > 0:
+    if len(st.session_state.correct_count) > 0:
         correct_word_wordcloud = WordCloud(
             width=800, 
-            height=400,
+            height=425,
             background_color='white',
             min_font_size=5,
             max_font_size=100,
-            random_state=42).generate_from_frequencies(st.session_state.correct_words)
+            random_state=42).generate_from_frequencies(st.session_state.correct_count)
         st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
     st.sidebar.button("GUARDAR", key='launch', type="primary", on_click=click_button)
     if st.session_state.clicked:
-        save_correct_words(topic, st.session_state.correct_words)
+        save_progress(topic, st.session_state.correct_count, st.session_state.last_correct_word)
         st.sidebar.write("Guardado!")
         reset_button()
 
@@ -107,7 +108,7 @@ main_container = st.container()
 
 with main_container:
     messages_container = st.container()
-    chat_area = messages_container.container(height=400)
+    chat_area = messages_container.container(height=475)
 
     for i in range(len(st.session_state.student_messages)):
         with chat_area.chat_message("student", avatar="😊"):
@@ -126,7 +127,7 @@ if prompt := st.chat_input("Fala aqui..."):
                 "messages": [prompt], 
                 "core_convo": [prompt],
                 "topic_vocab": topic_vocab,
-                "correct_words": st.session_state.correct_words,
+                "correct_count": st.session_state.correct_count,
                 "last_correct_word": st.session_state.last_correct_word,
                 "topic": topic
             },
@@ -143,7 +144,7 @@ if prompt := st.chat_input("Fala aqui..."):
         st.session_state.tutor_messages.append(tutor_response)
         st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
 
-        st.session_state.correct_words = response["correct_words"]
+        st.session_state.correct_count = response["correct_count"]
         if response["last_correct_word"] != st.session_state.last_correct_word:
             st.session_state.last_correct_word = response["last_correct_word"]
             st.rerun()
