@@ -1,4 +1,3 @@
-# import llm
 import streamlit as st 
 import re
 import os
@@ -15,11 +14,11 @@ def clean_message(message):
 
 
 def get_filpath(topic):
-    if topic == 'Dining out':
+    if topic == 'Comer fora 🍽️':
         filepath = 'pt_tutor/vocab/dining_out.csv'
-    elif topic == 'Weekend recap':
+    elif topic == 'Resumo do fim de semana 🍺':
         filepath = 'pt_tutor/vocab/weekend_recap.csv'
-    elif topic == 'Weather':
+    elif topic == 'Tempo ⛅':
         filepath = 'pt_tutor/vocab/weather.csv'
 
     return filepath 
@@ -28,16 +27,24 @@ def get_filpath(topic):
 def get_topic_vocab(topic):
     filepath = get_filpath(topic)
     df = pd.read_csv(filepath)
+    topic_vocab = set(df['portuguese'].str.strip())
 
-    return set(df['portuguese'].str.strip())
+    return topic_vocab
 
 
-def get_mastered_words(topic):
+def load_progress(topic):
     filepath = get_filpath(topic)
     df = pd.read_csv(filepath)
-    mastered_words = set(df[df['flag_mastered'] == 1]['portuguese'])
 
-    return mastered_words
+    correct_count = df.set_index('portuguese')['correct_count'].to_dict()
+    correct_count = {k: v for k, v in correct_count.items() if v > 0}
+
+    try:
+        last_correct_word = df.loc[df['flag_last_correct_word'] == 1, 'portuguese'].iloc[0]
+    except IndexError:
+        last_correct_word = ''
+    
+    return (correct_count, last_correct_word)
 
 
 def click_button():
@@ -48,13 +55,15 @@ def reset_button():
     st.session_state.clicked = False
 
 
-def save_mastered_words(topic, mastered_words):
+def save_progress(topic, correct_count, last_correct_word):
     filepath = get_filpath(topic)
     df = pd.read_csv(filepath)
-    df.loc[df['portuguese'].isin(mastered_words), 'flag_mastered'] = 1
+    df['correct_count'] = df['portuguese'].map(correct_count)
+
+    df['flag_last_correct_word'] = 0 # reset before saving
+    df.loc[df['portuguese']==last_correct_word, 'flag_last_correct_word'] = 1
 
     df.to_csv(filepath, index=False)
-    #print(f'Mastered words saved for {topic}')
 
 
 def update_topic_vocab(sheet_url, topic_name):
@@ -65,26 +74,3 @@ def update_topic_vocab(sheet_url, topic_name):
 
     df.to_csv(output_file, index=False)
     print(f'Data saved to {output_file}')
-
-
-# def update_conversation(n_submit, user_input, conversation_store):
-#     if n_submit > 0 and user_input:
-#         conversation_store.append({'role': 'user', 'text': user_input})
-        
-#         conversation_history = "\n".join([f"{entry['role'].capitalize()}: {entry['text']}" for entry in conversation_store])
-        
-#         response = llm.invoke(conversation_history)
-#         conversation_store.append({'role': 'llm', 'text': response})
-        
-#         return format_conversation(conversation_store), '', conversation_store  
-#     return format_conversation(conversation_store), '', conversation_store  
-
-# # make this a seperate file eventually
-# def format_conversation(conversation_store):
-#     formatted_conversation = []
-#     for entry in conversation_store:
-#         if entry['role'] == 'user':
-#             formatted_conversation.append(html.Div(f"{entry['text']}", className='user-text'))
-#         else:
-#             formatted_conversation.append(html.Div(f"{entry['text']}", className='llm-text'))
-#     return formatted_conversation
