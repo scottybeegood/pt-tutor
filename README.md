@@ -81,12 +81,13 @@ streamlit run pt_tutor/app.py
   - [X] Add progress saver
 - [X] Update prompt to focus on mastered vocab to reinforce learning
 - [X] Parameterize topic 
-- [ ] Accommodate multiple word vocab
-- [ ] Save last correct word
+- [X] Single word vocab only
+- [X] Save last correct word
 
 ### Planned for Release 2 (April 2025)
 - [ ] Add voice option
 - [ ] Add toggle so user can choose text or voice interaction
+- [ ] Accommodate multiple word vocab
 - [ ] Add 2 more categories (5 total)
 - [ ] Include non-present verb vocab 
 
