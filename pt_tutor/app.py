@@ -11,7 +11,7 @@ from utils.functions import (
     save_progress,
 )
 
-st.set_page_config(layout="wide", page_title="Fala Português!")
+st.set_page_config(layout="wide", page_title="Fala Português!!!")
 
 st.markdown("""
     <style>  
