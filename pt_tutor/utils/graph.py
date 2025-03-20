@@ -1,4 +1,5 @@
 import os
+import streamlit as st
 
 from dotenv import load_dotenv
 from typing import Annotated
@@ -28,8 +29,8 @@ from utils.functions import (
 
 
 load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
-openai_org_id = os.getenv("OPENAI_ORG_ID")
+openai_api_key = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY")
+openai_org_id = os.getenv("OPENAI_ORG_ID") or st.secrets.get("OPENAI_ORG_ID")
 
 llm = ChatOpenAI(
     api_key=openai_api_key,
