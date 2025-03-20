@@ -11,7 +11,7 @@ from utils.functions import (
     save_progress,
 )
 
-st.set_page_config(layout="wide", page_title="Fala Português!!!")
+st.set_page_config(layout="wide")
 
 st.markdown("""
     <style>  
@@ -55,8 +55,6 @@ if "last_correct_word" not in st.session_state:
     st.session_state.last_correct_word = ""
 if "clicked" not in st.session_state:
     st.session_state.clicked = False
-
-st.write("## Fala Português!!!")
 
 sidebar = st.sidebar
 
@@ -105,6 +103,8 @@ with sidebar:
         save_progress(topic, st.session_state.correct_count, st.session_state.last_correct_word)
         st.sidebar.write("Guardado!")
         reset_button()
+
+st.write("## Fala Português!")
 
 main_container = st.container()
 
