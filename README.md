@@ -83,6 +83,9 @@ streamlit run pt_tutor/app.py
 - [X] Parameterize topic 
 - [X] Single word vocab only
 - [X] Save last correct word
+- [X] Host on website
+- [ ] Parameterize user 
+- [ ] Save progress via Google Sheets
 
 ### Planned for Release 2 (April 2025)
 - [ ] Add voice option
@@ -93,5 +96,3 @@ streamlit run pt_tutor/app.py
 
 ### Planned for Release 3 (May 2025)
 - [ ] Add "Beginner Mode" where you speak English and response is in Portuguese 
-- [ ] Parameterize user 
-- [ ] Host on website
