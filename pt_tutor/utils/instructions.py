@@ -8,6 +8,7 @@ Specific instructions:
 4) Reinforce learning by focusing the conversation around the user's learned words: {correct_words} 
 5) Use the familiar, informal mode
 6) Keep responses short to just 1 sentence.
+7) Ensure you end with a question to keep the conversation going.
 """
 
 corrector_instructions = """

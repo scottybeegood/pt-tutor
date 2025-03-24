@@ -11,7 +11,7 @@ from utils.functions import (
     save_progress,
 )
 
-st.set_page_config(layout="wide", page_title="Fala Português!")
+st.set_page_config(layout="wide")
 
 st.markdown("""
     <style>  
@@ -56,13 +56,11 @@ if "last_correct_word" not in st.session_state:
 if "clicked" not in st.session_state:
     st.session_state.clicked = False
 
-st.write("## Fala Português!")
-
 sidebar = st.sidebar
 
 with sidebar:
     topic = st.sidebar.radio(
-        "Escolhe o tema que queres discutir:",
+        "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
         key="topic",
         options=["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅"],
     )
@@ -84,9 +82,11 @@ with sidebar:
         random_state=42).generate_from_frequencies(remaining_word_dict)
     st.sidebar.image(remaining_word_wordcloud.to_image(), use_container_width=True)
 
+    st.sidebar.write("**Palavras corretas**")
+
     col1, col2 = st.sidebar.columns(2)
-    col1.markdown(f"<div class='box-style'>Última palavra: <strong style='font-size:1.4em'>{st.session_state.last_correct_word}</strong></div>", unsafe_allow_html=True)
-    col2.markdown(f"<div class='box-style'>Palavras totais: <strong style='font-size:1.4em'>{len(st.session_state.correct_count)}</strong></div>", unsafe_allow_html=True)
+    col1.markdown(f"<div class='box-style'>Última: <strong style='font-size:1.4em'>{st.session_state.last_correct_word}</strong></div>", unsafe_allow_html=True)
+    col2.markdown(f"<div class='box-style'>Totais: <strong style='font-size:1.4em'>{len(st.session_state.correct_count)}</strong></div>", unsafe_allow_html=True)
  
     if len(st.session_state.correct_count) > 0:
         correct_word_wordcloud = WordCloud(
@@ -98,11 +98,13 @@ with sidebar:
             random_state=42).generate_from_frequencies(st.session_state.correct_count)
         st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
-    st.sidebar.button("GUARDAR", key='launch', type="primary", on_click=click_button)
-    if st.session_state.clicked:
-        save_progress(topic, st.session_state.correct_count, st.session_state.last_correct_word)
-        st.sidebar.write("Guardado!")
-        reset_button()
+    # st.sidebar.button("GUARDAR", key='launch', type="primary", on_click=click_button)
+    # if st.session_state.clicked:
+    #     save_progress(topic, st.session_state.correct_count, st.session_state.last_correct_word)
+    #     st.sidebar.write("Guardado!")
+    #     reset_button()
+
+st.write("## Fala Português!")
 
 main_container = st.container()
 
