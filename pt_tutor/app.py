@@ -98,11 +98,11 @@ with sidebar:
             random_state=42).generate_from_frequencies(st.session_state.correct_count)
         st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
-    # st.sidebar.button("GUARDAR", key='launch', type="primary", on_click=click_button)
-    # if st.session_state.clicked:
-    #     save_progress(topic, st.session_state.correct_count, st.session_state.last_correct_word)
-    #     st.sidebar.write("Guardado!")
-    #     reset_button()
+    st.sidebar.button("GUARDAR", key='launch', type="primary", on_click=click_button)
+    if st.session_state.clicked:
+        save_progress(topic, st.session_state.correct_count, st.session_state.last_correct_word)
+        st.sidebar.write("Guardado!")
+        reset_button()
 
 st.write("## Fala Português!")
 
