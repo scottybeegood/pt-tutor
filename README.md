@@ -85,14 +85,13 @@ streamlit run pt_tutor/app.py
 - [X] Save last correct word
 - [X] Host on website
 - [ ] Parameterize user 
-- [ ] Save progress via Google Sheets
+- [ ] Save progress 
 
 ### Planned for Release 2 (April 2025)
 - [ ] Add voice option
 - [ ] Add toggle so user can choose text or voice interaction
-- [ ] Accommodate multiple word vocab
-- [ ] Add 2 more categories (5 total)
-- [ ] Include non-present verb vocab 
 
 ### Planned for Release 3 (May 2025)
+- [ ] Accommodate multiple word vocab
+- [ ] Include vocab variants (o/os/a/as, conjugations)
 - [ ] Add "Beginner Mode" where you speak English and response is in Portuguese 
