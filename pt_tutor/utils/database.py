@@ -1,15 +1,20 @@
 import sqlite3
+import streamlit as st
+from pathlib import Path
 import pandas as pd
 
 
 class VocabDB:
     def __init__(self):
-        self.db_path = 'pt_tutor/data/.streamlit/portuguese_app.db'
         self.topic_filepath = {
             'Comer fora 🍽️': 'pt_tutor/data/seed_vocab/dining_out.csv', 
             'Resumo do fim de semana 🍺': 'pt_tutor/data/seed_vocab/weekend_recap.csv',
             'Tempo ⛅': 'pt_tutor/data/seed_vocab/weather.csv',
         }
+        if hasattr(st, 'runtime'):
+            self.db_path = str(Path(st.runtime.secrets._file_storage.path) / "portuguese_app.db")
+        else:
+            self.db_path = 'pt_tutor/data/.streamlit/portuguese_app.db'
         self.init_database()
 
     def init_database(self):
