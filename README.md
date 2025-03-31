@@ -84,7 +84,7 @@ streamlit run pt_tutor/app.py
 - [X] Single word vocab only
 - [X] Save last correct word
 - [X] Host on website
-- [ ] Parameterize user 
+- [X] Parameterize user
 - [ ] Save progress 
 
 ### Planned for Release 2 (April 2025)
