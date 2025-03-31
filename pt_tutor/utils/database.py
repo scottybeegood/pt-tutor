@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-import streamlit as st
+
 
 class VocabDB:
     def __init__(self):
