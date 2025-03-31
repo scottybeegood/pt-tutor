@@ -2,6 +2,7 @@ import sqlite3
 import streamlit as st
 from pathlib import Path
 import pandas as pd
+import os
 
 
 class VocabDB:
@@ -11,8 +12,8 @@ class VocabDB:
             'Resumo do fim de semana 🍺': 'pt_tutor/data/seed_vocab/weekend_recap.csv',
             'Tempo ⛅': 'pt_tutor/data/seed_vocab/weather.csv',
         }
-        if hasattr(st, 'runtime'):
-            self.db_path = str(Path(st.runtime.secrets._file_storage.path) / "portuguese_app.db")
+        if os.getenv('STREAMLIT_RUNTIME_ENVIRONMENT') == 'cloud':
+            self.db_path = '.streamlit/portuguese_app.db'
         else:
             self.db_path = 'pt_tutor/data/.streamlit/portuguese_app.db'
         self.init_database()
