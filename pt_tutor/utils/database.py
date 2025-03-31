@@ -1,6 +1,5 @@
 import sqlite3
 import streamlit as st
-from pathlib import Path
 import pandas as pd
 import os
 
@@ -12,10 +11,11 @@ class VocabDB:
             'Resumo do fim de semana 🍺': 'pt_tutor/data/seed_vocab/weekend_recap.csv',
             'Tempo ⛅': 'pt_tutor/data/seed_vocab/weather.csv',
         }
-        if os.getenv('STREAMLIT_RUNTIME_ENVIRONMENT') == 'cloud':
+        if st._is_running_with_streamlit:
             self.db_path = '.streamlit/portuguese_app.db'
         else:
             self.db_path = 'pt_tutor/data/.streamlit/portuguese_app.db'
+        os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
         self.init_database()
 
     def init_database(self):
