@@ -1,8 +1,6 @@
-import sqlite3
 import streamlit as st
 from st_supabase_connection import SupabaseConnection
 import pandas as pd
-import os
 from dotenv import load_dotenv
 
 
