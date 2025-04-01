@@ -18,6 +18,8 @@ langgraph = "^0.3.21"
 typing-extensions = "^4.13.0"
 langchain-openai = "^0.3.11"
 langchain-core = "^0.3.49"
+sounddevice = "^0.5.1"
+soundfile = "^0.13.1"
 
 [build-system]
 requires = ["poetry-core"]

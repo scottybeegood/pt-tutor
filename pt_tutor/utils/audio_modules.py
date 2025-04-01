@@ -1,6 +1,6 @@
 import sounddevice as sd
 import soundfile as sf
-from OpenAI import OpenAI
+from openai import OpenAI
 
 
 client = OpenAI()
