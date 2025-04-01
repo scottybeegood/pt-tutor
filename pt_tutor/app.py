@@ -42,6 +42,8 @@ st.markdown("""
 
 if "username" not in st.session_state:
     st.session_state.username = ""
+if "temp_username" not in st.session_state:
+    st.session_state.temp_username = ""
 if 'username_submitted' not in st.session_state:
     st.session_state.username_submitted = False
 if "student_messages" not in st.session_state:
