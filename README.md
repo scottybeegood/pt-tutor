@@ -85,7 +85,8 @@ streamlit run pt_tutor/app.py
 - [X] Save last correct word
 - [X] Host on website
 - [X] Parameterize user
-- [ ] Save progress 
+- [X] Save progress 
+- [ ] Clean up repo for sharing
 
 ### Planned for Release 2 (April 2025)
 - [ ] Add voice option
