@@ -1,10 +1,11 @@
 # pt-tutor
-Welcome to `pt-tutor`, the repo powering the Fala Português app! 
+Welcome to `pt-tutor`, the repository powering the Fala Português app! 
 
 # About Fala Português! 
 Fala Português is a Portuguese tutoring platform designed with the following principles:
 1. Real-time feedback is super valuable _during_ foreign language conversations
-2. New vocabulary should be introduced gradually, with emphasis dedicated to previously used vocabulary so that learning is re-enforced
+2. New vocabulary should be introduced gradually, with emphasis dedicated to previously 
+used vocabulary so that learning is re-enforced
 3. Language learning is most effective when it's categorized to real life circumstances
 4. Eeryone loves a good little progress bar 
 
@@ -19,7 +20,7 @@ If you DO NOT have Poetry installed yet, run in Terminal:
 ```bash
 pip install poetry 
 
-# ensure Poetry is available by checking version
+# to ensure Poetry is available by checking version
 poetry --version  
 ```
 
@@ -35,9 +36,19 @@ poetry install
 ### 2. OpenAI 
 This repo uses OpenAI large language models. 
 
-First create a `.env` file to house the revelant fields below. 
+Follow these steps to obtain necessary credentials:
+1. Create an account with OpenAI if you don't already have one 
+2. Once logged in, go to your profile and select `View API Keys` 
+3. Create your OPEN_API_KEY by clicking `Create new secret key`
+Copy and save on your computer this API key. Note it starts with `sk-...`
+4. To get your OPENAI_ORG_ID, click back on your profile icon, select 
+`Manage Account`, go to `Settings`, and locate and save the `Organization ID`
+within Organization settings. Note it starts with `org-`
 
-Then add to this file your OpenAI credentials:
+
+Next, create a `.env` file in the root directory of this report to house the revelant fields below. 
+
+Finally, add in to `.env` the obtained credentials:
 ```bash
 OPENAI_API_KEY=<your OpenAI API key>
 OPENAI_ORG_ID=<your OpenAI Org ID>
