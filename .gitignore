@@ -6,3 +6,5 @@ __pycache__/
 .Python
 pt_tutor/data/.streamlit/secrets.toml
 *.db
+.DS_Store
+**/.DS_Store
