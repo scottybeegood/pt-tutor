@@ -41,9 +41,9 @@ Follow these steps to obtain necessary credentials:
 2. Once logged in, go to your profile and select "View API Keys" 
 3. Create your `OPEN_API_KEY` by clicking "Create new secret key".
 Copy and save on your computer this API key. Note it starts with `sk-...`
-4. To get your `OPENAI_ORG_ID`, click back on your profile icon, select 
-"Manage Account", go to "Settings", and locate and save the `Organization ID`
-within Organization settings. Note it starts with `org-`
+4. To get your `OPENAI_ORG_ID`, click back on your profile icon, select "Manage Account",
+go to "Settings", and locate and save the `Organization ID` within Organization settings. 
+Note it starts with `org-`
 
 
 Next, create a `.env` file in the root directory of this report to house the revelant fields below. 
