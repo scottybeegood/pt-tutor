@@ -9,9 +9,9 @@ used vocabulary so that learning is re-enforced
 3. Language learning is most effective when it's categorized to real life circumstances
 4. Eeryone loves a good little progress bar 
 
-# Configuring
+# Configuring the app
 
-## Initially setting up 
+## First setting up 
 
 ### 1. Poetry 
 This repo uses Poetry for package management. 
