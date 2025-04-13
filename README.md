@@ -83,4 +83,11 @@ streamlit run pt_tutor/app.py
 - [ ] Improve vocab recognition
   - [ ] Accommodate multiple word vocab
   - [ ] Include vocab variants (o/os/a/as, verb conjugations)
+- [ ] Add "Translate last response" button
+
+## Planned for Release 4 (June 2025)
+- [ ] Add ability to submit custom topic with auto-generated words
+- [ ] Add "Enhanced Corrector" feedback showing ideal phrasing 
+
+## Planned for Release 5 (July 2025)
 - [ ] Add "Beginner Mode" where you speak English and response is in Portuguese 
