@@ -27,7 +27,9 @@ poetry --version
 If you DO have Poetry installed already, run in Terminal:
 ```bash
 # to create a virtual env
-poetry shell 
+poetry env activate 
+# and paste result, for me it's:
+source /Users/sbastek/pt-tutor/.venv/bin/activate
 
 # to load packages
 poetry install 
@@ -75,19 +77,19 @@ streamlit run pt_tutor/app.py
 ```
 
 # Roadmap 
-## Planned for Release 2 (April 2025)
+## Planned for Release 2 (June 2025)
 - [ ] Add voice experience
 - [ ] Add toggle so user can choose text or voice interaction
 
-## Planned for Release 3 (May 2025)
+## Planned for Release 3 (July 2025)
 - [ ] Improve vocab recognition
   - [ ] Accommodate multiple word vocab
   - [ ] Include vocab variants (o/os/a/as, verb conjugations)
 - [ ] Add "Translate last response" button
 
-## Planned for Release 4 (June 2025)
+## Planned for Release 4 (August 2025)
 - [ ] Add ability to submit custom topic with auto-generated words
 - [ ] Add "Enhanced Corrector" feedback showing ideal phrasing 
 
-## Planned for Release 5 (July 2025)
+## Planned for Release 5 (September 2025)
 - [ ] Add "Beginner Mode" where you speak English and response is in Portuguese 
