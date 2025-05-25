@@ -43,6 +43,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+
 if "username" not in st.session_state:
     st.session_state.username = ""
 if "temp_username" not in st.session_state:
@@ -69,10 +70,9 @@ if "last_correct_word" not in st.session_state:
     st.session_state.last_correct_word = ""
 if "clicked" not in st.session_state:
     st.session_state.clicked = False
+if "audio_running" not in st.session_state:
+    st.session_state.audio_running = False
 
-# db = VocabDB()
-
-# sidebar = st.sidebar
 
 if not st.session_state.username_submitted:
     st.sidebar.text_input(

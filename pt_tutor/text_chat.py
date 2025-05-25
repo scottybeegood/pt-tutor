@@ -60,6 +60,7 @@ def run_text_chat():
 
     st.write("## Fala Português!")
 
+    # starting main section 
     main_container = st.container()
 
     with main_container:
