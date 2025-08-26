@@ -20,6 +20,7 @@ langchain-openai = "^0.3.11"
 langchain-core = "^0.3.49"
 sounddevice = "^0.5.1"
 soundfile = "^0.13.1"
+gotrue = "^1.0.4"
 
 [build-system]
 requires = ["poetry-core"]
