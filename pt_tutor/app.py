@@ -1,3 +1,9 @@
+import os 
+from dotenv import load_dotenv
+load_dotenv()
+print("OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY"))
+print("CWD:", os.getcwd())
+
 import streamlit as st 
 from wordcloud import WordCloud
 import audio_chat
@@ -12,6 +18,7 @@ from utils.functions import (
     reset_button,
     
 )
+
 
 st.set_page_config(layout="wide")
 
