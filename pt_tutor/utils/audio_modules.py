@@ -18,14 +18,15 @@ def transcribe_audio(filepath):
             model='whisper-1',
             file=f, 
             response_format='text',
+            language='pt',
         )
     return transcription
 
 
 def generate_audio(text, filepath):
     response = client.audio.speech.create(
-        model='tts-1',
-        voice='alloy',
+        model='tts-1-hd',
+        voice='fable', #  'nova', 'shimmer' are the best alternatives here 
         input=text,
     )
 
