@@ -6,11 +6,13 @@ from openai import OpenAI
 client = OpenAI()
 
 
-def record_audio(filepath):
-    audio_recording = st.audio_input("Record audio")
+def record_audio(audio_recording, filepath): 
+    # audio_recording = st.audio_input("Record audio")
     if audio_recording:
         with open(filepath, 'wb') as f:
             f.write(audio_recording.getvalue())
+
+    # return audio_recording
 
 
 def transcribe_audio(filepath):

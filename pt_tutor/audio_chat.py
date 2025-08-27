@@ -87,7 +87,8 @@ def run_audio_chat():
             with chat_area.chat_message("tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
 
-    if record_audio(question_file):
+    if recording := st.audio_input("Record audio"):
+        record_audio(recording, question_file)
         transcription = transcribe_audio(question_file)
         with chat_area.chat_message("student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{transcription}</div>", unsafe_allow_html=True)
