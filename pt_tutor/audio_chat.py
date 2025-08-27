@@ -122,6 +122,6 @@ def run_audio_chat():
                 st.session_state.last_correct_word = response["last_correct_word"]
                 st.rerun()
 
-    response_file = 'pt_tutor/data/audio/response.mp3'
-    generate_audio(tutor_response, response_file)
-    st.audio(response_file)
+        response_file = 'pt_tutor/data/audio/response.mp3'
+        generate_audio(st.session_state.tutor_messages[-1], response_file)
+        st.audio(response_file)
