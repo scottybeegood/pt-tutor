@@ -16,10 +16,10 @@ from utils.audio_modules import (
 
 
 # question_file = 'pt_tutor/data/audio/question.wav'
-response_file = 'pt_tutor/data/audio/response.mp3'
-duration = 5
-fs = 48000
-device_index = 2 # MacBook Pro Mic / Speakers
+# response_file = 'pt_tutor/data/audio/response.mp3'
+# duration = 5
+# fs = 48000
+# device_index = 2 # MacBook Pro Mic / Speakers
 
 
 def run_audio_chat():
@@ -116,89 +116,12 @@ def run_audio_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
+            
+            response_file = 'pt_tutor/data/audio/response.mp3'
+            generate_audio(tutor_response, response_file)
+            st.audio(response_file)
 
             st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
                 st.session_state.last_correct_word = response["last_correct_word"]
                 st.rerun()
-
-
-
-
-
-
-    # with messages_container:
-    #     record_audio(question_file)
-
-    # with st.spinner('...'):
-    #     text = transcribe_audio(question_file)
-    #     st.markdown(f"<div class='student-style'>{text}</div>", unsafe_allow_html=True)
-
-    # main_container = st.container()
-
-    # with main_container:
-
-    #     if st.button("Iniciar chat: ", disabled=st.session_state.audio_running):
-    #         st.session_state.audio_running = True 
-
-    #         with st.spinner('...'):
-    #             record_audio(question_file)
-
-    #         if os.path.exists(question_file):
-    #             with st.spinner('...'):
-    #                 text = transcribe_audio(question_file)
-    #                 st.markdown(f"<div class='student-style'>{text}</div>", unsafe_allow_html=True)
-
-    #             with st.spinner('...'):
-    #                 generate_audio(text, response_file)
-
-    #             st.audio(response_file, format="audio/mp3", autoplay=True)
-
-    #     st.session_state.audio_running = False 
-
-    #     messages_container = st.container()
-    #     chat_area = messages_container.container(height=400)
-
-            
-
-
-
-
-    #     for i in range(len(st.session_state.student_messages)):
-    #         with chat_area.chat_message("student", avatar="😊"):
-    #             st.markdown(f"<div class='student-style'>{st.session_state.student_messages[i]}</div>", unsafe_allow_html=True)
-    #             st.markdown(f"<div class='student-correction-style'>{st.session_state.student_correction_messages[i]}</div>", unsafe_allow_html=True)
-    #         with chat_area.chat_message("tutor", avatar="🤖"):
-    #             st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
-
-    # if prompt := st.chat_input("Fala aqui..."):
-    #     with chat_area.chat_message("student", avatar="😊"):
-    #         st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
-    #         st.session_state.student_messages.append(prompt)
-
-    #         response = graph.invoke(
-    #             {
-    #                 "messages": [prompt], 
-    #                 "core_convo": [prompt],
-    #                 "topic_vocab": topic_vocab,
-    #                 "correct_count": st.session_state.correct_count,
-    #                 "last_correct_word": st.session_state.last_correct_word,
-    #                 "topic": topic
-    #             },
-    #             config = {
-    #                 "configurable": {"thread_id": 42},
-    #             }
-    #         )
-    #         student_correction = response["corrections"][-1].content
-    #         st.session_state.student_correction_messages.append(student_correction)
-    #         st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
-
-    #     with chat_area.chat_message("tutor", avatar="🤖"):
-    #         tutor_response = response["core_convo"][-1].content
-    #         st.session_state.tutor_messages.append(tutor_response)
-    #         st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
-
-    #         st.session_state.correct_count = response["correct_count"]
-    #         if response["last_correct_word"] != st.session_state.last_correct_word:
-    #             st.session_state.last_correct_word = response["last_correct_word"]
-    #             st.rerun()
