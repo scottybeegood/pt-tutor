@@ -1,6 +1,5 @@
 import os
 import streamlit as st 
-# import sounddevice as sd
 from wordcloud import WordCloud
 from utils.graph import graph 
 from utils.database import VocabDB
@@ -23,16 +22,7 @@ fs = 48000
 device_index = 2 # MacBook Pro Mic / Speakers
 
 
-# def list_audio_devices():
-#     devices = sd.query_devices()
-#     st.write("Available audio devices:")
-#     for i, device in enumerate(devices):
-#         st.write(f"{i}: {device['name']} (inputs: {device['max_input_channels']}, outputs: {device['max_output_channels']})")
-
-
 def run_audio_chat():
-    # list_audio_devices()
-
     db = VocabDB()
 
     with st.sidebar:
@@ -83,31 +73,38 @@ def run_audio_chat():
 
     st.write("## Fala Português!")
 
+    messages_container = st.container()
+    with messages_container:
+        record_audio(question_file)
+
+    with st.spinner('...'):
+        text = transcribe_audio(question_file)
+        st.markdown(f"<div class='student-style'>{text}</div>", unsafe_allow_html=True)
+
     main_container = st.container()
 
-    with main_container:
+    # with main_container:
 
-        if st.button("Iniciar chat: ", disabled=st.session_state.audio_running):
-            st.session_state.audio_running = True 
+    #     if st.button("Iniciar chat: ", disabled=st.session_state.audio_running):
+    #         st.session_state.audio_running = True 
 
-            with st.spinner('...'):
-                # record_audio(question_file, duration, fs, device_index)
-                record_audio(question_file)
+    #         with st.spinner('...'):
+    #             record_audio(question_file)
 
-            if os.path.exists(question_file):
-                with st.spinner('...'):
-                    text = transcribe_audio(question_file)
-                    st.markdown(f"<div class='student-style'>{text}</div>", unsafe_allow_html=True)
+    #         if os.path.exists(question_file):
+    #             with st.spinner('...'):
+    #                 text = transcribe_audio(question_file)
+    #                 st.markdown(f"<div class='student-style'>{text}</div>", unsafe_allow_html=True)
 
-                with st.spinner('...'):
-                    generate_audio(text, response_file)
+    #             with st.spinner('...'):
+    #                 generate_audio(text, response_file)
 
-                st.audio(response_file, format="audio/mp3", autoplay=True)
+    #             st.audio(response_file, format="audio/mp3", autoplay=True)
 
-        st.session_state.audio_running = False 
+    #     st.session_state.audio_running = False 
 
-        messages_container = st.container()
-        chat_area = messages_container.container(height=400)
+    #     messages_container = st.container()
+    #     chat_area = messages_container.container(height=400)
 
             
 

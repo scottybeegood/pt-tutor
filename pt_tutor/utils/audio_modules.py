@@ -1,17 +1,9 @@
-# import sounddevice as sd
-
 import streamlit as st 
 import soundfile as sf
 from openai import OpenAI
 
 
 client = OpenAI()
-
-
-# def record_audio(filepath, duration, fs, device_index):
-#     audio = sd.rec(int(duration * fs), samplerate=fs, channels=1,  device=device_index)
-#     sd.wait()
-#     sf.write(filepath, audio, fs)
 
 
 def record_audio(filepath):
