@@ -1,6 +1,6 @@
 import os
 import streamlit as st 
-import sounddevice as sd
+# import sounddevice as sd
 from wordcloud import WordCloud
 from utils.graph import graph 
 from utils.database import VocabDB
