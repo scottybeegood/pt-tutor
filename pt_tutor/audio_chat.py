@@ -73,13 +73,64 @@ def run_audio_chat():
 
     st.write("## Fala Português!")
 
-    messages_container = st.container()
-    with messages_container:
-        record_audio(question_file)
+    # starting main section 
+    main_container = st.container()
 
-    with st.spinner('...'):
-        text = transcribe_audio(question_file)
-        st.markdown(f"<div class='student-style'>{text}</div>", unsafe_allow_html=True)
+    with main_container:
+        messages_container = st.container()
+        chat_area = messages_container.container(height=400)
+
+        for i in range(len(st.session_state.student_messages)):
+            with chat_area.chat_message("student", avatar="😊"):
+                st.markdown(f"<div class='student-style'>{st.session_state.student_messages[i]}</div>", unsafe_allow_html=True)
+                st.markdown(f"<div class='student-correction-style'>{st.session_state.student_correction_messages[i]}</div>", unsafe_allow_html=True)
+            with chat_area.chat_message("tutor", avatar="🤖"):
+                st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
+
+    if record_audio(question_file):
+        transcription = transcribe_audio(question_file)
+        with chat_area.chat_message("student", avatar="😊"):
+            st.markdown(f"<div class='student-style'>{transcription}</div>", unsafe_allow_html=True)
+            st.session_state.student_messages.append(transcription)
+
+            response = graph.invoke(
+                {
+                    "messages": [transcription], 
+                    "core_convo": [transcription],
+                    "topic_vocab": topic_vocab,
+                    "correct_count": st.session_state.correct_count,
+                    "last_correct_word": st.session_state.last_correct_word,
+                    "topic": topic
+                },
+                config = {
+                    "configurable": {"thread_id": 42},
+                }
+            )
+            student_correction = response["corrections"][-1].content
+            st.session_state.student_correction_messages.append(student_correction)
+            st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
+
+        with chat_area.chat_message("tutor", avatar="🤖"):
+            tutor_response = response["core_convo"][-1].content
+            st.session_state.tutor_messages.append(tutor_response)
+            st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
+
+            st.session_state.correct_count = response["correct_count"]
+            if response["last_correct_word"] != st.session_state.last_correct_word:
+                st.session_state.last_correct_word = response["last_correct_word"]
+                st.rerun()
+
+
+
+
+
+
+    # with messages_container:
+    #     record_audio(question_file)
+
+    # with st.spinner('...'):
+    #     text = transcribe_audio(question_file)
+    #     st.markdown(f"<div class='student-style'>{text}</div>", unsafe_allow_html=True)
 
     # main_container = st.container()
 
