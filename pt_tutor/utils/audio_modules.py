@@ -1,8 +1,6 @@
 # import sounddevice as sd
 
-# import pyaudio
-# import wave
-
+import streamlit as st 
 import soundfile as sf
 from openai import OpenAI
 
@@ -16,38 +14,11 @@ client = OpenAI()
 #     sf.write(filepath, audio, fs)
 
 
-# def record_audio(filepath, duration, fs, device_index):
-#     CHUNK = 1024
-#     FORMAT = pyaudio.paInt16
-#     CHANNELS = 1
-
-#     p = pyaudio.PyAudio()
-
-#     stream = p.open(format=FORMAT,
-#                     channels=CHANNELS,
-#                     rate=fs,
-#                     input=True,
-#                     input_device_index=device_index,
-#                     frames_per_buffer=CHUNK)
-
-#     frames = []
-
-#     for _ in range(int(fs / CHUNK * duration)):
-#         data = stream.read(CHUNK)
-#         frames.append(data)
-
-#     stream.stop_stream()
-#     stream.close()
-#     p.terminate()
-
-#     with wave.open(filepath, 'wb') as wf:
-#         wf.setnchannels(CHANNELS)
-#         wf.setsampwidth(2)  # 16-bit = 2 bytes
-#         wf.setframerate(fs)
-#         wf.writeframes(b''.join(frames))
-
-
-# TODO try Streamlit's built-in audio components: audio_bytes = st.audio_input("Record audio")
+def record_audio(filepath):
+    audio_recording = st.audio_input("Record audio")
+    if audio_recording:
+        with open(filepath, 'wb') as f:
+            f.write(audio_recording.getvalue())
 
 
 def transcribe_audio(filepath):
