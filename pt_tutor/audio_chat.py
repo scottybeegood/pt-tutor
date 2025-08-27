@@ -10,7 +10,7 @@ from utils.functions import (
     reset_button, 
 )
 from utils.audio_modules import (
-    record_audio,
+    # record_audio,
     transcribe_audio,
     generate_audio,
 )
@@ -90,8 +90,8 @@ def run_audio_chat():
         if st.button("Iniciar chat: ", disabled=st.session_state.audio_running):
             st.session_state.audio_running = True 
 
-            with st.spinner('...'):
-                record_audio(question_file, duration, fs, device_index)
+            # with st.spinner('...'):
+            #     record_audio(question_file, duration, fs, device_index)
 
             if os.path.exists(question_file):
                 with st.spinner('...'):
