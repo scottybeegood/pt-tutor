@@ -1,3 +1,4 @@
+from distro import name
 import streamlit as st 
 from wordcloud import WordCloud
 from utils.graph import graph 
@@ -52,7 +53,7 @@ def run_text_chat():
                 random_state=42).generate_from_frequencies(st.session_state.correct_count)
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
-        st.sidebar.button("GUARDAR", key='launch', type="primary", on_click=click_button)
+        st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
         if st.session_state.clicked:
             db.save_progress(st.session_state.username, topic, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
@@ -68,14 +69,14 @@ def run_text_chat():
         chat_area = messages_container.container(height=400)
 
         for i in range(len(st.session_state.student_messages)):
-            with chat_area.chat_message("student", avatar="😊"):
+            with chat_area.chat_message(name="student", avatar="😊"):
                 st.markdown(f"<div class='student-style'>{st.session_state.student_messages[i]}</div>", unsafe_allow_html=True)
                 st.markdown(f"<div class='student-correction-style'>{st.session_state.student_correction_messages[i]}</div>", unsafe_allow_html=True)
-            with chat_area.chat_message("tutor", avatar="🤖"):
+            with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
 
     if prompt := st.chat_input("Fala aqui..."):
-        with chat_area.chat_message("student", avatar="😊"):
+        with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
             st.session_state.student_messages.append(prompt)
 
@@ -96,7 +97,7 @@ def run_text_chat():
             st.session_state.student_correction_messages.append(student_correction)
             st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
 
-        with chat_area.chat_message("tutor", avatar="🤖"):
+        with chat_area.chat_message(name="tutor", avatar="🤖"):
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
