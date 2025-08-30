@@ -1,15 +1,12 @@
-import sounddevice as sd
-import soundfile as sf
 from openai import OpenAI
 
 
 client = OpenAI()
 
 
-def record_audio(filepath, duration, fs, device_index):
-    audio = sd.rec(int(duration * fs), samplerate=fs, channels=1,  device=device_index)
-    sd.wait()
-    sf.write(filepath, audio, fs)
+def record_audio(audio_recording, filepath): 
+    with open(filepath, 'wb') as f:
+        f.write(audio_recording.getvalue())
 
 
 def transcribe_audio(filepath):
@@ -18,14 +15,15 @@ def transcribe_audio(filepath):
             model='whisper-1',
             file=f, 
             response_format='text',
+            language='pt',
         )
     return transcription
 
 
 def generate_audio(text, filepath):
     response = client.audio.speech.create(
-        model='tts-1',
-        voice='alloy',
+        model='tts-1-hd',
+        voice='fable', #  'nova', 'shimmer' are the best alternatives. 'alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer' are all options 
         input=text,
     )
 

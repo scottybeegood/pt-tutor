@@ -9,4 +9,4 @@ am.record_audio('pt_tutor/data/audio/question.wav', duration, fs, device_index)
 transcription = am.transcribe_audio('pt_tutor/data/audio/question.wav')
 print(transcription)
 
-am.generate_audio(transcription, 'pt_tutor/data/audio/answer.mp3')
+am.generate_audio(transcription, 'pt_tutor/data/audio/response.mp3')
