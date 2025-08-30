@@ -55,8 +55,8 @@ def run_text_chat():
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
         if st.sidebar.button(label="Traduzir última", key='translate', type="secondary"):
-            translation = translate_last()
-        
+            st.session_state.last_tutor_message_translated = translate_last()
+
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
         if st.session_state.clicked:
             db.save_progress(st.session_state.username, topic, st.session_state.correct_count, st.session_state.last_correct_word)
@@ -105,7 +105,7 @@ def run_text_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
-            st.markdown(f"""<div class='tutor-translate-style'>{translation}</div>""", unsafe_allow_html=True)
+            st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
 
             st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
