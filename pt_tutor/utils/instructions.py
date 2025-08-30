@@ -28,5 +28,5 @@ translator_instructions = """
 You are a expert translator. 
 
 Translate the message below into English:
-{last_tutor_message}
+{message}
 """

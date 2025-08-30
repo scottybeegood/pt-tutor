@@ -70,7 +70,7 @@ def translate_last():
     system_message = translator_instructions.format(message=last_tutor_message)
     response = llm.invoke([SystemMessage(content=system_message)])
 
-    return response 
+    st.session_state.last_tutor_message_translated = response
 
 
 def click_button():
