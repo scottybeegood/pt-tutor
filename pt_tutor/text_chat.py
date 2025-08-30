@@ -54,7 +54,8 @@ def run_text_chat():
                 random_state=42).generate_from_frequencies(st.session_state.correct_count)
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
-        st.sidebar.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
+        if st.sidebar.button(label="Traduzir última", key='translate', type="secondary"):
+            translate_last()
         
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
         if st.session_state.clicked:
