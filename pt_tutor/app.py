@@ -40,6 +40,12 @@ st.markdown("""
         font-size: 16px !important;
         text-align: right !important;
     }
+    .tutor-translate-style {
+        color: grey !important;
+        font-style: italic !important;
+        font-size: 16px !important;
+        text-align: left !important;
+    }
     .box-style {
         border: 2px solid green !important;
         padding: 10px !important;
