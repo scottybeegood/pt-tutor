@@ -56,6 +56,7 @@ def run_text_chat():
 
         if st.sidebar.button(label="Traduzir última", key='translate', type="secondary"):
             translate_last()
+            st.rerun()
         
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
         if st.session_state.clicked:
