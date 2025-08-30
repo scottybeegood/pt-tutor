@@ -5,7 +5,9 @@ from utils.graph import graph
 from utils.database import VocabDB
 from utils.functions import (
     get_topic_vocab,
+    click_translate_button,
     translate_last,
+    reset_translate_button,
     click_button,
     reset_button,
     
@@ -54,8 +56,10 @@ def run_text_chat():
                 random_state=42).generate_from_frequencies(st.session_state.correct_count)
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
-        if st.sidebar.button(label="Traduzir última", key='translate', type="secondary"):
-            st.session_state.last_tutor_message_translated = translate_last()
+        st.sidebar.button(label="Traduzir última", key='translate', type="secondary", on_click=click_translate_button)
+        if st.session_state.clicked_translate:
+            translate_last()
+            reset_translate_button()
 
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
         if st.session_state.clicked:

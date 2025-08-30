@@ -75,6 +75,8 @@ if "student_correction_messages" not in st.session_state:
     st.session_state.student_correction_messages = []
 if "tutor_messages" not in st.session_state:
     st.session_state.tutor_messages = []
+if "clicked_translate" not in st.session_state:
+    st.session_state.clicked_translate = False
 if "last_tutor_message_translated" not in st.session_state:
     st.session_state.last_tutor_message_translated = ""
 if "topic_vocab" not in st.session_state:

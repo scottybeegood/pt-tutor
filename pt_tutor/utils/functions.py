@@ -64,14 +64,21 @@ def get_topic_vocab(topic):
     return topic_vocab
 
 
+def click_translate_button():
+    st.session_state.clicked_translate = True
+
+
 def translate_last():
     last_tutor_message = st.session_state.tutor_messages[-1]
 
     system_message = translator_instructions.format(message=last_tutor_message)
     response = llm.invoke([SystemMessage(content=system_message)])
 
-    # st.session_state.last_tutor_message_translated = response.content
-    return response
+    st.session_state.last_tutor_message_translated = response.content
+
+
+def reset_translate_button():
+    st.session_state.clicked_translate = False
 
 
 def click_button():
