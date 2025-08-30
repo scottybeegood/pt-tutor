@@ -2,6 +2,25 @@ import streamlit as st
 import re
 import unicodedata
 import pandas as pd
+import os
+
+from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage
+
+from utils.instructions import translator_instructions
+
+
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY")
+openai_org_id = os.getenv("OPENAI_ORG_ID") or st.secrets.get("OPENAI_ORG_ID")
+
+llm = ChatOpenAI(
+    api_key=openai_api_key,
+    organization=openai_org_id,
+    model="gpt-4o-mini",
+    temperature=1.0
+)
 
 
 def submit_username():
@@ -43,6 +62,15 @@ def get_topic_vocab(topic):
     topic_vocab = set(df['portuguese'].str.strip())
 
     return topic_vocab
+
+
+def translate_last():
+    last_tutor_message = st.session_state.tutor_messages[-1]
+
+    system_message = translator_instructions.format(message=last_tutor_message)
+    response = llm.invoke([SystemMessage(content=system_message)])
+
+    return response 
 
 
 def click_button():

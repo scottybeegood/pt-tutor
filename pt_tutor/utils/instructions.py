@@ -23,3 +23,10 @@ Then provide a corrected version of the user's message:
 2) but is also grammatically correct
 """
 
+
+translator_instructions = """
+You are a expert translator. 
+
+Translate the message below into English:
+{last_tutor_message}
+"""
