@@ -79,7 +79,7 @@ streamlit run pt_tutor/app.py
 # Roadmap 
 ## Planned for Release 2 (Aug 29 2025)
 - [X] Add toggle so user can choose text or voice interaction
-- [ ] Add voice experience
+- [X] Add voice experience
 
 ## Planned for Release 3 (Aug 31 2025)
 - [ ] Add "Translate last response" button
