@@ -5,7 +5,7 @@ from utils.graph import graph
 from utils.database import VocabDB
 from utils.functions import (
     get_topic_vocab,
-    click_translate_button,
+    # click_translate_button,
     translate_last,
     reset_translate_button,
     click_button,
