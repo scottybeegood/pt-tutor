@@ -78,7 +78,7 @@ def run_text_chat():
             with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
 
-    if prompt := st.chat_input("Fala aqui..."):
+    if prompt := st.chat_input("Fala aqui..."): # or if st.session_state.clicked_translate?
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
             st.session_state.student_messages.append(prompt)
@@ -108,16 +108,17 @@ def run_text_chat():
             if st.session_state.clicked_translate:
                 translate_last()
                 st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
+                st.write(f'test 1: {st.session_state.last_tutor_message_translated}')
                 reset_translate_button()
-            st.write(f'test 1: {st.session_state.last_tutor_message_translated}')
+            st.write(f'test 2: {st.session_state.last_tutor_message_translated}')
 
             st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
                 st.session_state.last_correct_word = response["last_correct_word"]
                 st.rerun()
 
-        st.write(f'test 2: {st.session_state.last_tutor_message_translated}')
+        st.write(f'test 3: {st.session_state.last_tutor_message_translated}')
 
-    st.write(f'test 3: {st.session_state.last_tutor_message_translated}')
+    st.write(f'test 4: {st.session_state.last_tutor_message_translated}')
 
 
