@@ -77,7 +77,8 @@ def run_text_chat():
                 st.markdown(f"<div class='student-correction-style'>{st.session_state.student_correction_messages[i]}</div>", unsafe_allow_html=True)
             with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
-        st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
+        with chat_area.chat_message(name="tutor", avatar="🤖"):
+            st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
 
     if prompt := st.chat_input("Fala aqui..."): # or if st.session_state.clicked_translate?
         with chat_area.chat_message(name="student", avatar="😊"):
