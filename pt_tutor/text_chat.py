@@ -59,7 +59,7 @@ def run_text_chat():
         st.sidebar.button(label="Traduzir última", key='translate', type="secondary", on_click=click_translate_button)
         if st.session_state.clicked_translate:
             translate_last()
-            st.sidebar.write("Guardado!")
+            st.sidebar.write(st.session_state.last_tutor_message_translated)
             reset_translate_button()
 
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
