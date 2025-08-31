@@ -104,6 +104,8 @@ def run_text_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
+
+        with chat_area:
             if st.button(label="Traduzir última", key='translate', type="secondary"): # , on_click=click_translate_button)
             # if st.session_state.clicked_translate:
                 translate_last()
