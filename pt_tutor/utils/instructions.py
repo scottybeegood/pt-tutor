@@ -29,4 +29,6 @@ You are a expert translator.
 
 Translate the message below into English:
 {message}
+
+Your response should include **ONLY** the translated text. 
 """

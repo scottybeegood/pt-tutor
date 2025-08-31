@@ -60,6 +60,7 @@ def run_text_chat():
         if st.session_state.clicked_translate:
             translate_last()
             st.sidebar.write(st.session_state.last_tutor_message_translated)
+            st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
             reset_translate_button()
 
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
@@ -110,7 +111,7 @@ def run_text_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
-            st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
+            # st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
 
             st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
