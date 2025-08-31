@@ -64,11 +64,13 @@ def get_topic_vocab(topic):
     return topic_vocab
 
 
-def click_translate_button():
-    st.session_state.clicked_translate = True
+# def click_translate_button():
+#     st.session_state.clicked_translate = True
 
 
 def translate_last():
+    st.session_state.clicked_translate = True
+
     last_tutor_message = st.session_state.tutor_messages[-1]
 
     system_message = translator_instructions.format(message=last_tutor_message)
@@ -79,6 +81,8 @@ def translate_last():
 
 def reset_translate_button():
     st.session_state.clicked_translate = False
+
+    st.session_state.last_tutor_message_translated = ""
 
 
 def click_button():
