@@ -59,6 +59,7 @@ def run_audio_chat():
                 random_state=42).generate_from_frequencies(st.session_state.correct_count)
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
+        # TODO: update below to match text_chat 
         st.sidebar.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
         
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
