@@ -35,7 +35,7 @@ openai_org_id = os.getenv("OPENAI_ORG_ID") or st.secrets.get("OPENAI_ORG_ID")
 llm = ChatOpenAI(
     api_key=openai_api_key,
     organization=openai_org_id,
-    model="gpt-4o-mini" # "gpt-5"  <-- too verbose 
+    model="gpt-4o-mini", # "gpt-5"  <-- too verbose 
     temperature=0.7 # 1.0
 )
 
