@@ -77,16 +77,12 @@ streamlit run pt_tutor/app.py
 ```
 
 # Roadmap 
-## Planned for Release 2 (Aug 29 2025)
-- [X] Add toggle so user can choose text or voice interaction
-- [X] Add voice experience
-
-## Planned for Release 4 (Sep 7 2025)
-- [ ] Add "Translate last response" button
+## Planned for Release 3 (Sep 28 2025)
+- [X] Add "Translate last response" button
 - [ ] Add "Enhanced Corrector" feedback showing ideal phrasing 
 - [ ] Add "Beginner Mode" where you speak English and response is in Portuguese 
 
-## Planned for Release 5 (Sep 14 2025)
+## Planned for Release 4 (Oct 12 2025)
 - [ ] Add ability to submit custom topic with auto-generated words
 - [ ] Improve vocab recognition
   - [ ] Accommodate multiple word vocab
