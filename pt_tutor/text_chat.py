@@ -34,7 +34,7 @@ def run_text_chat():
             st.session_state.correct_count = db.load_progress(st.session_state.username, topic_submission)[0]
             st.session_state.last_correct_word = db.load_progress(st.session_state.username, topic_submission)[1]
 
-            if st.session_state.correct_count is None: # no progress saved for username and topic.
+            if not st.session_state.correct_count: # no progress saved for username and topic.
                 if topic_submission in preset_topic_options:
                     st.session_state.correct_count = get_topic_vocab(topic_submission)
                 else:
