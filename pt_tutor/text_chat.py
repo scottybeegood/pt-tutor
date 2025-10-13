@@ -17,20 +17,20 @@ def run_text_chat():
     db = VocabDB()
 
     with st.sidebar:
-        if st.session_state.topic == "":
-            topic = st.sidebar.radio(
-                "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
-                key="topic",
-                options=["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Testing Tempo ⛅", "Outra tema ⁉️"], # TODO: add outras as sep options 
-            )
-            if topic == "Outra tema ⁉️":
-                topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic")
+        topic = st.sidebar.radio(
+            "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
+            key="topic",
+            options=["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Testing Tempo ⛅", "Outra tema ⁉️"], # TODO: add outras as sep options 
+        )
+        if topic == "Outra tema ⁉️":
+            topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic")
+            if topic_submission != st.session_state.topic_submission:
+                st.session_state.topic_submission = topic_submission
                 topic = topic_submission.strip().lower().replace(" ", "_")
 
                 topic_vocab = collect_custom_topic_vocab(topic_submission)
-            else:
-                topic_vocab = get_topic_vocab(topic)
-            st.session_state.topic = topic
+        else:
+            topic_vocab = get_topic_vocab(topic)
 
         if topic_vocab != st.session_state.topic_vocab:
             st.session_state.correct_count = db.load_progress(st.session_state.username, topic)[0]
