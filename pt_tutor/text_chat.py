@@ -69,7 +69,7 @@ def run_text_chat():
 
     with main_container:
         messages_container = st.container()
-        chat_area = messages_container.container(height=400)
+        chat_area = messages_container.container(height=1200)
 
         for i in range(len(st.session_state.student_messages)):
             with chat_area.chat_message(name="student", avatar="😊"):
