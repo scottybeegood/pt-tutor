@@ -36,6 +36,8 @@ def run_text_chat():
             else:
                 topic_vocab = st.session_state.topic_vocab
         elif topic in preset_topic_options:
+            print(f'topic selected: {topic}')
+            print(f'preset_topic_options: {preset_topic_options}')
             topic_submission = topic 
             topic_vocab = get_topic_vocab(topic_submission)
         else: 
