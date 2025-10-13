@@ -26,15 +26,16 @@ def run_text_chat():
             topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic", value="opening a new bank account")
             if topic_submission != st.session_state.topic_submission:
                 st.session_state.topic_submission = topic_submission
-                topic_vocab = collect_custom_topic_vocab(topic_submission) # if custom topic
+                topic_vocab = collect_custom_topic_vocab(topic_submission)
             else:
                 topic_vocab = st.session_state.topic_vocab
         else:
-            topic_vocab = get_topic_vocab(topic) # if 1 of 3 main topics
+            topic_submission = topic 
+            topic_vocab = get_topic_vocab(topic_submission)
 
         if topic_vocab != st.session_state.topic_vocab:
-            st.session_state.correct_count = db.load_progress(st.session_state.username, topic)[0]
-            st.session_state.last_correct_word = db.load_progress(st.session_state.username, topic)[1]
+            st.session_state.correct_count = db.load_progress(st.session_state.username, topic_submission)[0]
+            st.session_state.last_correct_word = db.load_progress(st.session_state.username, topic_submission)[1]
             reset_container_content()
 
         st.session_state.topic_vocab = topic_vocab
