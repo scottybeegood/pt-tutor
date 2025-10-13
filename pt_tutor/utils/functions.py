@@ -100,8 +100,3 @@ def click_button():
 
 def reset_button():
     st.session_state.clicked = False
-
-
-def trigger_rerun():
-    st.session_state.need_rerun = False
-    st.rerun()
