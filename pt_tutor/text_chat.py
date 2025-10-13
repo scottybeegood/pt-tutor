@@ -11,7 +11,6 @@ from utils.functions import (
     reset_translate_button,
     click_button,
     reset_button,
-    trigger_rerun,
 )
 
 def run_text_chat():
