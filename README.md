@@ -77,9 +77,7 @@ streamlit run pt_tutor/app.py
 ```
 
 # Roadmap 
-- [ ] Fix translate last button
+- [X] Fix translate last button
 - [X] Reset convo with topic switch 
 - [ ] Add ability to submit custom topic with auto-generated words
-- [ ] Improve vocab recognition
-  - [ ] Accommodate multiple word vocab
-  - [ ] Include vocab variants (o/os/a/as, verb conjugations)
+- [ ] Combine text_chat.py and audio_chat.py

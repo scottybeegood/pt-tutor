@@ -1,3 +1,14 @@
+custom_topic_vocab_collector_instructions = """
+Collect exactly 100 vocabulary words related to the topic below, all in **European Portuguese**.
+{topic}
+
+Specific instructions:
+1) Provide the words as a comma-separated list.
+2) Do not include any additional text, explanations, or formatting.
+3) Ensure each vocab word is a single word.
+"""
+
+
 chatbot_instructions = """
 You are a conversational chatbot.
 

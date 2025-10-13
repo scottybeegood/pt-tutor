@@ -8,7 +8,10 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage
 
-from utils.instructions import translator_instructions
+from utils.instructions import (
+    custom_topic_vocab_collector_instructions, 
+    translator_instructions
+)
 
 
 load_dotenv()
@@ -38,6 +41,15 @@ def set_chat_mode():
     st.session_state.temp_chat_mode = ""
 
 
+def collect_custom_topic_vocab(topic):
+    system_message = custom_topic_vocab_collector_instructions.format(topic=topic)
+    response = llm.invoke([SystemMessage(content=system_message)])
+
+    vocab_set = set(word.strip() for word in response.content.split(","))
+
+    return vocab_set
+    
+
 def clean_message(message):
     lowercased = message.lower()
     normalized = unicodedata.normalize('NFKC', lowercased)
@@ -47,11 +59,11 @@ def clean_message(message):
 
 
 def reset_container_content():
-    st.session_state.student_messages = [] # good 
-    st.session_state.tutor_messages = [] # good 
-    st.session_state.clicked_translate = False # good 
-    st.session_state.last_tutor_message_translated = "" # good
-    st.session_state.student_correction_messages = [] # good 
+    st.session_state.student_messages = []
+    st.session_state.tutor_messages = []
+    st.session_state.clicked_translate = False
+    st.session_state.last_tutor_message_translated = ""
+    st.session_state.student_correction_messages = []
 
 
 def get_filepath(topic):
@@ -61,7 +73,6 @@ def get_filepath(topic):
         filepath = 'pt_tutor/data/seed_vocab/weekend_recap.csv'
     elif topic == 'Tempo ⛅':
         filepath = 'pt_tutor/data/seed_vocab/weather.csv'
-
     return filepath 
 
 
@@ -71,10 +82,6 @@ def get_topic_vocab(topic):
     topic_vocab = set(df['portuguese'].str.strip())
 
     return topic_vocab
-
-
-# def click_translate_button():
-#     st.session_state.clicked_translate = True
 
 
 def translate_last():

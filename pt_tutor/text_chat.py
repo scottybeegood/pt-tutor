@@ -4,9 +4,9 @@ from wordcloud import WordCloud
 from utils.graph import graph 
 from utils.database import VocabDB
 from utils.functions import (
+    collect_custom_topic_vocab,
     get_topic_vocab,
     reset_container_content,
-    # click_translate_button,
     translate_last,
     reset_translate_button,
     click_button,
@@ -20,9 +20,16 @@ def run_text_chat():
         topic = st.sidebar.radio(
             "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
             key="topic",
-            options=["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅"],
+            options=["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅", "Outra tema ⁉️"], # TODO: add outras as sep options 
         )
-        topic_vocab = get_topic_vocab(topic)
+        if topic == "Outra tema ⁉️":
+            topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic")
+            topic = topic_submission.strip().lower().replace(" ", "_")
+
+            topic_vocab = collect_custom_topic_vocab(topic_submission)
+        else:
+            topic_vocab = get_topic_vocab(topic)
+
         if topic_vocab != st.session_state.topic_vocab:
             st.session_state.correct_count = db.load_progress(st.session_state.username, topic)[0]
             st.session_state.last_correct_word = db.load_progress(st.session_state.username, topic)[1]
