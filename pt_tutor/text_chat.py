@@ -23,14 +23,14 @@ def run_text_chat():
             options=["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Testing Tempo ⛅", "Outra tema ⁉️"], # TODO: add outras as sep options 
         )
         if topic == "Outra tema ⁉️":
-            topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic")
-            if st.session_state.topic_submission == "" or topic_submission != st.session_state.topic_submission:
+            topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic", value="opening a new bank account")
+            if topic_submission != st.session_state.topic_submission:
                 st.session_state.topic_submission = topic_submission
-                topic = topic_submission.strip().lower().replace(" ", "_")
-
-                topic_vocab = collect_custom_topic_vocab(topic_submission)
+                topic_vocab = collect_custom_topic_vocab(topic_submission) # if custom topic
+            else:
+                topic_vocab = st.session_state.topic_vocab
         else:
-            topic_vocab = get_topic_vocab(topic)
+            topic_vocab = get_topic_vocab(topic) # if 1 of 3 main topics
 
         if topic_vocab != st.session_state.topic_vocab:
             st.session_state.correct_count = db.load_progress(st.session_state.username, topic)[0]

@@ -80,4 +80,4 @@ streamlit run pt_tutor/app.py
 - [X] Fix translate last button
 - [X] Reset convo with topic switch 
 - [ ] Add ability to submit custom topic with auto-generated words
-- [ ] Combine text_chat.py and audio_chat.py
+- [ ] Streamline logic
