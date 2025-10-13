@@ -108,13 +108,13 @@ def run_text_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
-            st.write('< button should appear below >')  # Debug line
+            st.write('< button should appear below >')
             st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-        st.session_state.correct_count = response["correct_count"]
-        if response["last_correct_word"] != st.session_state.last_correct_word:
-            st.session_state.last_correct_word = response["last_correct_word"]
-            #st.rerun()
+    st.session_state.correct_count = response["correct_count"]
+    if response["last_correct_word"] != st.session_state.last_correct_word:
+        st.session_state.last_correct_word = response["last_correct_word"]
+        st.rerun()
 
     if st.session_state.clicked_translate:
         reset_translate_button()
