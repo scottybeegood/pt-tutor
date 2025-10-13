@@ -44,10 +44,9 @@ def set_chat_mode():
 def collect_custom_topic_vocab(topic):
     system_message = custom_topic_vocab_collector_instructions.format(topic=topic)
     response = llm.invoke([SystemMessage(content=system_message)])
+    topic_vocab_dict = {word.strip(): 0 for word in response.content.split(",") if word.strip()}
 
-    vocab_set = set(word.strip() for word in response.content.split(","))
-
-    return vocab_set
+    return topic_vocab_dict
     
 
 def clean_message(message):
@@ -79,9 +78,9 @@ def get_filepath(topic):
 def get_topic_vocab(topic):
     filepath = get_filepath(topic)
     df = pd.read_csv(filepath)
-    topic_vocab = set(df['portuguese'].str.strip())
+    topic_vocab_dict = {word.strip(): 0 for word in df['portuguese'].str.strip()}
 
-    return topic_vocab
+    return topic_vocab_dict
 
 
 def translate_last():

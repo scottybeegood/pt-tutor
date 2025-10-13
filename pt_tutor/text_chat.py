@@ -18,7 +18,6 @@ def run_text_chat():
 
     with st.sidebar:
         preset_topic_options = ["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅", "Outra tema ⁉️"]
-        # TODO: post-save, new topic submissions glitches and switches to Comer fora. 
         user_generated_topic_options = db.load_topics(st.session_state.username)
         all_topic_options = preset_topic_options + user_generated_topic_options
 
@@ -27,40 +26,36 @@ def run_text_chat():
             key="topic",
             options=all_topic_options,
         )
-        # TODO: clean up conditional flow below. 
         if topic == "Outra tema ⁉️":
             topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic", value="opening a new bank account")
-            if topic_submission != st.session_state.topic_submission:
-                st.session_state.topic_submission = topic_submission
-                topic_vocab = collect_custom_topic_vocab(topic_submission)
-            else:
-                topic_vocab = st.session_state.topic_vocab
-        elif topic in preset_topic_options:
-            print(f'topic selected: {topic}')
-            print(f'preset_topic_options: {preset_topic_options}')
-            topic_submission = topic 
-            topic_vocab = get_topic_vocab(topic_submission)
-        else: 
-            topic_submission = topic
-            topic_vocab = set(db.load_progress(st.session_state.username, topic_submission)[0])
-    
-        # TODO: is this piece necessary? if so, implemented better?
-        if topic_vocab != st.session_state.topic_vocab:
+        topic_submission = topic
+
+        if topic_submission != st.session_state.topic_submission: #initializing 
             st.session_state.correct_count = db.load_progress(st.session_state.username, topic_submission)[0]
             st.session_state.last_correct_word = db.load_progress(st.session_state.username, topic_submission)[1]
+
+            if st.session_state.correct_count is None: # no progress saved for username and topic.
+                if topic_submission in preset_topic_options:
+                    st.session_state.correct_count = get_topic_vocab(topic_submission)
+                else:
+                    st.session_state.correct_count = collect_custom_topic_vocab(topic_submission)
+
             reset_container_content()
+            
+        # topic_vocab = set(st.session_state.correct_count) # make not need this. 
+        # remaining_words = topic_vocab - mastered_words
+        # remaining_word_dict = {word: 1 for word in remaining_words}
 
-        st.session_state.topic_vocab = topic_vocab
+        mastered_words = {word for word, count in st.session_state.correct_count.items() if count > 0}
+        remaining_words = {word for word, count in st.session_state.correct_count.items() if count == 0}
 
-        remaining_words = topic_vocab - set(st.session_state.correct_count)
-        remaining_word_dict = {word: 1 for word in remaining_words}
         remaining_word_wordcloud = WordCloud(
             width=800, 
             height=425,
             background_color='white',
             min_font_size=20,
             max_font_size=20,
-            random_state=42).generate_from_frequencies(remaining_word_dict)
+            random_state=42).generate_from_frequencies(remaining_words)
         st.sidebar.image(remaining_word_wordcloud.to_image(), use_container_width=True)
 
         st.sidebar.write("**Palavras corretas**")
@@ -76,7 +71,7 @@ def run_text_chat():
                 background_color='white',
                 min_font_size=5,
                 max_font_size=100,
-                random_state=42).generate_from_frequencies(st.session_state.correct_count)
+                random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
@@ -116,7 +111,7 @@ def run_text_chat():
                 {
                     "messages": [prompt], 
                     "core_convo": [prompt],
-                    "topic_vocab": topic_vocab,
+                    #"topic_vocab": topic_vocab,
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
                     "topic": topic
@@ -133,7 +128,6 @@ def run_text_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
-            #st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
             st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:

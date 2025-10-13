@@ -81,6 +81,8 @@ if "clicked_translate" not in st.session_state:
     st.session_state.clicked_translate = False
 if "last_tutor_message_translated" not in st.session_state:
     st.session_state.last_tutor_message_translated = ""
+if "topic_submission" not in st.session_state:
+    st.session_state.topic_submission = ""
 if "topic_vocab" not in st.session_state:
     st.session_state.topic_vocab = set() # needed to recognize topic changes 
 if "correct_count" not in st.session_state:
