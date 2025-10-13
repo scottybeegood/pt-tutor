@@ -18,6 +18,7 @@ def run_text_chat():
 
     with st.sidebar:
         preset_topic_options = ["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅", "Outra tema ⁉️"]
+        # TODO: post-save, new topic submissions glitches and switches to Comer fora. 
         user_generated_topic_options = db.load_topics(st.session_state.username)
         all_topic_options = preset_topic_options + user_generated_topic_options
 
@@ -26,6 +27,7 @@ def run_text_chat():
             key="topic",
             options=all_topic_options,
         )
+        # TODO: clean up conditional flow below. 
         if topic == "Outra tema ⁉️":
             topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic", value="opening a new bank account")
             if topic_submission != st.session_state.topic_submission:
@@ -33,10 +35,13 @@ def run_text_chat():
                 topic_vocab = collect_custom_topic_vocab(topic_submission)
             else:
                 topic_vocab = st.session_state.topic_vocab
-        else:
+        elif topic in preset_topic_options:
             topic_submission = topic 
             topic_vocab = get_topic_vocab(topic_submission)
-
+        else: 
+            topic_vocab = set(db.load_progress(st.session_state.username, topic_submission)[0])
+    
+        # TODO: is this piece necessary? if so, implemented better?
         if topic_vocab != st.session_state.topic_vocab:
             st.session_state.correct_count = db.load_progress(st.session_state.username, topic_submission)[0]
             st.session_state.last_correct_word = db.load_progress(st.session_state.username, topic_submission)[1]

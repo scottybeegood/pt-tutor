@@ -79,5 +79,8 @@ streamlit run pt_tutor/app.py
 # Roadmap 
 - [X] Fix translate last button
 - [X] Reset convo with topic switch 
-- [ ] Add ability to submit custom topic with auto-generated words
-- [ ] Streamline logic (sync text_chat & audio_chat)
+- [X] Add ability to submit custom topic with auto-generated words
+- [ ] Cleanup 
+  - [ ] Address TODO's
+  - [ ] Streamline logic (sync text_chat & audio_chat)
+  

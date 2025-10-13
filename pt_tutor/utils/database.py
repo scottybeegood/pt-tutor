@@ -52,20 +52,7 @@ class VocabDB:
             last_correct_word = ''
     
         return (correct_count, last_correct_word)
-    
 
-    # def save_topic(self, username: str, topic: str):
-    #     conn = st.connection("supabase", type=SupabaseConnection)
-    #     existing = (conn.client.table('topics')
-    #                     .select('topic')
-    #                     .eq('username', username)
-    #                     .eq('topic', topic)
-    #                     .execute())
-    #     if not existing.data:
-    #         (conn.client.table('topics')
-    #             .insert({'username': username, 'topic': topic})
-    #             .execute())
-        
 
     def save_progress(self, username: str, topic: str, correct_count: dict, last_correct_word: str):
         words = list(correct_count.keys())
