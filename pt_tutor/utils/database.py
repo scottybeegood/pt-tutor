@@ -44,7 +44,7 @@ class VocabDB:
             return ({}, '')
 
         correct_count = df.set_index('portuguese_word')['correct_count'].to_dict()
-        correct_count = {k: v for k, v in correct_count.items() if v > 0}
+        # correct_count = {k: v for k, v in correct_count.items() if v > 0}
 
         try:
             last_correct_word = df.loc[df['flag_last_correct_word'] == 1, 'portuguese_word'].iloc[0]
