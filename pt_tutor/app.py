@@ -61,14 +61,16 @@ if "username" not in st.session_state:
     st.session_state.username = ""
 if "temp_username" not in st.session_state:
     st.session_state.temp_username = ""
-if 'username_submitted' not in st.session_state:
+if "username_submitted" not in st.session_state:
     st.session_state.username_submitted = False
-if 'chat_mode' not in st.session_state:
+if "chat_mode" not in st.session_state:
     st.session_state.chat_mode = ""
-if 'temp_chat_mode' not in st.session_state:
+if "temp_chat_mode" not in st.session_state:
     st.session_state.temp_chat_mode = ""
-if 'chat_mode_submitted' not in st.session_state:
+if "chat_mode_submitted" not in st.session_state:
     st.session_state.chat_mode_submitted = False
+if "topic" not in st.session_state:
+    st.session_state.topic = ""
 if "student_messages" not in st.session_state:
     st.session_state.student_messages = []
 if "student_correction_messages" not in st.session_state:
