@@ -24,7 +24,7 @@ def run_text_chat():
         )
         if topic == "Outra tema ⁉️":
             topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic")
-            if topic_submission != st.session_state.topic_submission:
+            if st.session_state.topic_submission == "" or topic_submission != st.session_state.topic_submission:
                 st.session_state.topic_submission = topic_submission
                 topic = topic_submission.strip().lower().replace(" ", "_")
 
