@@ -43,7 +43,7 @@ def run_text_chat():
             reset_container_content()
 
         mastered_words = {word: count for word, count in st.session_state.correct_count.items() if count > 0}
-        remaining_words = {word: count for word, count in st.session_state.correct_count.items() if count == 0}
+        remaining_words = {word: 1 for word, count in st.session_state.correct_count.items() if count == 0} # set to 1 for wordcloud
 
         remaining_word_wordcloud = WordCloud(
             width=800, 
