@@ -35,7 +35,7 @@ def run_text_chat():
             st.session_state.last_correct_word = db.load_progress(st.session_state.username, topic_submission)[1]
 
             if not st.session_state.correct_count: # no progress saved for username and topic.
-                if topic_submission in preset_topic_options:
+                if topic_submission in ["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅"]:
                     st.session_state.correct_count = get_topic_vocab(topic_submission)
                 else:
                     st.session_state.correct_count = collect_custom_topic_vocab(topic_submission)
@@ -59,7 +59,7 @@ def run_text_chat():
 
         col1, col2 = st.sidebar.columns(2)
         col1.markdown(f"<div class='box-style'>Última: <strong style='font-size:1.4em'>{st.session_state.last_correct_word}</strong></div>", unsafe_allow_html=True)
-        col2.markdown(f"<div class='box-style'>Totais: <strong style='font-size:1.4em'>{len(st.session_state.correct_count)}</strong></div>", unsafe_allow_html=True)
+        col2.markdown(f"<div class='box-style'>Totais: <strong style='font-size:1.4em'>{len(mastered_words)}</strong></div>", unsafe_allow_html=True)
     
         if len(mastered_words) > 0:
             correct_word_wordcloud = WordCloud(
