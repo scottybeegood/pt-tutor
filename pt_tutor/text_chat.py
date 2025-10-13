@@ -41,6 +41,7 @@ def run_text_chat():
             topic_submission = topic 
             topic_vocab = get_topic_vocab(topic_submission)
         else: 
+            topic_submission = topic
             topic_vocab = set(db.load_progress(st.session_state.username, topic_submission)[0])
     
         # TODO: is this piece necessary? if so, implemented better?
