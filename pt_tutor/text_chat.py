@@ -18,8 +18,8 @@ def run_text_chat():
 
     with st.sidebar:
         preset_topic_options = ["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅", "Outra tema ⁉️"]
-        st.session_state.user_generated_topic_options = db.load_topics(st.session_state.username)
-        all_topic_options = preset_topic_options + st.session_state.user_generated_topic_options
+        user_generated_topic_options = db.load_topics(st.session_state.username)
+        all_topic_options = preset_topic_options + user_generated_topic_options
 
         topic = st.sidebar.radio(
             "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
