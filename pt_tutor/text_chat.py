@@ -115,7 +115,7 @@ def run_text_chat():
         if response["last_correct_word"] != st.session_state.last_correct_word:
             st.session_state.last_correct_word = response["last_correct_word"]
 
-    st.rerun()
+        st.rerun()
 
     # st.session_state.need_rerun = True
 
