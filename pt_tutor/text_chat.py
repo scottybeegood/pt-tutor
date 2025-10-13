@@ -41,13 +41,9 @@ def run_text_chat():
                     st.session_state.correct_count = collect_custom_topic_vocab(topic_submission)
 
             reset_container_content()
-            
-        # topic_vocab = set(st.session_state.correct_count) # make not need this. 
-        # remaining_words = topic_vocab - mastered_words
-        # remaining_word_dict = {word: 1 for word in remaining_words}
 
-        mastered_words = {word for word, count in st.session_state.correct_count.items() if count > 0}
-        remaining_words = {word for word, count in st.session_state.correct_count.items() if count == 0}
+        mastered_words = {word: count for word, count in st.session_state.correct_count.items() if count > 0}
+        remaining_words = {word: count for word, count in st.session_state.correct_count.items() if count == 0}
 
         remaining_word_wordcloud = WordCloud(
             width=800, 
