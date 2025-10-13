@@ -17,10 +17,14 @@ def run_text_chat():
     db = VocabDB()
 
     with st.sidebar:
+        preset_topic_options = ["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅", "Outra tema ⁉️"]
+        st.session_state.user_generated_topic_options = db.load_topics(st.session_state.username)
+        all_topic_options = preset_topic_options + st.session_state.user_generated_topic_options
+
         topic = st.sidebar.radio(
             "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
             key="topic",
-            options=["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Testing Tempo ⛅", "Outra tema ⁉️"], # TODO: add outras as sep options 
+            options=all_topic_options,
         )
         if topic == "Outra tema ⁉️":
             topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic", value="opening a new bank account")
