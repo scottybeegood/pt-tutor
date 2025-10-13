@@ -69,8 +69,8 @@ if "temp_chat_mode" not in st.session_state:
     st.session_state.temp_chat_mode = ""
 if "chat_mode_submitted" not in st.session_state:
     st.session_state.chat_mode_submitted = False
-if "custom_topic" not in st.session_state:
-    st.session_state.custom_topic = ""
+if "topic_submission" not in st.session_state:
+    st.session_state.topic_submission = ""
 if "student_messages" not in st.session_state:
     st.session_state.student_messages = []
 if "student_correction_messages" not in st.session_state:
