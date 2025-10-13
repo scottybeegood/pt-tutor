@@ -82,6 +82,8 @@ def run_text_chat():
             with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
                 if i == len(st.session_state.student_messages) - 1:
+                    # move button here? 
+                    st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
                     st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
 
     if prompt := st.chat_input("Fala aqui..."):
@@ -110,8 +112,7 @@ def run_text_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
-            st.write('< button should appear below >')
-            st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
+            # st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
         st.session_state.correct_count = response["correct_count"]
         if response["last_correct_word"] != st.session_state.last_correct_word:
