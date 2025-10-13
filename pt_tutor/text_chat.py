@@ -5,6 +5,7 @@ from utils.graph import graph
 from utils.database import VocabDB
 from utils.functions import (
     get_topic_vocab,
+    reset_container_content,
     # click_translate_button,
     translate_last,
     reset_translate_button,
@@ -26,6 +27,7 @@ def run_text_chat():
         if topic_vocab != st.session_state.topic_vocab:
             st.session_state.correct_count = db.load_progress(st.session_state.username, topic)[0]
             st.session_state.last_correct_word = db.load_progress(st.session_state.username, topic)[1]
+            reset_container_content()
 
         st.session_state.topic_vocab = topic_vocab
 
@@ -61,6 +63,10 @@ def run_text_chat():
             db.save_progress(st.session_state.username, topic, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
             reset_button()
+
+    # checking translate last button input status
+    st.write(f'clicked_translate: {st.session_state.clicked_translate}')
+    st.write(f'last_tutor_message_translated: {st.session_state.last_tutor_message_translated}')
 
     st.write("## Fala Português!")
 

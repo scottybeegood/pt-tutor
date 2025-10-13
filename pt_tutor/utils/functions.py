@@ -37,12 +37,21 @@ def set_chat_mode():
     st.session_state.chat_mode_submitted = True
     st.session_state.temp_chat_mode = ""
 
+
 def clean_message(message):
     lowercased = message.lower()
     normalized = unicodedata.normalize('NFKC', lowercased)
     cleaned = re.sub(r'[^a-zA-Z0-9\s\u00C0-\u017F]', '', normalized)
 
     return cleaned
+
+
+def reset_container_content():
+    st.session_state.student_messages = [] # good 
+    st.session_state.tutor_messages = [] # good 
+    st.session_state.clicked_translate = False # good 
+    st.session_state.last_tutor_message_translated = "" # good
+    st.session_state.student_correction_messages = [] # good 
 
 
 def get_filepath(topic):
