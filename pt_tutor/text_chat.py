@@ -20,7 +20,7 @@ def run_text_chat():
         topic = st.sidebar.radio(
             "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
             key="topic",
-            options=["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅", "Outra tema ⁉️"], # TODO: add outras as sep options 
+            options=["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Testing Tempo ⛅", "Outra tema ⁉️"], # TODO: add outras as sep options 
         )
         if topic == "Outra tema ⁉️":
             topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic")
