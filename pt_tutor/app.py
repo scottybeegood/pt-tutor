@@ -89,6 +89,8 @@ if "clicked" not in st.session_state:
     st.session_state.clicked = False
 if "audio_running" not in st.session_state:
     st.session_state.audio_running = False
+if "need_rerun" not in st.session_state:
+    st.session_state.need_rerun = False
 
 
 if not st.session_state.username_submitted:
