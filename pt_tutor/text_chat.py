@@ -64,6 +64,8 @@ def run_text_chat():
             st.sidebar.write("Guardado!")
             reset_button()
 
+        st.write(f'last_tutor_message_translated: {st.session_state.last_tutor_message_translated}')
+
     st.write("## Fala Português!")
 
     # starting main section 
@@ -71,7 +73,7 @@ def run_text_chat():
 
     with main_container:
         messages_container = st.container()
-        chat_area = messages_container.container(height=1200)
+        chat_area = messages_container.container(height=400)
 
         for i in range(len(st.session_state.student_messages)):
             with chat_area.chat_message(name="student", avatar="😊"):
