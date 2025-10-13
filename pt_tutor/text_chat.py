@@ -114,7 +114,7 @@ def run_text_chat():
         st.session_state.correct_count = response["correct_count"]
         if response["last_correct_word"] != st.session_state.last_correct_word:
             st.session_state.last_correct_word = response["last_correct_word"]
-            st.rerun()
+            #st.rerun()
 
     if st.session_state.clicked_translate:
         reset_translate_button()
