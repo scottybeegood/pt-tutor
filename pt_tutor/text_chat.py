@@ -82,7 +82,6 @@ def run_text_chat():
             with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
                 if i == len(st.session_state.student_messages) - 1:
-                    # move button here? 
                     st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
                     st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
 
