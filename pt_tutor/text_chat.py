@@ -73,7 +73,7 @@ def run_text_chat():
 
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
         if st.session_state.clicked:
-            db.save_progress(st.session_state.username, topic, st.session_state.correct_count, st.session_state.last_correct_word)
+            db.save_progress(st.session_state.username, topic_submission, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
             reset_button()
 
