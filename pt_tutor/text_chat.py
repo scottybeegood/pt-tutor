@@ -41,6 +41,7 @@ def run_text_chat():
                 else:
                     st.session_state.correct_count = collect_custom_topic_vocab(topic_submission)
 
+            st.session_state.topic_submission = topic_submission
             reset_container_content()
 
         mastered_words = {word: count for word, count in st.session_state.correct_count.items() if count > 0}
@@ -109,7 +110,6 @@ def run_text_chat():
                 {
                     "messages": [prompt], 
                     "core_convo": [prompt],
-                    #"topic_vocab": topic_vocab,
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
                     "topic": topic
