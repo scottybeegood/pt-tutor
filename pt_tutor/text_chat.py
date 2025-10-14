@@ -18,7 +18,10 @@ def run_text_chat():
 
     with st.sidebar:
         preset_topic_options = ["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅", "Outra tema ⁉️"]
-        user_generated_topic_options = db.load_topics(st.session_state.username)
+        user_generated_topic_options = [
+            topic for topic in db.load_topics(st.session_state.username)
+            if topic not in preset_topic_options
+        ]
         all_topic_options = preset_topic_options + user_generated_topic_options
 
         topic = st.sidebar.radio(
@@ -31,8 +34,8 @@ def run_text_chat():
         else:   
             topic_submission = topic
 
-        st.write(f'topic_submission: {topic_submission}') # DEBUGGING
-        st.write(f'st.session_state.topic_submission: {st.session_state.topic_submission}') # DEBUGGING
+        # st.write(f'topic_submission: {topic_submission}') # DEBUGGING
+        # st.write(f'st.session_state.topic_submission: {st.session_state.topic_submission}') # DEBUGGING
         if topic_submission != st.session_state.topic_submission: #initializing 
             st.session_state.correct_count = db.load_progress(st.session_state.username, topic_submission)[0]
             st.session_state.last_correct_word = db.load_progress(st.session_state.username, topic_submission)[1]
