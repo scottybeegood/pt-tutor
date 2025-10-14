@@ -28,7 +28,8 @@ def run_text_chat():
         )
         if topic == "Outra tema ⁉️":
             topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic", value="opening a new bank account")
-        topic_submission = topic
+        else:   
+            topic_submission = topic
 
         if topic_submission != st.session_state.topic_submission: #initializing 
             st.session_state.correct_count = db.load_progress(st.session_state.username, topic_submission)[0]
