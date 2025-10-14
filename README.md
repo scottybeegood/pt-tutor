@@ -81,6 +81,6 @@ streamlit run pt_tutor/app.py
 - [X] Reset convo with topic switch 
 - [X] Add ability to submit custom topic with auto-generated words
 - [ ] Cleanup 
-  - [ ] Address TODO's
+  - [ ] Remove unused st.session_state entries
   - [ ] Streamline logic (sync text_chat & audio_chat)
   
