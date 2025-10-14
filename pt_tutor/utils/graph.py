@@ -43,7 +43,6 @@ class State(TypedDict):
     messages: Annotated[list, add_messages]
     core_convo: Annotated[list, add_messages]
     corrections: Annotated[list, add_messages]
-    # topic_vocab: set
     correct_count: dict
     last_correct_word: str
     topic: str 
@@ -51,12 +50,12 @@ class State(TypedDict):
 
 def chatbot(state: State):
     topic = state["topic"]
-    # topic_vocab = state["topic_vocab"]
-    correct_words = set(state["correct_count"])
+    all_vocab = set(state["correct_count"].keys())
+    correct_vocab = {word for word, count in state["correct_count"].items() if count > 0}
 
     system_message = chatbot_instructions.format(topic=topic, 
-                                                 #topic_vocab=topic_vocab,
-                                                 correct_words=correct_words)
+                                                 all_vocab=all_vocab,
+                                                 correct_vocab=correct_vocab)
     response = llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
     state["messages"] = [response]
