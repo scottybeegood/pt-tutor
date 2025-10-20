@@ -1,12 +1,8 @@
-import os 
 from dotenv import load_dotenv
 load_dotenv()
-print("OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY"))
-print("CWD:", os.getcwd())
 
 import streamlit as st 
-import audio_chat
-import text_chat
+import chat
 from utils.functions import (
     submit_username,
     set_chat_mode,    
@@ -102,8 +98,5 @@ else:
             on_change=set_chat_mode,
         )
     else:
-        if st.session_state.chat_mode == "text":
-            text_chat.run_text_chat()
-        else: 
-            audio_chat.run_audio_chat()
+        chat.run_chat()
     

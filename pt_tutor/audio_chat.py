@@ -84,10 +84,12 @@ def run_audio_chat():
             with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
 
+    # audio specific 
     if recording := st.audio_input(label="Fala aqui..."):
         question_file = 'pt_tutor/data/audio/question.wav'
         record_audio(recording, question_file)
         transcription = transcribe_audio(question_file)
+    # end audio specific
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{transcription}</div>", unsafe_allow_html=True)
             st.session_state.student_messages.append(transcription)
@@ -120,6 +122,8 @@ def run_audio_chat():
                 st.session_state.last_correct_word = response["last_correct_word"]
                 st.rerun()
 
+    # audio specific
         response_file = 'pt_tutor/data/audio/response.mp3'
         generate_audio(st.session_state.tutor_messages[-1], response_file)
         st.audio(data=response_file, autoplay=True)
+    # end audio specific

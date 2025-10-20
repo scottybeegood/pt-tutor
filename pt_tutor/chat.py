@@ -1,4 +1,3 @@
-from distro import name
 import streamlit as st 
 from wordcloud import WordCloud
 from utils.graph import graph 
@@ -12,8 +11,14 @@ from utils.functions import (
     click_button,
     reset_button,
 )
+from utils.audio_modules import (
+    record_audio,
+    transcribe_audio,
+    generate_audio,
+)
 
-def run_text_chat():
+
+def run_chat():
     db = VocabDB()
 
     with st.sidebar:
@@ -104,17 +109,23 @@ def run_text_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-    # text specific 
-    if prompt := st.chat_input("Fala aqui..."):
-    # end text specific
+    if st.session_state.chat_mode == "text":
+        user_input = st.chat_input("Fala aqui...")
+    elif st.session_state.chat_mode == "audio":
+        recording = st.audio_input(label="Fala aqui...")
+        question_file = 'pt_tutor/data/audio/question.wav'
+        record_audio(recording, question_file)
+        user_input = transcribe_audio(question_file)
+
+    if user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
-            st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
-            st.session_state.student_messages.append(prompt)
+            st.markdown(f"<div class='student-style'>{user_input}</div>", unsafe_allow_html=True)
+            st.session_state.student_messages.append(user_input)
 
             response = graph.invoke(
                 {
-                    "messages": [prompt], 
-                    "core_convo": [prompt],
+                    "messages": [user_input], 
+                    "core_convo": [user_input],
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
                     "topic": topic
@@ -137,3 +148,8 @@ def run_text_chat():
                 st.session_state.last_correct_word = response["last_correct_word"]
 
             st.rerun()
+
+    if st.session_state.chat_mode == "audio":
+        response_file = 'pt_tutor/data/audio/response.mp3'
+        generate_audio(st.session_state.tutor_messages[-1], response_file)
+        st.audio(data=response_file, autoplay=True)
