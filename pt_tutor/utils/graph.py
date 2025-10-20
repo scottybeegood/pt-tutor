@@ -91,8 +91,6 @@ def scorer(state: State):
     )
     corrector_message = clean_message(corrector_message)
 
-    # state.setdefault("correct_count", {})
-
     for user_word in corrector_message.split():
         if user_word in user_message.split() and user_word in state["correct_count"].keys():
             state["correct_count"][user_word] += 1
