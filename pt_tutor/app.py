@@ -40,6 +40,12 @@ st.markdown("""
         font-size: 16px !important;
         text-align: right !important;
     }
+    .tutor-translate-style {
+        color: grey !important;
+        font-style: italic !important;
+        font-size: 16px !important;
+        text-align: left !important;
+    }
     .box-style {
         border: 2px solid green !important;
         padding: 10px !important;
@@ -55,20 +61,28 @@ if "username" not in st.session_state:
     st.session_state.username = ""
 if "temp_username" not in st.session_state:
     st.session_state.temp_username = ""
-if 'username_submitted' not in st.session_state:
+if "username_submitted" not in st.session_state:
     st.session_state.username_submitted = False
-if 'chat_mode' not in st.session_state:
+if "chat_mode" not in st.session_state:
     st.session_state.chat_mode = ""
-if 'temp_chat_mode' not in st.session_state:
+if "temp_chat_mode" not in st.session_state:
     st.session_state.temp_chat_mode = ""
-if 'chat_mode_submitted' not in st.session_state:
+if "chat_mode_submitted" not in st.session_state:
     st.session_state.chat_mode_submitted = False
+if "topic_submission" not in st.session_state:
+    st.session_state.topic_submission = ""
 if "student_messages" not in st.session_state:
     st.session_state.student_messages = []
 if "student_correction_messages" not in st.session_state:
     st.session_state.student_correction_messages = []
 if "tutor_messages" not in st.session_state:
     st.session_state.tutor_messages = []
+if "clicked_translate" not in st.session_state:
+    st.session_state.clicked_translate = False
+if "last_tutor_message_translated" not in st.session_state:
+    st.session_state.last_tutor_message_translated = ""
+if "topic_submission" not in st.session_state:
+    st.session_state.topic_submission = ""
 if "topic_vocab" not in st.session_state:
     st.session_state.topic_vocab = set() # needed to recognize topic changes 
 if "correct_count" not in st.session_state:
@@ -79,6 +93,8 @@ if "clicked" not in st.session_state:
     st.session_state.clicked = False
 if "audio_running" not in st.session_state:
     st.session_state.audio_running = False
+if "need_rerun" not in st.session_state:
+    st.session_state.need_rerun = False
 
 
 if not st.session_state.username_submitted:

@@ -35,15 +35,14 @@ openai_org_id = os.getenv("OPENAI_ORG_ID") or st.secrets.get("OPENAI_ORG_ID")
 llm = ChatOpenAI(
     api_key=openai_api_key,
     organization=openai_org_id,
-    model="gpt-4o-mini",
-    temperature=1.0
+    model="gpt-4o-mini", # "gpt-5"  <-- too verbose 
+    temperature=0.7 # 1.0
 )
 
 class State(TypedDict):
     messages: Annotated[list, add_messages]
     core_convo: Annotated[list, add_messages]
     corrections: Annotated[list, add_messages]
-    topic_vocab: set
     correct_count: dict
     last_correct_word: str
     topic: str 
@@ -51,12 +50,12 @@ class State(TypedDict):
 
 def chatbot(state: State):
     topic = state["topic"]
-    topic_vocab = state["topic_vocab"]
-    correct_words = set(state["correct_count"])
+    all_vocab = set(state["correct_count"].keys())
+    correct_vocab = {word for word, count in state["correct_count"].items() if count > 0}
 
     system_message = chatbot_instructions.format(topic=topic, 
-                                                 topic_vocab=topic_vocab,
-                                                 correct_words=correct_words)
+                                                 all_vocab=all_vocab,
+                                                 correct_vocab=correct_vocab)
     response = llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
     state["messages"] = [response]
@@ -92,16 +91,12 @@ def scorer(state: State):
     )
     corrector_message = clean_message(corrector_message)
 
-    state.setdefault("correct_count", {})
+    # state.setdefault("correct_count", {})
 
     for user_word in corrector_message.split():
-        if user_word in user_message.split() and user_word in state["topic_vocab"]:
-            if user_word in state["correct_count"]:
-                state["correct_count"][user_word] += 1
-                state["last_correct_word"] = user_word
-            else:
-                state["correct_count"][user_word] = 1
-                state["last_correct_word"] = user_word
+        if user_word in user_message.split() and user_word in state["correct_count"].keys():
+            state["correct_count"][user_word] += 1
+            state["last_correct_word"] = user_word
  
     return state
 

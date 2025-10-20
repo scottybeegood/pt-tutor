@@ -15,6 +15,22 @@ class VocabDB:
         self.supabase = conn.client
    
 
+    def load_topics(self, username: str):
+        conn = st.connection("supabase", type=SupabaseConnection)
+        result = (conn.client.table('topics')
+                    .select('topic')
+                    .eq('username', username)
+                    .execute())
+        df = pd.DataFrame(result.data)
+
+        if df.empty:
+            return []
+
+        topics = df['topic'].unique().tolist()
+    
+        return topics
+    
+    
     def load_progress(self, username: str, topic: str):
         conn = st.connection("supabase", type=SupabaseConnection)
         result = (conn.client.table('progress')
@@ -28,7 +44,6 @@ class VocabDB:
             return ({}, '')
 
         correct_count = df.set_index('portuguese_word')['correct_count'].to_dict()
-        correct_count = {k: v for k, v in correct_count.items() if v > 0}
 
         try:
             last_correct_word = df.loc[df['flag_last_correct_word'] == 1, 'portuguese_word'].iloc[0]
@@ -36,7 +51,7 @@ class VocabDB:
             last_correct_word = ''
     
         return (correct_count, last_correct_word)
-        
+
 
     def save_progress(self, username: str, topic: str, correct_count: dict, last_correct_word: str):
         words = list(correct_count.keys())
@@ -61,4 +76,15 @@ class VocabDB:
         if progress:
             (conn.client.table('progress')
                 .insert(progress)
+                .execute())
+            
+        # save topic if new
+        existing = (conn.client.table('topics')
+                        .select('topic')
+                        .eq('username', username)
+                        .eq('topic', topic)
+                        .execute())
+        if not existing.data:
+            (conn.client.table('topics')
+                .insert({'username': username, 'topic': topic})
                 .execute())

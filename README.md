@@ -77,19 +77,10 @@ streamlit run pt_tutor/app.py
 ```
 
 # Roadmap 
-## Planned for Release 2 (Aug 29 2025)
-- [X] Add toggle so user can choose text or voice interaction
-- [X] Add voice experience
-
-## Planned for Release 3 (Aug 31 2025)
-- [ ] Add "Translate last response" button
-- [ ] Add "Enhanced Corrector" feedback showing ideal phrasing 
-
-## Planned for Release 4 (Sep 7 2025)
-- [ ] Add "Beginner Mode" where you speak English and response is in Portuguese 
-
-## Planned for Release 5 (Sep 14 2025)
-- [ ] Add ability to submit custom topic with auto-generated words
-- [ ] Improve vocab recognition
-  - [ ] Accommodate multiple word vocab
-  - [ ] Include vocab variants (o/os/a/as, verb conjugations)
+- [X] Fix translate last button
+- [X] Reset convo with topic switch 
+- [X] Add ability to submit custom topic with auto-generated words
+- [ ] Cleanup 
+  - [ ] Remove unused st.session_state entries
+  - [ ] Streamline logic (sync text_chat & audio_chat)
+  

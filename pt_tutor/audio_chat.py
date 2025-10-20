@@ -5,6 +5,7 @@ from utils.graph import graph
 from utils.database import VocabDB
 from utils.functions import (
     get_topic_vocab,
+    translate_last,
     click_button,
     reset_button, 
 )
@@ -58,6 +59,9 @@ def run_audio_chat():
                 random_state=42).generate_from_frequencies(st.session_state.correct_count)
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
+        # TODO: update below to match text_chat 
+        st.sidebar.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
+        
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
         if st.session_state.clicked:
             db.save_progress(st.session_state.username, topic, st.session_state.correct_count, st.session_state.last_correct_word)
@@ -109,6 +113,7 @@ def run_audio_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
+            st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
 
             st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
