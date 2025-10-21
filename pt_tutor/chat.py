@@ -22,6 +22,7 @@ from utils.audio_modules import (
 def run_chat():
     db = VocabDB()
 
+    # starting sidebar
     with st.sidebar:
         preset_topic_options = ["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅", "Outra tema ⁉️"]
         user_generated_topic_options = [
@@ -31,12 +32,14 @@ def run_chat():
         all_topic_options = preset_topic_options + user_generated_topic_options
 
         topic = st.sidebar.radio(
-            "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
+            label="**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
             key="topic",
             options=all_topic_options,
         )
         if topic == "Outra tema ⁉️":
-            topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic", value="opening a new bank account")
+            topic_submission = st.text_input(label="Escreve o teu tema aqui:", 
+                                             key="custom_topic", 
+                                             value="opening a new bank account")
         else:   
             topic_submission = topic
 
@@ -82,7 +85,10 @@ def run_chat():
                 random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
-        st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
+        st.sidebar.button(label="GUARDAR",
+                          key='launch', 
+                          type="primary", 
+                          on_click=click_button)
         if st.session_state.clicked:
             db.save_progress(st.session_state.username, topic_submission, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
@@ -114,15 +120,17 @@ def run_chat():
                         response_file = 'pt_tutor/data/audio/response.mp3'
                         generate_audio(st.session_state.tutor_messages[-1], response_file)
                         st.audio(data=response_file, autoplay=True)
-                        st.session_state.recording_submitted = False
+                        # st.session_state.recording_submitted = False
     
     if st.session_state.chat_mode == "text":
-        st.session_state.user_input = st.chat_input("Fala aqui...")
+        st.session_state.user_input = st.chat_input(placeholder="Fala aqui...")
     elif st.session_state.chat_mode == "audio":
-        if not st.session_state.recording_submitted:
-            st.audio_input("Fala aqui...",
-                           key="temp_recording",
-                           on_change=submit_recording)
+        audio_file = st.audio_input(label="Fala aqui...", key="temp_recording")
+        if audio_file:
+            question_file = 'pt_tutor/data/audio/question.wav'
+            record_audio(audio_file, question_file)
+            user_input = transcribe_audio(question_file)
+            st.session_state.user_input = user_input
 
     if st.session_state.user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
@@ -154,9 +162,4 @@ def run_chat():
             if response["last_correct_word"] != st.session_state.last_correct_word:
                 st.session_state.last_correct_word = response["last_correct_word"]
 
-            st.rerun()
-
-    # if st.session_state.chat_mode == "audio":
-    #     response_file = 'pt_tutor/data/audio/response.mp3'
-    #     generate_audio(st.session_state.tutor_messages[-1], response_file)
-    #     st.audio(data=response_file, autoplay=True)
+            st.rerun() # for last_correct_word update
