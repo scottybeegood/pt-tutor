@@ -140,7 +140,7 @@ def run_chat():
 
     if st.session_state.user_input:  
 
-        st.write(f"<!-- iteration post user_input check: {st.session_state.iteration} -->")
+        #st.write(f"<!-- iteration post user_input check: {st.session_state.iteration} -->")
         st.write(f"<!-- USER_INPUT check: {user_input} -->")
 
         with chat_area.chat_message(name="student", avatar="😊"):
