@@ -92,6 +92,8 @@ if "recording_submitted" not in st.session_state:
     st.session_state.recording_submitted = False
 if "last_recording" not in st.session_state:
     st.session_state.last_recording = None
+if "last_audio_size" not in st.session_state:
+    st.session_state.last_audio_size = None
 
 
 if not st.session_state.username_submitted:
