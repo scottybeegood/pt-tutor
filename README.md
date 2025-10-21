@@ -83,4 +83,5 @@ streamlit run pt_tutor/app.py
 - [X] Cleanup 
   - [X] Remove unused st.session_state entries
   - [X] Streamline logic (sync text_chat & audio_chat)
+- [ ] Refine voice in Audio 
   
