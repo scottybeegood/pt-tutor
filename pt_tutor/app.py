@@ -78,6 +78,8 @@ if "last_correct_word" not in st.session_state:
     st.session_state.last_correct_word = ""
 if "clicked" not in st.session_state:
     st.session_state.clicked = False
+if "recording" not in st.session_state:
+    st.session_state.recording = None
 
 
 if not st.session_state.username_submitted:
