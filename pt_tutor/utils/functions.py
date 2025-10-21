@@ -106,3 +106,9 @@ def click_button():
 
 def reset_button():
     st.session_state.clicked = False
+
+
+def submit_recording():
+    st.session_state.recording = st.session_state.temp_recording
+    st.session_state.recording_submitted = True
+    st.session_state.temp_recording = ""
