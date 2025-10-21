@@ -122,7 +122,8 @@ def run_chat():
                         st.session_state.recording_submitted = False
     
     if st.session_state.chat_mode == "text":
-        st.session_state.user_input = st.chat_input(placeholder="Fala aqui...")
+        user_input = st.chat_input(placeholder="Fala aqui...")
+        st.session_state.user_input = user_input
     elif st.session_state.chat_mode == "audio":
         recording = st.audio_input(label="Fala aqui...")
         if recording and st.session_state.recording_submitted == False: 
