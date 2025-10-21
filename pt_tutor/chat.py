@@ -120,9 +120,9 @@ def run_chat():
         st.session_state.user_input = st.chat_input("Fala aqui...")
     elif st.session_state.chat_mode == "audio":
         if not st.session_state.recording_submitted:
-            st.session_state.user_input = st.audio_input("Fala aqui...",
-                                                         key="temp_recording",
-                                                         on_change=submit_recording)
+            st.audio_input("Fala aqui...",
+                           key="temp_recording",
+                           on_change=submit_recording)
 
     if st.session_state.user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
