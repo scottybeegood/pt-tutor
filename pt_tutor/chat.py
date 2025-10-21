@@ -119,7 +119,7 @@ def run_chat():
         if st.session_state.recording:
             question_file = 'pt_tutor/data/audio/question.wav'
             record_audio(st.session_state.recording, question_file)
-            st.session_stateuser_input = transcribe_audio(question_file)
+            st.session_state.user_input = transcribe_audio(question_file)
 
     if st.session_state.user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
