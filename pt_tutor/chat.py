@@ -124,13 +124,13 @@ def run_chat():
     if st.session_state.chat_mode == "text":
         st.session_state.user_input = st.chat_input(placeholder="Fala aqui...")
     elif st.session_state.chat_mode == "audio":
-        audio_file = st.audio_input(label="Fala aqui...", key="temp_recording")
+        audio_file = st.audio_input(label="Fala aqui...") #, key="temp_recording")
         if audio_file:
             question_file = 'pt_tutor/data/audio/question.wav'
             record_audio(audio_file, question_file)
             user_input = transcribe_audio(question_file)
             st.session_state.user_input = user_input
-        audio_file = None
+        # audio_file = None
 
     if st.session_state.user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
