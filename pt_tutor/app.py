@@ -2,7 +2,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import streamlit as st 
-import chat
+import text_chat
+import audio_chat
 from utils.functions import (
     submit_username,
     set_chat_mode,    
@@ -78,22 +79,6 @@ if "last_correct_word" not in st.session_state:
     st.session_state.last_correct_word = ""
 if "clicked" not in st.session_state:
     st.session_state.clicked = False
-if "recording" not in st.session_state:
-    st.session_state.recording = None
-if "user_input" not in st.session_state:
-    st.session_state.user_input = None
-if "iteration" not in st.session_state:
-    st.session_state.iteration = 0
-if "recording" not in st.session_state:
-    st.session_state.recording = ""
-if "temp_recording" not in st.session_state:
-    st.session_state.temp_recording = ""
-if "recording_submitted" not in st.session_state:
-    st.session_state.recording_submitted = False
-if "last_recording" not in st.session_state:
-    st.session_state.last_recording = None
-if "last_audio_size" not in st.session_state:
-    st.session_state.last_audio_size = None
 
 
 if not st.session_state.username_submitted:
@@ -114,5 +99,7 @@ else:
             on_change=set_chat_mode,
         )
     else:
-        chat.run_chat()
-    
+        if st.session_state.chat_mode == "text":
+            text_chat.run_text_chat()
+        elif st.session_state.chat_mode == "audio":
+            audio_chat.run_audio_chat()

@@ -104,9 +104,7 @@ def run_text_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-    # text specific 
-    if prompt := st.chat_input("Fala aqui..."):
-    # end text specific
+    if prompt := st.chat_input(placeholder="Fala aqui..."):
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
             st.session_state.student_messages.append(prompt)
