@@ -158,6 +158,7 @@ def run_chat():
                     "configurable": {"thread_id": 42},
                 }
             )
+            st.session_state.user_input = None
             student_correction = response["corrections"][-1].content
             st.session_state.student_correction_messages.append(student_correction)
             st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
@@ -171,5 +172,4 @@ def run_chat():
             if response["last_correct_word"] != st.session_state.last_correct_word:
                 st.session_state.last_correct_word = response["last_correct_word"]
 
-    st.session_state.user_input = None
-    st.rerun() # for last_correct_word update
+            st.rerun() # for last_correct_word update
