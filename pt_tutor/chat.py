@@ -159,6 +159,7 @@ def run_chat():
                     "configurable": {"thread_id": 42},
                 }
             )
+            st.write(f"<!-- st.session.user_input pre user_input reset check: {st.session_state.user_input} -->")
             st.session_state.user_input = None
             st.write(f"<!-- st.session.user_input post user_input reset check: {st.session_state.user_input} -->")
             student_correction = response["corrections"][-1].content
