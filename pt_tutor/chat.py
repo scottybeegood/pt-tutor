@@ -111,7 +111,7 @@ def run_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-    user_input = None
+    st.session_state.user_input = None
     if st.session_state.chat_mode == "text":
         user_input = st.chat_input("Fala aqui...")
     elif st.session_state.chat_mode == "audio":
@@ -151,6 +151,7 @@ def run_chat():
                 generate_audio(st.session_state.tutor_messages[-1], response_file)
                 st.audio(data=response_file, autoplay=True)
                 st.session_state.recording = None
+                st.session_state.user_input = None
 
             st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
