@@ -132,6 +132,7 @@ def run_chat():
             question_file = 'pt_tutor/data/audio/question.wav'
             record_audio(recording, question_file)
             user_input = transcribe_audio(question_file)
+            st.write(f'transcription of st.audio_input: {user_input}')
     st.session_state.user_input = user_input
 
     if st.session_state.user_input:    
