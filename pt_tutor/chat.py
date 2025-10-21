@@ -125,7 +125,7 @@ def run_chat():
         st.session_state.user_input = st.chat_input(placeholder="Fala aqui...")
     elif st.session_state.chat_mode == "audio":
         recording = st.audio_input(label="Fala aqui...")
-        if recording and not st.session_state.recording_submitted:
+        if recording and st.session_state.recording_submitted == False: 
             submission_file = 'pt_tutor/data/audio/submission.wav'
             record_audio(recording, submission_file)
             user_input = transcribe_audio(submission_file)
@@ -171,5 +171,5 @@ def run_chat():
             if response["last_correct_word"] != st.session_state.last_correct_word:
                 st.session_state.last_correct_word = response["last_correct_word"]
 
-    st.session_state.user_input = None
-    st.rerun() # for last_correct_word update
+        st.session_state.user_input = None
+        st.rerun() # for last_correct_word update
