@@ -111,7 +111,7 @@ def run_audio_chat():
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
         response_file = 'pt_tutor/data/audio/response.mp3'
-        generate_audio(st.session_state.tutor_messages[len(st.session_state.student_messages)-1], response_file)
+        generate_audio(st.session_state.tutor_messages[len(st.session_state.tutor_messages)-1], response_file)
         st.audio(data=response_file, autoplay=True)
 
     if recording := st.audio_input(label="Fala aqui..."):
