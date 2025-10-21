@@ -116,6 +116,7 @@ def run_chat():
                         st.audio(data=response_file, autoplay=True)
                         st.session_state.recording_submitted = False
     
+    user_input = None
     if st.session_state.chat_mode == "text":
         user_input = st.chat_input("Fala aqui...")
     elif st.session_state.chat_mode == "audio":
