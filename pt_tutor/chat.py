@@ -171,5 +171,5 @@ def run_chat():
             if response["last_correct_word"] != st.session_state.last_correct_word:
                 st.session_state.last_correct_word = response["last_correct_word"]
 
-            st.session_state.user_input = None
-            st.rerun() # for last_correct_word update
+    st.session_state.user_input = None
+    st.rerun() # for last_correct_word update
