@@ -114,25 +114,16 @@ def run_chat():
                         response_file = 'pt_tutor/data/audio/response.mp3'
                         generate_audio(st.session_state.tutor_messages[-1], response_file)
                         st.audio(data=response_file, autoplay=True)
-                        st.session_state.recording = None
-
-    st.session_state.recording_submitted = False
+                        st.session_state.recording_submitted = False
     
     if st.session_state.chat_mode == "text":
         user_input = st.chat_input("Fala aqui...")
     elif st.session_state.chat_mode == "audio":
-        st.session_state.iteration = st.session_state.iteration + 1
-        st.write(f'iteration: {st.session_state.iteration}')
-        if not st.session_state.recording:
-            st.audio_input("Fala aqui...", 
-                           key="temp_recording",
-                           on_change=submit_recording
-            )
-        if st.session_state.recording_submitted:
-            question_file = 'pt_tutor/data/audio/question.wav'
-            record_audio(st.session_state.recording, question_file)
-            user_input = transcribe_audio(question_file)
-            st.write(f'transcription of st.audio_input: {user_input}')
+        if not st.session_state.recording_submitted:
+            user_input = st.audio_input("Fala aqui...", 
+                                        key="temp_recording",
+                                        on_change=submit_recording
+                         )
 
     if user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
