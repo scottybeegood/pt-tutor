@@ -159,6 +159,7 @@ def run_chat():
                 }
             )
             st.session_state.user_input = None
+            st.write(f"<!-- st.session.user_input post user_input reset check: {st.session_state.user_input} -->")
             student_correction = response["corrections"][-1].content
             st.session_state.student_correction_messages.append(student_correction)
             st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
