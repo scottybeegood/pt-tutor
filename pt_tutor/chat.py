@@ -10,7 +10,6 @@ from utils.functions import (
     reset_translate_button,
     click_button,
     reset_button,
-    submit_recording,
 )
 from utils.audio_modules import (
     record_audio,
