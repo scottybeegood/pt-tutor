@@ -10,6 +10,7 @@ from utils.functions import (
     reset_translate_button,
     click_button,
     reset_button,
+    submit_recording,
 )
 from utils.audio_modules import (
     record_audio,
@@ -126,7 +127,11 @@ def run_chat():
         st.session_state.iteration = st.session_state.iteration + 1
         st.write(f'iteration: {st.session_state.iteration}')
         st.write(f'recording before st.audio_input: {recording}')
-        recording = st.audio_input(label="Fala aqui...") # get this to reset each run
+        if not st.session_state.recording:
+            st.audio_input("Fala aqui...", 
+                           key="temp_recording",
+                           on_change=submit_recording
+            )
         st.write(f'recording after st.audio_input: {recording}')
         if recording:
             question_file = 'pt_tutor/data/audio/question.wav'

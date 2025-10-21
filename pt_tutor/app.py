@@ -84,6 +84,12 @@ if "user_input" not in st.session_state:
     st.session_state.user_input = None
 if "iteration" not in st.session_state:
     st.session_state.iteration = 0
+if "recording" not in st.session_state:
+    st.session_state.recording = ""
+if "temp_recording" not in st.session_state:
+    st.session_state.temp_recording = ""
+if "recording_submitted" not in st.session_state:
+    st.session_state.recording_submitted = False
 
 
 if not st.session_state.username_submitted:
