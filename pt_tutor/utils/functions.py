@@ -112,12 +112,12 @@ def reset_button():
     st.session_state.clicked = False
 
 
-def submit_recording():
-    st.session_state.recording = st.session_state.temp_recording
-    st.session_state.recording_submitted = True
-    st.session_state.temp_recording = ""
+# def submit_recording():
+#     st.session_state.recording = st.session_state.temp_recording
+#     st.session_state.recording_submitted = True
+#     st.session_state.temp_recording = ""
 
-    question_file = 'pt_tutor/data/audio/question.wav'
-    record_audio(st.session_state.recording, question_file)
-    user_input = transcribe_audio(question_file)
-    st.session_state.user_input = user_input
+#     question_file = 'pt_tutor/data/audio/question.wav'
+#     record_audio(st.session_state.recording, question_file)
+#     user_input = transcribe_audio(question_file)
+#     st.session_state.user_input = user_input
