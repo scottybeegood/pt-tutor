@@ -130,7 +130,7 @@ def run_chat():
         st.write(f'recording after st.audio_input: {recording}')
         if recording:
             question_file = 'pt_tutor/data/audio/question.wav'
-            record_audio(st.session_state.recording, question_file)
+            record_audio(recording, question_file)
             user_input = transcribe_audio(question_file)
     st.session_state.user_input = user_input
 
