@@ -115,6 +115,7 @@ def run_chat():
                         st.audio(data=response_file, autoplay=True)
                         st.session_state.recording = None
 
+    recording = None
     user_input = None
     st.session_state.user_input = None
     st.write(f'st.session_state.user_input: {st.session_state.user_input}')
