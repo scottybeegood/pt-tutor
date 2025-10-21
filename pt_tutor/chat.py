@@ -134,6 +134,7 @@ def run_chat():
             user_input = transcribe_audio(question_file)
             st.write(f'transcription of st.audio_input: {user_input}')
     st.session_state.user_input = user_input
+    st.write(f'st.session_state.user_input after user input block: {st.session_state.user_input}')
 
     if st.session_state.user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
