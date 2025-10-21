@@ -87,7 +87,7 @@ def run_chat():
             st.sidebar.write("Guardado!")
             reset_button()
 
-        st.sidebar.write(f'st.session_state.recording: {st.session_state.recording}') 
+        st.sidebar.write(f'st.session_state.recording: {st.session_state.user_input}') 
 
     st.write("## Fala Português!")
 
@@ -117,25 +117,25 @@ def run_chat():
                         st.audio(data=response_file, autoplay=True)
                         st.session_state.recording = None
 
-    user_input = None
+    st.session_state.user_input = None
     if st.session_state.chat_mode == "text":
-        user_input = st.chat_input("Fala aqui...")
+        st.session_state.user_input = st.chat_input("Fala aqui...")
     elif st.session_state.chat_mode == "audio":
         st.session_state.recording = st.audio_input(label="Fala aqui...")
         if st.session_state.recording:
             question_file = 'pt_tutor/data/audio/question.wav'
             record_audio(st.session_state.recording, question_file)
-            user_input = transcribe_audio(question_file)
+            st.session_state.user_input = transcribe_audio(question_file)
 
-    if user_input:    
+    if st.session_state.user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
-            st.markdown(f"<div class='student-style'>{user_input}</div>", unsafe_allow_html=True)
-            st.session_state.student_messages.append(user_input)
+            st.markdown(f"<div class='student-style'>{st.session_state.user_input}</div>", unsafe_allow_html=True)
+            st.session_state.student_messages.append(st.session_state.user_input)
 
             response = graph.invoke(
                 {
-                    "messages": [user_input], 
-                    "core_convo": [user_input],
+                    "messages": [st.session_state.user_input], 
+                    "core_convo": [st.session_state.user_input],
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
                     "topic": topic
