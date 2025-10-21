@@ -133,18 +133,16 @@ def run_chat():
             record_audio(st.session_state.recording, question_file)
             user_input = transcribe_audio(question_file)
             st.write(f'transcription of st.audio_input: {user_input}')
-    st.session_state.user_input = user_input
-    st.write(f'st.session_state.user_input after user input block: {st.session_state.user_input}')
 
-    if st.session_state.user_input:    
+    if user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
-            st.markdown(f"<div class='student-style'>{st.session_state.user_input}</div>", unsafe_allow_html=True)
-            st.session_state.student_messages.append(st.session_state.user_input)
+            st.markdown(f"<div class='student-style'>{user_input}</div>", unsafe_allow_html=True)
+            st.session_state.student_messages.append(user_input)
 
             response = graph.invoke(
                 {
-                    "messages": [st.session_state.user_input], 
-                    "core_convo": [st.session_state.user_input],
+                    "messages": [user_input], 
+                    "core_convo": [user_input],
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
                     "topic": topic
