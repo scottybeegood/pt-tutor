@@ -118,10 +118,12 @@ def run_chat():
     user_input = None
     st.session_state.user_input = None
     st.write(f'st.session_state.user_input: {st.session_state.user_input}')
+    st.write(f'st.session_state.recording: {st.session_state.recording}')
     if st.session_state.chat_mode == "text":
         user_input = st.chat_input("Fala aqui...")
     elif st.session_state.chat_mode == "audio":
-        st.session_state.recording = st.audio_input(label="Fala aqui...")
+        recording = st.audio_input(label="Fala aqui...")
+        st.session_state.recording = recording
         if st.session_state.recording:
             question_file = 'pt_tutor/data/audio/question.wav'
             record_audio(st.session_state.recording, question_file)
