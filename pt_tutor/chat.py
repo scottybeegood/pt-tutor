@@ -127,13 +127,17 @@ def run_chat():
         recording = st.audio_input(label="Fala aqui...")
 
         if recording and not st.session_state.recording_submitted:
-            question_file = 'pt_tutor/data/audio/question.wav'
-            record_audio(recording, question_file)
-            user_input = transcribe_audio(question_file)
+            submission_file = 'pt_tutor/data/audio/submission.wav'
+            record_audio(recording, submission_file)
+            user_input = transcribe_audio(submission_file)
             st.session_state.user_input = user_input
             st.session_state.recording_submitted = True
         elif not recording:
             st.session_state.recording_submitted = False
+
+    st.session_state.iteration += 1
+    st.write(f"<!-- iteration: {st.session_state.iteration} -->")
+    st.write(f"st.session_state.user_input: {st.session_state.user_input}")
 
     if st.session_state.user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
