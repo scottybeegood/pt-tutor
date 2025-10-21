@@ -149,8 +149,8 @@ def run_chat():
 
             response = graph.invoke(
                 {
-                    "messages": [st.session_state.user_input],
-                    "core_convo": [st.session_state.user_input],
+                    "messages": [user_input],
+                    "core_convo": [user_input],
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
                     "topic": topic
