@@ -123,6 +123,8 @@ def run_chat():
     if st.session_state.chat_mode == "text":
         user_input = st.chat_input("Fala aqui...")
     elif st.session_state.chat_mode == "audio":
+        st.session_state.iteration = st.session_state.iteration + 1
+        st.write(f'iteration: {st.session_state.iteration}')
         recording = st.audio_input(label="Fala aqui...")
         st.session_state.recording = recording
         if st.session_state.recording:
