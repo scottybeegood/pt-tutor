@@ -119,34 +119,23 @@ def run_chat():
                         response_file = 'pt_tutor/data/audio/response.mp3'
                         generate_audio(st.session_state.tutor_messages[-1], response_file)
                         st.audio(data=response_file, autoplay=True)
-                        st.session_state.recording_submitted = False
+
+    user_input = None
     
     if st.session_state.chat_mode == "text":
         user_input = st.chat_input(placeholder="Fala aqui...")
-        st.session_state.user_input = user_input
     elif st.session_state.chat_mode == "audio":
         recording = st.audio_input(label="Fala aqui...")
-        if recording and st.session_state.recording_submitted == False: 
+        if recording and recording != st.session_state.last_recording:
             submission_file = 'pt_tutor/data/audio/submission.wav'
             record_audio(recording, submission_file)
             user_input = transcribe_audio(submission_file)
-            st.session_state.user_input = user_input
-            st.session_state.recording_submitted = True
-        elif not recording:
-            st.session_state.recording_submitted = False
+            st.session_state.last_processed_recording = recording
 
-    st.session_state.iteration += 1
-    st.write(f"<!-- iteration pre user_input check: {st.session_state.iteration} -->")
-    st.write(f"st.session_state.user_input: {st.session_state.user_input}")
-
-    if st.session_state.user_input:  
-
-        #st.write(f"<!-- iteration post user_input check: {st.session_state.iteration} -->")
-        st.write(f"-- USER_INPUT check: {user_input} -->")
-
+    if user_input:  
         with chat_area.chat_message(name="student", avatar="😊"):
-            st.markdown(f"<div class='student-style'>{st.session_state.user_input}</div>", unsafe_allow_html=True)
-            st.session_state.student_messages.append(st.session_state.user_input)
+            st.markdown(f"<div class='student-style'>{user_input}</div>", unsafe_allow_html=True)
+            st.session_state.student_messages.append(user_input)
 
             response = graph.invoke(
                 {
@@ -160,9 +149,6 @@ def run_chat():
                     "configurable": {"thread_id": 42},
                 }
             )
-            st.write(f"<!-- st.session.user_input pre user_input reset check: {st.session_state.user_input} -->")
-            st.session_state.user_input = None
-            st.write(f"<!-- st.session.user_input post user_input reset check: {st.session_state.user_input} -->")
             student_correction = response["corrections"][-1].content
             st.session_state.student_correction_messages.append(student_correction)
             st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)

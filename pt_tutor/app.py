@@ -90,6 +90,8 @@ if "temp_recording" not in st.session_state:
     st.session_state.temp_recording = ""
 if "recording_submitted" not in st.session_state:
     st.session_state.recording_submitted = False
+if "last_recording" not in st.session_state:
+    st.session_state.last_recording = None
 
 
 if not st.session_state.username_submitted:
