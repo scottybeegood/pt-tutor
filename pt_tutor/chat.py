@@ -87,8 +87,6 @@ def run_chat():
             st.sidebar.write("Guardado!")
             reset_button()
 
-        st.sidebar.write(f'st.session_state.user_input: {st.session_state.user_input}') 
-
     st.write("## Fala Português!")
 
     # starting main section 
@@ -119,6 +117,7 @@ def run_chat():
 
     user_input = None
     st.session_state.user_input = None
+    st.write(f'st.session_state.user_input: {st.session_state.user_input}')
     if st.session_state.chat_mode == "text":
         user_input = st.chat_input("Fala aqui...")
     elif st.session_state.chat_mode == "audio":
