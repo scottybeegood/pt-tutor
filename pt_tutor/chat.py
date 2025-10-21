@@ -126,7 +126,7 @@ def run_chat():
     elif st.session_state.chat_mode == "audio":
         recording = st.audio_input(label="Fala aqui...", key=f"temp_recording_{st.session_state.iteration}")
 
-        if recording and not st.session_state.recording_submitted:
+        if recording: # and not st.session_state.recording_submitted:
             submission_file = 'pt_tutor/data/audio/submission.wav'
             record_audio(recording, submission_file)
             user_input = transcribe_audio(submission_file)
