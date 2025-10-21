@@ -111,27 +111,31 @@ def run_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-    st.session_state.user_input = None
+                    if st.session_state.chat_mode == "audio":
+                        response_file = 'pt_tutor/data/audio/response.mp3'
+                        generate_audio(st.session_state.tutor_messages[-1], response_file)
+                        st.audio(data=response_file, autoplay=True)
+                        st.session_state.recording = None
+
+    user_input = None
     if st.session_state.chat_mode == "text":
-        st.session_state.user_input = st.chat_input("Fala aqui...")
+        user_input = st.chat_input("Fala aqui...")
     elif st.session_state.chat_mode == "audio":
         st.session_state.recording = st.audio_input(label="Fala aqui...")
         if st.session_state.recording:
             question_file = 'pt_tutor/data/audio/question.wav'
             record_audio(st.session_state.recording, question_file)
-            st.session_state.user_input = transcribe_audio(question_file)
+            user_input = transcribe_audio(question_file)
 
-    st.write(f'st.session_state.user_input: {st.session_state.user_input}') 
-
-    if st.session_state.user_input:    
+    if user_input:    
         with chat_area.chat_message(name="student", avatar="😊"):
-            st.markdown(f"<div class='student-style'>{st.session_state.user_input}</div>", unsafe_allow_html=True)
-            st.session_state.student_messages.append(st.session_state.user_input)
+            st.markdown(f"<div class='student-style'>{user_input}</div>", unsafe_allow_html=True)
+            st.session_state.student_messages.append(user_input)
 
             response = graph.invoke(
                 {
-                    "messages": [st.session_state.user_input], 
-                    "core_convo": [st.session_state.user_input],
+                    "messages": [user_input], 
+                    "core_convo": [user_input],
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
                     "topic": topic
@@ -148,12 +152,6 @@ def run_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
-            if st.session_state.chat_mode == "audio":
-                response_file = 'pt_tutor/data/audio/response.mp3'
-                generate_audio(st.session_state.tutor_messages[-1], response_file)
-                st.audio(data=response_file, autoplay=True)
-                st.session_state.recording = None
-                st.session_state.user_input = None
 
             st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
