@@ -125,11 +125,10 @@ def run_chat():
     elif st.session_state.chat_mode == "audio":
         st.session_state.iteration = st.session_state.iteration + 1
         st.write(f'iteration: {st.session_state.iteration}')
-        st.write(f'recording: {recording}')
-        st.write(f'st.session_state.recording: {st.session_state.recording}')
+        st.write(f'recording before st.audio_input: {recording}')
         recording = st.audio_input(label="Fala aqui...")
-        st.session_state.recording = recording
-        if st.session_state.recording:
+        st.write(f'recording after st.audio_input: {recording}')
+        if recording:
             question_file = 'pt_tutor/data/audio/question.wav'
             record_audio(st.session_state.recording, question_file)
             user_input = transcribe_audio(question_file)
