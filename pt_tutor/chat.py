@@ -144,6 +144,10 @@ def run_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
+            if st.session_state.chat_mode == "audio":
+                response_file = 'pt_tutor/data/audio/response.mp3'
+                generate_audio(st.session_state.tutor_messages[-1], response_file)
+                st.audio(data=response_file, autoplay=True)
 
             st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
@@ -151,7 +155,7 @@ def run_chat():
 
             st.rerun()
 
-    if st.session_state.chat_mode == "audio":
-        response_file = 'pt_tutor/data/audio/response.mp3'
-        generate_audio(st.session_state.tutor_messages[-1], response_file)
-        st.audio(data=response_file, autoplay=True)
+    # if st.session_state.chat_mode == "audio":
+    #     response_file = 'pt_tutor/data/audio/response.mp3'
+    #     generate_audio(st.session_state.tutor_messages[-1], response_file)
+    #     st.audio(data=response_file, autoplay=True)
