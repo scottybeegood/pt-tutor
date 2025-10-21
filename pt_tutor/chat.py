@@ -119,7 +119,7 @@ def run_chat():
                         response_file = 'pt_tutor/data/audio/response.mp3'
                         generate_audio(st.session_state.tutor_messages[-1], response_file)
                         st.audio(data=response_file, autoplay=True)
-                        # st.session_state.recording_submitted = False
+                        st.session_state.recording_submitted = False
     
     if st.session_state.chat_mode == "text":
         st.session_state.user_input = st.chat_input(placeholder="Fala aqui...")
