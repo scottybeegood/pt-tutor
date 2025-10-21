@@ -110,6 +110,10 @@ def run_audio_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
+                    response_file = 'pt_tutor/data/audio/response.mp3'
+                    generate_audio(st.session_state.tutor_messages[-1], response_file)
+                    st.audio(data=response_file, autoplay=True)
+
     if recording := st.audio_input(label="Fala aqui..."):
         question_file = 'pt_tutor/data/audio/question.wav'
         record_audio(recording, question_file)
@@ -133,19 +137,10 @@ def run_audio_chat():
             )
             student_correction = response["corrections"][-1].content
             st.session_state.student_correction_messages.append(student_correction)
-            st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
+            st.session_state.correct_count = response["correct_count"]
+            st.session_state.last_correct_word = response["last_correct_word"]
 
-        with chat_area.chat_message(name="tutor", avatar="🤖"):
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
-            st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
-
-            st.session_state.correct_count = response["correct_count"]
-            if response["last_correct_word"] != st.session_state.last_correct_word:
-                st.session_state.last_correct_word = response["last_correct_word"]
-                
-            response_file = 'pt_tutor/data/audio/response.mp3'
-            generate_audio(st.session_state.tutor_messages[-1], response_file)
-            st.audio(data=response_file, autoplay=True)
-
+        
             st.rerun()
