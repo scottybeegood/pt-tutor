@@ -136,10 +136,13 @@ def run_chat():
             st.session_state.recording_submitted = False
 
     st.session_state.iteration += 1
-    st.write(f"<!-- iteration: {st.session_state.iteration} -->")
+    st.write(f"<!-- iteration pre user_input check: {st.session_state.iteration} -->")
     st.write(f"st.session_state.user_input: {st.session_state.user_input}")
 
-    if st.session_state.user_input:    
+    if st.session_state.user_input:  
+
+        st.write(f"<!-- iteration post user_input check: {st.session_state.iteration} -->")
+
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{st.session_state.user_input}</div>", unsafe_allow_html=True)
             st.session_state.student_messages.append(st.session_state.user_input)
