@@ -126,7 +126,7 @@ def run_chat():
         st.session_state.iteration = st.session_state.iteration + 1
         st.write(f'iteration: {st.session_state.iteration}')
         st.write(f'recording before st.audio_input: {recording}')
-        recording = st.audio_input(label="Fala aqui...")
+        recording = st.audio_input(label="Fala aqui...") # get this to reset each run
         st.write(f'recording after st.audio_input: {recording}')
         if recording:
             question_file = 'pt_tutor/data/audio/question.wav'
