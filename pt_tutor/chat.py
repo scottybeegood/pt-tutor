@@ -148,7 +148,7 @@ def run_chat():
                 response_file = 'pt_tutor/data/audio/response.mp3'
                 generate_audio(st.session_state.tutor_messages[-1], response_file)
                 st.audio(data=response_file, autoplay=True)
-                recording = None
+                # TODO: reset recording, as a st.state object 
 
             st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
@@ -160,5 +160,3 @@ def run_chat():
     #     response_file = 'pt_tutor/data/audio/response.mp3'
     #     generate_audio(st.session_state.tutor_messages[-1], response_file)
     #     st.audio(data=response_file, autoplay=True)
-
-    # TODO: reset recording
