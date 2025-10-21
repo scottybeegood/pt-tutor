@@ -110,7 +110,7 @@ def run_audio_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-    if recording := st.audio_input(label="Fala aqui...")
+    if recording := st.audio_input(label="Fala aqui..."):
         question_file = 'pt_tutor/data/audio/question.wav'
         record_audio(recording, question_file)
         transcription = transcribe_audio(question_file)
