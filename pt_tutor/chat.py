@@ -87,6 +87,8 @@ def run_chat():
             st.sidebar.write("Guardado!")
             reset_button()
 
+        st.sidebar.write(f'st.session_state.recording: {st.session_state.recording}') 
+
     st.write("## Fala Português!")
 
     # starting main section 
