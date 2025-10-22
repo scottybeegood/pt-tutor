@@ -112,7 +112,7 @@ def run_audio_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-                    if st.session_state.tutor_messages:
+                    if len(st.session_state.student_messages) == len(st.session_state.tutor_messages):
                         response_file = 'pt_tutor/data/audio/response.mp3'
                         generate_audio(st.session_state.tutor_messages[-1], response_file)
                         st.audio(data=response_file, autoplay=True)
