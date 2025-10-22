@@ -18,7 +18,6 @@ from utils.audio_modules import (
     record_audio,
     transcribe_audio,
     generate_audio,
-    record_and_transcribe,
 )
 
 
