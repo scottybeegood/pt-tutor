@@ -105,27 +105,23 @@ def run_audio_chat():
                 st.markdown(f"<div class='student-correction-style'>{st.session_state.student_correction_messages[i]}</div>", unsafe_allow_html=True)
             with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
-                if i == len(st.session_state.student_messages) - 1:
-                    if st.session_state.clicked_translate:
-                        st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
-                        reset_translate_button()
-                    else:
-                        st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
+                
+        if st.session_state.clicked_translate:
+            st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
+            reset_translate_button()
+        else:
+            st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-                    if st.session_state.tutor_messages:
-                        response_file = 'pt_tutor/data/audio/response.mp3'
-                        generate_audio(st.session_state.tutor_messages[len(st.session_state.tutor_messages)-1], response_file)
-                        st.audio(data=response_file, autoplay=True)
+        if st.session_state.tutor_messages:
+            response_file = 'pt_tutor/data/audio/response.mp3'
+            generate_audio(st.session_state.tutor_messages[len(st.session_state.tutor_messages)-1], response_file)
+            st.audio(data=response_file, autoplay=True)
 
-
-    st.button(label="FALA!", key='record', type="secondary", on_click=click_speak_button)
-    if st.session_state.speak_clicked:
-        recording = st.audio_input(label="Fala aqui...")
-        submission_file = 'pt_tutor/data/audio/submission.wav'
-        record_audio(recording, submission_file)
-        transcription = transcribe_audio(submission_file)
-        st.write("Feito!")
-        reset_speak_button()
+    # pause it here?
+    if recording := st.audio_input(label="Fala aqui..."):
+        question_file = 'pt_tutor/data/audio/question.wav'
+        record_audio(recording, question_file)
+        transcription = transcribe_audio(question_file)
 
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{transcription}</div>", unsafe_allow_html=True)
