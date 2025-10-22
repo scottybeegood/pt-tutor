@@ -106,11 +106,11 @@ def run_audio_chat():
             with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
                 
-        if st.session_state.clicked_translate:
-            st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
-            reset_translate_button()
-        else:
-            st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
+                if st.session_state.clicked_translate:
+                    st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
+                    reset_translate_button()
+                else:
+                    st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
         if st.session_state.tutor_messages:
             response_file = 'pt_tutor/data/audio/response.mp3'
