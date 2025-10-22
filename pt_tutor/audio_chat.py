@@ -143,3 +143,7 @@ def run_audio_chat():
 
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
+
+            recording = None
+
+            st.rerun()
