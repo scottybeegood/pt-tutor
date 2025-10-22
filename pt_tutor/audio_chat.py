@@ -117,13 +117,15 @@ def run_audio_chat():
                         generate_audio(st.session_state.tutor_messages[len(st.session_state.tutor_messages)-1], response_file)
                         st.audio(data=response_file, autoplay=True)
 
-    # pause it here?
-    if recording := st.audio_input(label="Fala aqui..."):
+    
+    st.session_state.recording = st.audio_input(label="Fala aqui...")
+    if st.session_state.recording:
         question_file = 'pt_tutor/data/audio/question.wav'
         record_audio(recording, question_file)
         st.session_state.iteration += 1
         st.write("iter: {}".format(st.session_state.iteration))
         transcription = transcribe_audio(question_file)
+        st.session_state.recording = None
 
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{transcription}</div>", unsafe_allow_html=True)
