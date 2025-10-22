@@ -117,9 +117,9 @@ def run_audio_chat():
                         generate_audio(st.session_state.tutor_messages[len(st.session_state.tutor_messages)-1], response_file)
                         st.audio(data=response_file, autoplay=True)
 
-    print(f'st.session_state.recording before input: {st.session_state.recording}')
+    st.write(f'st.session_state.recording before input: {st.session_state.recording}')
     st.session_state.recording = st.audio_input(label="Fala aqui...")
-    print(f'st.session_state.recording after input: {st.session_state.recording}')
+    st.write(f'st.session_state.recording after input: {st.session_state.recording}')
     if st.session_state.recording:
         question_file = 'pt_tutor/data/audio/question.wav'
         record_audio(st.session_state.recording, question_file)
