@@ -129,28 +129,28 @@ def run_audio_chat():
 
             st.session_state.last_processed_file_id = current_file_id
 
-        with chat_area.chat_message(name="student", avatar="😊"):
-            st.markdown(f"<div class='student-style'>{transcription}</div>", unsafe_allow_html=True)
-            st.session_state.student_messages.append(transcription)
+            with chat_area.chat_message(name="student", avatar="😊"):
+                st.markdown(f"<div class='student-style'>{transcription}</div>", unsafe_allow_html=True)
+                st.session_state.student_messages.append(transcription)
 
-            response = graph.invoke(
-                {
-                    "messages": [transcription], 
-                    "core_convo": [transcription],
-                    "correct_count": st.session_state.correct_count,
-                    "last_correct_word": st.session_state.last_correct_word,
-                    "topic": topic
-                },
-                config = {
-                    "configurable": {"thread_id": 42},
-                }
-            )
-            student_correction = response["corrections"][-1].content
-            st.session_state.student_correction_messages.append(student_correction)
-            st.session_state.correct_count = response["correct_count"]
-            st.session_state.last_correct_word = response["last_correct_word"]
+                response = graph.invoke(
+                    {
+                        "messages": [transcription], 
+                        "core_convo": [transcription],
+                        "correct_count": st.session_state.correct_count,
+                        "last_correct_word": st.session_state.last_correct_word,
+                        "topic": topic
+                    },
+                    config = {
+                        "configurable": {"thread_id": 42},
+                    }
+                )
+                student_correction = response["corrections"][-1].content
+                st.session_state.student_correction_messages.append(student_correction)
+                st.session_state.correct_count = response["correct_count"]
+                st.session_state.last_correct_word = response["last_correct_word"]
 
-            tutor_response = response["core_convo"][-1].content
-            st.session_state.tutor_messages.append(tutor_response)
+                tutor_response = response["core_convo"][-1].content
+                st.session_state.tutor_messages.append(tutor_response)
 
-            st.rerun()
+                st.rerun()
