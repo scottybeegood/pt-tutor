@@ -75,12 +75,3 @@ To load the app locally, simply run the command below in Terminal.
 ```bash
 streamlit run pt_tutor/app.py
 ```
-
-# Roadmap 
-- [X] Fix translate last button
-- [X] Reset convo with topic switch 
-- [X] Add ability to submit custom topic with auto-generated words
-- [ ] Cleanup 
-  - [ ] Remove unused st.session_state entries
-  - [ ] Streamline logic (sync text_chat & audio_chat)
-  

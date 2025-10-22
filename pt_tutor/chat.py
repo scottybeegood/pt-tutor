@@ -1,4 +1,3 @@
-from distro import name
 import streamlit as st 
 from wordcloud import WordCloud
 from utils.graph import graph 
@@ -12,10 +11,17 @@ from utils.functions import (
     click_button,
     reset_button,
 )
+from utils.audio_modules import (
+    record_audio,
+    transcribe_audio,
+    generate_audio,
+)
 
-def run_text_chat():
+
+def run_chat():
     db = VocabDB()
 
+    # starting sidebar
     with st.sidebar:
         preset_topic_options = ["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅", "Outra tema ⁉️"]
         user_generated_topic_options = [
@@ -25,12 +31,14 @@ def run_text_chat():
         all_topic_options = preset_topic_options + user_generated_topic_options
 
         topic = st.sidebar.radio(
-            "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
+            label="**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
             key="topic",
             options=all_topic_options,
         )
         if topic == "Outra tema ⁉️":
-            topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic", value="opening a new bank account")
+            topic_submission = st.text_input(label="Escreve o teu tema aqui:", 
+                                             key="custom_topic", 
+                                             value="opening a new bank account")
         else:   
             topic_submission = topic
 
@@ -76,7 +84,10 @@ def run_text_chat():
                 random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
-        st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
+        st.sidebar.button(label="GUARDAR",
+                          key='launch', 
+                          type="primary", 
+                          on_click=click_button)
         if st.session_state.clicked:
             db.save_progress(st.session_state.username, topic_submission, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
@@ -104,15 +115,38 @@ def run_text_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-    if prompt := st.chat_input(placeholder="Fala aqui..."):
+                    if st.session_state.chat_mode == "audio":
+                        response_file = 'pt_tutor/data/audio/response.mp3'
+                        generate_audio(st.session_state.tutor_messages[-1], response_file)
+                        st.audio(data=response_file, autoplay=True)
+
+    user_input = None
+    
+    if st.session_state.chat_mode == "text":
+        user_input = st.chat_input(placeholder="Fala aqui...")
+    elif st.session_state.chat_mode == "audio":
+        recording = st.audio_input(label="Fala aqui...")
+        if recording:
+            current_size = recording.size
+
+            if current_size != st.session_state.last_audio_size:
+                submission_file = 'pt_tutor/data/audio/submission.wav'
+                record_audio(recording, submission_file)
+                user_input = transcribe_audio(submission_file)
+                st.session_state.last_processed_recording = recording
+            else:
+                st.session_state.last_audio_size = None
+
+
+    if user_input:  
         with chat_area.chat_message(name="student", avatar="😊"):
-            st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
-            st.session_state.student_messages.append(prompt)
+            st.markdown(f"<div class='student-style'>{user_input}</div>", unsafe_allow_html=True)
+            st.session_state.student_messages.append(user_input)
 
             response = graph.invoke(
                 {
-                    "messages": [prompt], 
-                    "core_convo": [prompt],
+                    "messages": [user_input],
+                    "core_convo": [user_input],
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
                     "topic": topic
@@ -134,4 +168,4 @@ def run_text_chat():
             if response["last_correct_word"] != st.session_state.last_correct_word:
                 st.session_state.last_correct_word = response["last_correct_word"]
 
-            st.rerun()
+            st.rerun() # for last_correct_word update
