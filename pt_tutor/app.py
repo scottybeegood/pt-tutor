@@ -79,8 +79,8 @@ if "last_correct_word" not in st.session_state:
     st.session_state.last_correct_word = ""
 if "clicked" not in st.session_state:
     st.session_state.clicked = False
-if "iteration" not in st.session_state:
-    st.session_state.iteration = 0
+if "speak_clicked" not in st.session_state:
+    st.session_state.speak_clicked = False
 
 
 if not st.session_state.username_submitted:
