@@ -117,15 +117,17 @@ def run_audio_chat():
                         generate_audio(st.session_state.tutor_messages[len(st.session_state.tutor_messages)-1], response_file)
                         st.audio(data=response_file, autoplay=True)
 
-    st.write(f'st.session_state.recording before input: {st.session_state.recording}')
     st.session_state.recording = st.audio_input(label="Fala aqui...")
-    st.write(f'st.session_state.recording after input: {st.session_state.recording}')
     if st.session_state.recording:
-        question_file = 'pt_tutor/data/audio/question.wav'
-        record_audio(st.session_state.recording, question_file)
-        st.session_state.iteration += 1
-        st.write("iter: {}".format(st.session_state.iteration))
-        transcription = transcribe_audio(question_file)
+        current_file_id = st.session_state.recording.file_id
+        if current_file_id != st.session_state.last_processed_file_id:
+            question_file = 'pt_tutor/data/audio/question.wav'
+            record_audio(st.session_state.recording, question_file)
+            st.session_state.iteration += 1
+            st.write("iter: {}".format(st.session_state.iteration))
+            transcription = transcribe_audio(question_file)
+
+            st.session_state.last_processed_file_id = current_file_id
 
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{transcription}</div>", unsafe_allow_html=True)
@@ -151,5 +153,4 @@ def run_audio_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
 
-            st.session_state.recording = None
-            #st.rerun()
+            st.rerun()

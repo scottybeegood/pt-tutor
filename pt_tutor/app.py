@@ -85,6 +85,8 @@ if "iteration" not in st.session_state:
     st.session_state.iteration = 0
 if "recording" not in st.session_state:
     st.session_state.recording = None
+if "last_processed_file_id" not in st.session_state:
+    st.session_state.last_processed_file_id = None
 
 
 if not st.session_state.username_submitted:
