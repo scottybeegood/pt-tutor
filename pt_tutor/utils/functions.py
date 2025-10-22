@@ -112,6 +112,14 @@ def reset_button():
     st.session_state.clicked = False
 
 
+def click_speak_button():
+    st.session_state.speak_clicked = True
+
+
+def reset_speak_button():
+    st.session_state.speak_clicked = False
+
+
 # def submit_recording():
 #     st.session_state.recording = st.session_state.temp_recording
 #     st.session_state.recording_submitted = True

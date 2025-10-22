@@ -11,11 +11,14 @@ from utils.functions import (
     reset_translate_button,
     click_button,
     reset_button,
+    click_speak_button,
+    reset_speak_button,
 )
 from utils.audio_modules import (
     record_audio,
     transcribe_audio,
     generate_audio,
+    record_and_transcribe,
 )
 
 
@@ -82,7 +85,7 @@ def run_audio_chat():
                 random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
-        st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
+        st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button) # TODO: add detail (click_button --> click_save_button)
         if st.session_state.clicked:
             db.save_progress(st.session_state.username, topic_submission, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
@@ -115,11 +118,15 @@ def run_audio_chat():
                         generate_audio(st.session_state.tutor_messages[len(st.session_state.tutor_messages)-1], response_file)
                         st.audio(data=response_file, autoplay=True)
 
-    st.session_state.iteration += 1
-    if recording := st.audio_input(label="Fala aqui...", key=f"audio_{st.session_state.iteration}"):
-        question_file = 'pt_tutor/data/audio/question.wav'
-        record_audio(recording, question_file)
-        transcription = transcribe_audio(question_file)
+
+    st.button(label="FALA!", key='record', type="secondary", on_click=click_speak_button)
+    if st.session_state.speak_clicked:
+        recording = st.audio_input(label="Fala aqui...")
+        submission_file = 'pt_tutor/data/audio/submission.wav'
+        record_audio(recording, submission_file)
+        transcription = transcribe_audio(submission_file)
+        st.write("Feito!")
+        reset_speak_button()
 
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{transcription}</div>", unsafe_allow_html=True)

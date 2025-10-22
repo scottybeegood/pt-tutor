@@ -21,7 +21,7 @@ def transcribe_audio(filepath):
 
 
 def generate_audio(text, filepath):
-    response = client.audio.speech.create(
+    response = client.audio.speech.create( # TODO: find a good model for european portuguese
         model='tts-1-hd',
         voice='fable', #  'nova', 'shimmer' are the best alternatives. 'alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer' are all options 
         input=text,
