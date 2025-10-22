@@ -81,6 +81,8 @@ if "clicked" not in st.session_state:
     st.session_state.clicked = False
 if "speak_clicked" not in st.session_state:
     st.session_state.speak_clicked = False
+if "iteration" not in st.session_state:
+    st.session_state.iteration = 0
 
 
 if not st.session_state.username_submitted:

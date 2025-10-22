@@ -121,6 +121,8 @@ def run_audio_chat():
     if recording := st.audio_input(label="Fala aqui..."):
         question_file = 'pt_tutor/data/audio/question.wav'
         record_audio(recording, question_file)
+        st.session_state.iteration += 1
+        st.write("iter: {}".format(st.session_state.iteration))
         transcription = transcribe_audio(question_file)
 
         with chat_area.chat_message(name="student", avatar="😊"):
