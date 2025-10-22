@@ -152,4 +152,4 @@ def run_audio_chat():
             st.session_state.tutor_messages.append(tutor_response)
 
             st.session_state.recording = None
-            st.rerun()
+            #st.rerun()
