@@ -106,8 +106,9 @@ else:
             index=None,
             on_change=set_chat_mode,
         )
-    else:
+    else: # TODO: consolidate audio, text 
         if st.session_state.chat_mode == "text":
             text_chat.run_text_chat()
         elif st.session_state.chat_mode == "audio":
             audio_chat.run_audio_chat()
+    
