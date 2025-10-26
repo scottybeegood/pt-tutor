@@ -88,7 +88,7 @@ def run_chat():
                           key='launch', 
                           type="primary", 
                           on_click=click_save_button)
-        if st.session_state.clicked:
+        if st.session_state.save_clicked:
             db.save_progress(st.session_state.username, topic_submission, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
             reset_save_button()

@@ -77,7 +77,7 @@ def run_text_chat():
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_save_button)
-        if st.session_state.clicked:
+        if st.session_state.save_clicked:
             db.save_progress(st.session_state.username, topic_submission, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
             reset_save_button()
