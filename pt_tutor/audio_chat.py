@@ -9,8 +9,8 @@ from utils.functions import (
     reset_container_content,
     translate_last,
     reset_translate_button,
-    click_button,
-    reset_button,
+    click_save_button,
+    reset_save_button,
     click_speak_button,
     reset_speak_button,
 )
@@ -84,11 +84,11 @@ def run_audio_chat():
                 random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
             st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
 
-        st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button) # TODO: add detail (click_button --> click_save_button)
+        st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_save_button)
         if st.session_state.clicked:
             db.save_progress(st.session_state.username, topic_submission, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
-            reset_button()
+            reset_save_button()
 
     st.write("## Fala Português!")
 

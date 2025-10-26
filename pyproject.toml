@@ -21,6 +21,7 @@ langchain-core = "^0.3.49"
 sounddevice = "^0.5.1"
 soundfile = "^0.13.1"
 gotrue = "^2.12.4"
+google-cloud = "^0.34.0"
 
 [build-system]
 requires = ["poetry-core"]

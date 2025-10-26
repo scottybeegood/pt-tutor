@@ -561,6 +561,18 @@ doc = ["sphinx (>=7.1.2,<7.2)", "sphinx-autodoc-typehints", "sphinx_rtd_theme"]
 test = ["coverage[toml]", "ddt (>=1.1.1,!=1.4.3)", "mock ; python_version < \"3.8\"", "mypy", "pre-commit", "pytest (>=7.3.1)", "pytest-cov", "pytest-instafail", "pytest-mock", "pytest-sugar", "typing-extensions ; python_version < \"3.11\""]
 
 [[package]]
+name = "google-cloud"
+version = "0.34.0"
+description = "API Client library for Google Cloud"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "google-cloud-0.34.0.tar.gz", hash = "sha256:01430187cf56df10a9ba775dd547393185d4b40741db0ea5889301f8e7a9d5d3"},
+    {file = "google_cloud-0.34.0-py2.py3-none-any.whl", hash = "sha256:fb1ab7b0548fe44b3d538041f0a374505b7f990d448a935ea36649c5ccab5acf"},
+]
+
+[[package]]
 name = "gotrue"
 version = "2.12.4"
 description = "Python Client Library for Supabase Auth"
@@ -3565,4 +3577,4 @@ cffi = ["cffi (>=1.17) ; python_version >= \"3.13\" and platform_python_implemen
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "77b5f97cf71c3cfd39569c564aae2edeb63e35d539d3463b764f0375e8c1ee16"
+content-hash = "3c8067993ef44d9c99dc9349eeabce49bcd3dc08eb959d46520efbfc28369ade"
