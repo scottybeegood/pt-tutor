@@ -152,4 +152,4 @@ def run_audio_chat():
                     st.session_state.last_correct_word = response["last_correct_word"]
                     st.session_state.correct_count = response["correct_count"]
                     
-        st.rerun() # if recording accepted
+            st.rerun() # if recording accepted
