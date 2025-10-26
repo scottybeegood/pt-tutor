@@ -112,7 +112,7 @@ def run_chat():
                     if st.session_state.chat_mode == "audio":
                         st.audio(data=st.session_state.last_generated_audio, autoplay=True)    
 
-    user_input = None
+    user_input = ""
     
     if st.session_state.chat_mode == "text":
         user_input = st.chat_input(placeholder="Fala aqui...")
@@ -127,7 +127,7 @@ def run_chat():
 
                 st.session_state.last_processed_file_id = current_file_id
 
-    if user_input:  
+    if user_input != "":  
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{user_input}</div>", unsafe_allow_html=True)
             st.session_state.student_messages.append(user_input)
