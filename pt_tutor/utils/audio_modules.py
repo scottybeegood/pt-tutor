@@ -1,8 +1,11 @@
-from openai import OpenAI
-from google.cloud import texttospeech
+from google.cloud import (
+    speech, 
+    texttospeech
+)
 
 
-client = texttospeech.TextToSpeechClient()
+stt_client = speech.SpeechClient()
+tts_client = texttospeech.TextToSpeechClient()
 
 
 def record_audio(audio_recording, filepath): 
@@ -12,17 +15,22 @@ def record_audio(audio_recording, filepath):
 
 def transcribe_audio(filepath):
     with open(filepath, 'rb') as f:
-        transcription = client.audio.transcriptions.create(
-            model='whisper-1',
-            file=f, 
-            response_format='text',
-            language='pt',
-        )
+        audio_content = f.read()
+
+    transcription = stt_client.recognize(
+        audio=speech.RecognitionAudio(content=audio_content),
+        config=speech.RecognitionConfig(
+            encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+            language_code="pt-PT",
+            model="default",
+        ),
+    )
+
     return transcription
 
 
 def generate_audio(text, filepath):
-    response = client.synthesize_speech(
+    response = tts_client.synthesize_speech(
         input=texttospeech.SynthesisInput(
             text=text
         ),
@@ -37,10 +45,6 @@ def generate_audio(text, filepath):
             speaking_rate=1.0
         ),
     )
-
-    # with open(filepath, 'wb') as f:
-    #     for chunk in response.iter_bytes():
-    #         f.write(chunk)
 
     with open(filepath, "wb") as f:
         f.write(response.audio_content)
