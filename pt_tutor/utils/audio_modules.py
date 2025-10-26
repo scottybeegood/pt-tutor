@@ -4,7 +4,8 @@ from google.cloud import (
 )
 
 
-stt_client = speech.SpeechClient()
+# stt_client = speech.SpeechClient()
+client = OpenAI()
 tts_client = texttospeech.TextToSpeechClient()
 
 
@@ -13,19 +14,30 @@ def record_audio(audio_recording, filepath):
         f.write(audio_recording.getvalue())
 
 
+# def transcribe_audio(filepath):
+#     with open(filepath, 'rb') as f:
+#         audio_content = f.read()
+
+#     transcription = stt_client.recognize(
+#         audio=speech.RecognitionAudio(content=audio_content),
+#         config=speech.RecognitionConfig(
+#             encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+#             language_code="pt-PT",
+#             model="default",
+#         ),
+#     )
+
+#     return transcription
+
+
 def transcribe_audio(filepath):
     with open(filepath, 'rb') as f:
-        audio_content = f.read()
-
-    transcription = stt_client.recognize(
-        audio=speech.RecognitionAudio(content=audio_content),
-        config=speech.RecognitionConfig(
-            encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-            language_code="pt-PT",
-            model="default",
-        ),
-    )
-
+        transcription = client.audio.transcriptions.create(
+            model='whisper-1',
+            file=f, 
+            response_format='text',
+            language='pt',
+        )
     return transcription
 
 
