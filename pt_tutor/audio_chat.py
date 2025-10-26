@@ -112,6 +112,10 @@ def run_audio_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
+                    response_file = 'pt_tutor/data/audio/response.mp3'
+                    generate_audio(st.session_state.tutor_messages[-1], response_file)
+                    st.audio(data=response_file, autoplay=True)
+
     st.session_state.recording = st.audio_input(label="Fala aqui...")
     if st.session_state.recording:
         current_file_id = st.session_state.recording.file_id
@@ -122,7 +126,6 @@ def run_audio_chat():
 
             st.session_state.last_processed_file_id = current_file_id
 
-            # TODO: move student, tutor chat areas together up above to re-unite translate. 
             with chat_area.chat_message(name="student", avatar="😊"):
                 st.markdown(f"<div class='student-style'>{transcription}</div>", unsafe_allow_html=True)
                 st.session_state.student_messages.append(transcription)
@@ -141,18 +144,11 @@ def run_audio_chat():
                 )
                 student_correction = response["corrections"][-1].content
                 st.session_state.student_correction_messages.append(student_correction)
-                st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
 
-            with chat_area.chat_message(name="tutor", avatar="🤖"):
                 tutor_response = response["core_convo"][-1].content
                 st.session_state.tutor_messages.append(tutor_response)
-                st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
 
                 if response["last_correct_word"] != st.session_state.last_correct_word:
                     st.session_state.last_correct_word = response["last_correct_word"]
                     st.session_state.correct_count = response["correct_count"]
                     st.rerun()
-
-                response_file = 'pt_tutor/data/audio/response.mp3'
-                generate_audio(st.session_state.tutor_messages[-1], response_file)
-                st.audio(data=response_file, autoplay=True)
