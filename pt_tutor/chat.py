@@ -122,9 +122,8 @@ def run_chat():
             current_file_id = st.session_state.recording.file_id
             if current_file_id != st.session_state.last_processed_file_id:
                 record_audio(st.session_state.recording, 'pt_tutor/data/audio/question.wav')
+                user_input = transcribe_audio('pt_tutor/data/audio/question.wav')
                 st.session_state.last_processed_file_id = current_file_id
-
-            user_input = transcribe_audio('pt_tutor/data/audio/question.wav')
 
     # st.write(f'user_input: {user_input}')
     if user_input:
