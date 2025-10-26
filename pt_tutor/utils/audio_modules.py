@@ -55,7 +55,8 @@ def generate_audio(text, filepath):
         voice=texttospeech.VoiceSelectionParams(
             language_code="pt-PT",
             name="Sadaltager",
-            custom_voice=texttospeech.CustomVoiceParams(model="gemini-2.5-flash-tts")
+            model_name="gemini-2.5-flash-tts"
+            # custom_voice=texttospeech.CustomVoiceParams(model="gemini-2.5-flash-tts")
         ),
         audio_config=texttospeech.AudioConfig(
             audio_encoding=texttospeech.AudioEncoding.LINEAR16,
