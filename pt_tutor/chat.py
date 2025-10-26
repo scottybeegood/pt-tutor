@@ -8,8 +8,8 @@ from utils.functions import (
     reset_container_content,
     translate_last,
     reset_translate_button,
-    click_button,
-    reset_button,
+    click_save_button,
+    reset_save_button,
 )
 from utils.audio_modules import (
     record_audio,
@@ -87,11 +87,11 @@ def run_chat():
         st.sidebar.button(label="GUARDAR",
                           key='launch', 
                           type="primary", 
-                          on_click=click_button)
+                          on_click=click_save_button)
         if st.session_state.clicked:
             db.save_progress(st.session_state.username, topic_submission, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
-            reset_button()
+            reset_save_button()
 
     st.write("## Fala Português!")
 
