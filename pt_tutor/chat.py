@@ -112,7 +112,7 @@ def run_chat():
                     if st.session_state.chat_mode == "audio":
                         st.audio(data=st.session_state.last_generated_audio, autoplay=True)    
 
-    # user_input = None
+    user_input = None
     
     if st.session_state.chat_mode == "text":
         user_input = st.chat_input(placeholder="Fala aqui...")
