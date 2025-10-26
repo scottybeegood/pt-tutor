@@ -126,8 +126,8 @@ def run_chat():
 
             user_input = transcribe_audio('pt_tutor/data/audio/question.wav')
 
-    st.write(f'user_input: {user_input}')
-    if user_input: # and user_input != "":  
+    # st.write(f'user_input: {user_input}')
+    if user_input:
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{user_input}</div>", unsafe_allow_html=True)
             st.session_state.student_messages.append(user_input)
@@ -150,9 +150,8 @@ def run_chat():
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
             if st.session_state.chat_mode == "audio":
-                response_file = 'pt_tutor/data/audio/response.mp3'
-                generate_audio(tutor_response, response_file)
-                st.session_state.last_generated_audio = response_file
+                generate_audio(tutor_response, 'pt_tutor/data/audio/response.mp3')
+                st.session_state.last_generated_audio = 'pt_tutor/data/audio/response.mp3'
 
             if response["last_correct_word"] != st.session_state.last_correct_word:
                 st.session_state.last_correct_word = response["last_correct_word"]
