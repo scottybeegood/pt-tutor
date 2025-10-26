@@ -10,8 +10,7 @@ from utils.database import VocabDB
 
 credentials = service_account.Credentials.from_service_account_info(dict(st.secrets["google_cloud"]))
 
-stt_client = speech.SpeechClient()
-# client = OpenAI()
+stt_client = speech.SpeechClient(credentials=credentials)
 tts_client = texttospeech.TextToSpeechClient(credentials=credentials)
 
 
@@ -34,17 +33,6 @@ def transcribe_audio(filepath):
     )
 
     return transcription
-
-
-# def transcribe_audio(filepath):
-#     with open(filepath, 'rb') as f:
-#         transcription = client.audio.transcriptions.create(
-#             model='whisper-1',
-#             file=f, 
-#             response_format='text',
-#             language='pt',
-#         )
-#     return transcription
 
 
 def generate_audio(text, filepath):
