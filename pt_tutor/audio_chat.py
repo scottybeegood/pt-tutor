@@ -105,7 +105,7 @@ def run_audio_chat():
                 st.markdown(f"<div class='student-correction-style'>{st.session_state.student_correction_messages[i]}</div>", unsafe_allow_html=True)
             with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
-                if i == len(st.session_state.student_messages) - 1:
+                if i == len(st.session_state.tutor_messages) - 1:
                     if st.session_state.clicked_translate:
                         st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
                         reset_translate_button()
@@ -113,7 +113,7 @@ def run_audio_chat():
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
                     response_file = 'pt_tutor/data/audio/response.mp3'
-                    generate_audio(st.session_state.tutor_messages[-1], response_file)
+                    generate_audio(st.session_state.tutor_messages[i], response_file) # -1 
                     st.audio(data=response_file, autoplay=True)
 
     st.session_state.recording = st.audio_input(label="Fala aqui...")
