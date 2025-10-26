@@ -87,6 +87,8 @@ if "recording" not in st.session_state:
     st.session_state.recording = None
 if "last_processed_file_id" not in st.session_state:
     st.session_state.last_processed_file_id = None
+if "last_generated_audio" not in st.session_state:
+    st.session_state.last_generated_audio = None
 
 
 if not st.session_state.username_submitted:

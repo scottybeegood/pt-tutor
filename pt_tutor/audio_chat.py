@@ -112,9 +112,7 @@ def run_audio_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-                    response_file = 'pt_tutor/data/audio/response.mp3'
-                    generate_audio(st.session_state.tutor_messages[i], response_file) # -1 
-                    st.audio(data=response_file, autoplay=True)
+                    st.audio(data=st.session_state.last_generated_audio, autoplay=True)                    
 
     st.session_state.recording = st.audio_input(label="Fala aqui...")
     if st.session_state.recording:
@@ -147,6 +145,9 @@ def run_audio_chat():
 
                 tutor_response = response["core_convo"][-1].content
                 st.session_state.tutor_messages.append(tutor_response)
+                response_file = 'pt_tutor/data/audio/response.mp3'
+                generate_audio(tutor_response, response_file)
+                st.session_state.last_generated_audio = response_file
 
                 if response["last_correct_word"] != st.session_state.last_correct_word:
                     st.session_state.last_correct_word = response["last_correct_word"]
