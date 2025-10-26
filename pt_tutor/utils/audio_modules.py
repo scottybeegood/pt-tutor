@@ -1,13 +1,20 @@
+import json
+import streamlit as st
 from openai import OpenAI
 from google.cloud import (
     speech, 
     texttospeech
 )
+from google.oauth2 import service_account
+from utils.database import VocabDB
 
+
+credentials_dict = json.loads(st.secrets["google_cloud"]["credentials"])
+credentials = service_account.Credentials.from_service_account_info(credentials_dict)
 
 # stt_client = speech.SpeechClient()
 client = OpenAI()
-tts_client = texttospeech.TextToSpeechClient()
+tts_client = texttospeech.TextToSpeechClient(credentials=credentials)
 
 
 def record_audio(audio_recording, filepath): 
