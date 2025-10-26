@@ -1,3 +1,4 @@
+from openai import OpenAI
 from google.cloud import (
     speech, 
     texttospeech
