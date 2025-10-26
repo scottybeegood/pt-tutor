@@ -8,11 +8,11 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage
 
-from pt_tutor.utils.audio_modules import (
-    transcribe_audio,
-    record_audio,
-)
-from pt_tutor.utils.instructions import (
+# from pt_tutor.utils.audio_modules import (
+#     transcribe_audio,
+#     record_audio,
+# )
+from utils.instructions import (
     custom_topic_vocab_collector_instructions, 
     translator_instructions
 )
