@@ -21,7 +21,6 @@ from utils.audio_modules import (
 def run_chat():
     db = VocabDB()
 
-    # starting sidebar
     with st.sidebar:
         preset_topic_options = ["Comer fora 🍽️", "Resumo do fim de semana 🍺", "Tempo ⛅", "Outra tema ⁉️"]
         user_generated_topic_options = [
@@ -31,14 +30,12 @@ def run_chat():
         all_topic_options = preset_topic_options + user_generated_topic_options
 
         topic = st.sidebar.radio(
-            label="**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
+            "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
             key="topic",
             options=all_topic_options,
         )
         if topic == "Outra tema ⁉️":
-            topic_submission = st.text_input(label="Escreve o teu tema aqui:", 
-                                             key="custom_topic", 
-                                             value="opening a new bank account")
+            topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic", value="opening a new bank account")
         else:   
             topic_submission = topic
 
@@ -66,7 +63,7 @@ def run_chat():
                 min_font_size=20,
                 max_font_size=20,
                 random_state=42).generate_from_frequencies(remaining_words)
-            st.sidebar.image(remaining_word_wordcloud.to_image(), use_container_width=True)
+            st.sidebar.image(remaining_word_wordcloud.to_image(), width='stretch')
 
         st.sidebar.write("**Palavras corretas**")
 
@@ -82,12 +79,9 @@ def run_chat():
                 min_font_size=5,
                 max_font_size=100,
                 random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
-            st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
+            st.sidebar.image(correct_word_wordcloud.to_image(), width='stretch')
 
-        st.sidebar.button(label="GUARDAR",
-                          key='launch', 
-                          type="primary", 
-                          on_click=click_save_button)
+        st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_save_button)
         if st.session_state.save_clicked:
             db.save_progress(st.session_state.username, topic_submission, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
@@ -108,7 +102,7 @@ def run_chat():
                 st.markdown(f"<div class='student-correction-style'>{st.session_state.student_correction_messages[i]}</div>", unsafe_allow_html=True)
             with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
-                if i == len(st.session_state.student_messages) - 1:
+                if i == len(st.session_state.tutor_messages) - 1:
                     if st.session_state.clicked_translate:
                         st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
                         reset_translate_button()
@@ -116,27 +110,22 @@ def run_chat():
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
                     if st.session_state.chat_mode == "audio":
-                        response_file = 'pt_tutor/data/audio/response.mp3'
-                        generate_audio(st.session_state.tutor_messages[-1], response_file)
-                        st.audio(data=response_file, autoplay=True)
+                        st.audio(data=st.session_state.last_generated_audio, autoplay=True)    
 
-    user_input = None
+    # user_input = None
     
     if st.session_state.chat_mode == "text":
         user_input = st.chat_input(placeholder="Fala aqui...")
     elif st.session_state.chat_mode == "audio":
-        recording = st.audio_input(label="Fala aqui...")
-        if recording:
-            current_size = recording.size
+        st.session_state.recording = st.audio_input(label="Fala aqui...")
+        if st.session_state.recording:
+            current_file_id = st.session_state.recording.file_id
+            if current_file_id != st.session_state.last_processed_file_id:
+                question_file = 'pt_tutor/data/audio/question.wav'
+                record_audio(st.session_state.recording, question_file)
+                user_input = transcribe_audio(question_file)
 
-            if current_size != st.session_state.last_audio_size:
-                submission_file = 'pt_tutor/data/audio/submission.wav'
-                record_audio(recording, submission_file)
-                user_input = transcribe_audio(submission_file)
-                st.session_state.last_processed_recording = recording
-            else:
-                st.session_state.last_audio_size = None
-
+                st.session_state.last_processed_file_id = current_file_id
 
     if user_input:  
         with chat_area.chat_message(name="student", avatar="😊"):
@@ -157,15 +146,17 @@ def run_chat():
             )
             student_correction = response["corrections"][-1].content
             st.session_state.student_correction_messages.append(student_correction)
-            st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
 
-        with chat_area.chat_message(name="tutor", avatar="🤖"):
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
-            st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
+            if st.session_state.chat_mode == "audio":
+                response_file = 'pt_tutor/data/audio/response.mp3'
+                generate_audio(tutor_response, response_file)
+                st.session_state.last_generated_audio = response_file
 
-            st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
                 st.session_state.last_correct_word = response["last_correct_word"]
-
-            st.rerun() # for last_correct_word update
+                st.session_state.correct_count = response["correct_count"]
+                
+        st.rerun() # if recording accepted
+            

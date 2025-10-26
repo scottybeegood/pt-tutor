@@ -66,7 +66,7 @@ def run_audio_chat():
                 min_font_size=20,
                 max_font_size=20,
                 random_state=42).generate_from_frequencies(remaining_words)
-            st.sidebar.image(remaining_word_wordcloud.to_image(), use_container_width=True)
+            st.sidebar.image(remaining_word_wordcloud.to_image(), width='stretch')
 
         st.sidebar.write("**Palavras corretas**")
 
@@ -82,7 +82,7 @@ def run_audio_chat():
                 min_font_size=5,
                 max_font_size=100,
                 random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
-            st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
+            st.sidebar.image(correct_word_wordcloud.to_image(), width='stretch')
 
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_save_button)
         if st.session_state.save_clicked:
@@ -112,7 +112,8 @@ def run_audio_chat():
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-                    st.audio(data=st.session_state.last_generated_audio, autoplay=True)                    
+                    if st.session_state.chat_mode == "audio":
+                        st.audio(data=st.session_state.last_generated_audio, autoplay=True)                    
 
     st.session_state.recording = st.audio_input(label="Fala aqui...")
     if st.session_state.recording:
