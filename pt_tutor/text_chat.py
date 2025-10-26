@@ -58,7 +58,7 @@ def run_text_chat():
                 min_font_size=20,
                 max_font_size=20,
                 random_state=42).generate_from_frequencies(remaining_words)
-            st.sidebar.image(remaining_word_wordcloud.to_image(), use_container_width=True)
+            st.sidebar.image(remaining_word_wordcloud.to_image(), width='stretch')
 
         st.sidebar.write("**Palavras corretas**")
 
@@ -74,7 +74,7 @@ def run_text_chat():
                 min_font_size=5,
                 max_font_size=100,
                 random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
-            st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
+            st.sidebar.image(correct_word_wordcloud.to_image(), width='stretch')
 
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_save_button)
         if st.session_state.save_clicked:
