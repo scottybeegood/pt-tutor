@@ -56,6 +56,8 @@ if "chat_mode" not in st.session_state:
     st.session_state.chat_mode = ""
 if "temp_chat_mode" not in st.session_state:
     st.session_state.temp_chat_mode = ""
+if "voice_model" not in st.session_state:
+    st.session_state.voice_model = ""
 if "chat_mode_submitted" not in st.session_state:
     st.session_state.chat_mode_submitted = False
 if "topic_submission" not in st.session_state:
@@ -103,7 +105,7 @@ else:
         st.sidebar.radio(
             "**Escolhe o modo de chat:**",
             key="temp_chat_mode",
-            options=["Texto 💬", "Áudio 🎤"],
+            options=["Texto 💬", "Áudio 🎤👨", "Áudio 🎤👩"],
             index=None,
             on_change=set_chat_mode,
         )
