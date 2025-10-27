@@ -38,7 +38,7 @@ def set_chat_mode():
         st.session_state.voice_model = "Sadaltager"
     if st.session_state.temp_chat_mode == "Áudio 🎤👩":
         st.session_state.chat_mode = "audio" 
-        st.session_state.voice_model = "Kore"
+        st.session_state.voice_model = "Achernar"
     if st.session_state.temp_chat_mode == "Texto 💬":
         st.session_state.chat_mode = "text"
         
