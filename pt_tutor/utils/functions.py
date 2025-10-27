@@ -8,10 +8,6 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage
 
-# from pt_tutor.utils.audio_modules import (
-#     transcribe_audio,
-#     record_audio,
-# )
 from utils.instructions import (
     custom_topic_vocab_collector_instructions, 
     translator_instructions
@@ -118,14 +114,3 @@ def click_speak_button():
 
 def reset_speak_button():
     st.session_state.speak_clicked = False
-
-
-# def submit_recording():
-#     st.session_state.recording = st.session_state.temp_recording
-#     st.session_state.recording_submitted = True
-#     st.session_state.temp_recording = ""
-
-#     question_file = 'pt_tutor/data/audio/question.wav'
-#     record_audio(st.session_state.recording, question_file)
-#     user_input = transcribe_audio(question_file)
-#     st.session_state.user_input = user_input

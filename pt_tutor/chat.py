@@ -125,7 +125,6 @@ def run_chat():
                 user_input = transcribe_audio('pt_tutor/data/audio/question.wav')
                 st.session_state.last_processed_file_id = current_file_id
 
-    # st.write(f'user_input: {user_input}')
     if user_input:
         with chat_area.chat_message(name="student", avatar="😊"):
             st.markdown(f"<div class='student-style'>{user_input}</div>", unsafe_allow_html=True)

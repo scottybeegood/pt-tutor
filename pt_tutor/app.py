@@ -2,8 +2,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import streamlit as st 
-import text_chat
-import audio_chat
 import chat 
 from utils.functions import (
     submit_username,
@@ -109,11 +107,5 @@ else:
             index=None,
             on_change=set_chat_mode,
         )
-    # else:
-    #     if st.session_state.chat_mode == "text":
-    #         text_chat.run_text_chat()
-    #     elif st.session_state.chat_mode == "audio":
-    #         audio_chat.run_audio_chat()
     else:
         chat.run_chat()
-    
