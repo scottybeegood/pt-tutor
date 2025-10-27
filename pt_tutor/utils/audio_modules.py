@@ -42,7 +42,7 @@ def generate_audio(text, filepath):
         voice=texttospeech.VoiceSelectionParams(
             language_code="pt-PT",
             model_name="gemini-2.5-flash-tts",
-            name="Sadaltager",
+            name=st.session_state.voice_model,
         ),
         audio_config=texttospeech.AudioConfig(
             audio_encoding=texttospeech.AudioEncoding.LINEAR16,
