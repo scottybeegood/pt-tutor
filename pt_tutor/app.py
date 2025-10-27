@@ -1,22 +1,11 @@
-import os 
 from dotenv import load_dotenv
 load_dotenv()
-print("OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY"))
-print("CWD:", os.getcwd())
 
 import streamlit as st 
-from wordcloud import WordCloud
-import audio_chat
-import text_chat
-from utils.graph import graph 
-from utils.database import VocabDB
+import chat 
 from utils.functions import (
     submit_username,
-    set_chat_mode,
-    get_topic_vocab,
-    click_button,
-    reset_button,
-    
+    set_chat_mode,    
 )
 
 
@@ -83,18 +72,22 @@ if "last_tutor_message_translated" not in st.session_state:
     st.session_state.last_tutor_message_translated = ""
 if "topic_submission" not in st.session_state:
     st.session_state.topic_submission = ""
-if "topic_vocab" not in st.session_state:
-    st.session_state.topic_vocab = set() # needed to recognize topic changes 
 if "correct_count" not in st.session_state:
     st.session_state.correct_count = {}
 if "last_correct_word" not in st.session_state:
     st.session_state.last_correct_word = ""
-if "clicked" not in st.session_state:
-    st.session_state.clicked = False
-if "audio_running" not in st.session_state:
-    st.session_state.audio_running = False
-if "need_rerun" not in st.session_state:
-    st.session_state.need_rerun = False
+if "save_clicked" not in st.session_state:
+    st.session_state.save_clicked = False
+if "speak_clicked" not in st.session_state:
+    st.session_state.speak_clicked = False
+if "iteration" not in st.session_state:
+    st.session_state.iteration = 0
+if "recording" not in st.session_state:
+    st.session_state.recording = None
+if "last_processed_file_id" not in st.session_state:
+    st.session_state.last_processed_file_id = None
+if "last_generated_audio" not in st.session_state:
+    st.session_state.last_generated_audio = None
 
 
 if not st.session_state.username_submitted:
@@ -115,8 +108,4 @@ else:
             on_change=set_chat_mode,
         )
     else:
-        if st.session_state.chat_mode == "text":
-            text_chat.run_text_chat()
-        else: 
-            audio_chat.run_audio_chat()
-    
+        chat.run_chat()

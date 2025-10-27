@@ -56,6 +56,17 @@ OPENAI_API_KEY=<your OpenAI API key>
 OPENAI_ORG_ID=<your OpenAI Org ID>
 ```
 
+### 3. Google Cloud
+Google Cloud is used for speech-to-text and text-to-speech considering its 
+library of European Portuguese voices. 
+
+To use these capabilities, 
+1. Create a Google Cloud profile
+2. Create a Service Account 
+3. Download a JSON file with all credentials
+4. Store credentials in data/.streamlit/secrets.toml for local dev and 
+   Streamlit > Settings > Secrets for cloud access.
+
 ## Updating  
 Update packages with: 
 ```bash
@@ -75,12 +86,3 @@ To load the app locally, simply run the command below in Terminal.
 ```bash
 streamlit run pt_tutor/app.py
 ```
-
-# Roadmap 
-- [X] Fix translate last button
-- [X] Reset convo with topic switch 
-- [X] Add ability to submit custom topic with auto-generated words
-- [ ] Cleanup 
-  - [ ] Remove unused st.session_state entries
-  - [ ] Streamline logic (sync text_chat & audio_chat)
-  

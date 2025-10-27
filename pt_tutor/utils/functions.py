@@ -100,9 +100,17 @@ def reset_translate_button():
     st.session_state.last_tutor_message_translated = ""
 
 
-def click_button():
-    st.session_state.clicked = True
+def click_save_button():
+    st.session_state.save_clicked = True
 
 
-def reset_button():
-    st.session_state.clicked = False
+def reset_save_button():
+    st.session_state.save_clicked = False
+
+
+def click_speak_button():
+    st.session_state.speak_clicked = True
+
+
+def reset_speak_button():
+    st.session_state.speak_clicked = False

@@ -1,4 +1,3 @@
-from distro import name
 import streamlit as st 
 from wordcloud import WordCloud
 from utils.graph import graph 
@@ -9,11 +8,17 @@ from utils.functions import (
     reset_container_content,
     translate_last,
     reset_translate_button,
-    click_button,
-    reset_button,
+    click_save_button,
+    reset_save_button,
+)
+from utils.audio_modules import (
+    record_audio,
+    transcribe_audio,
+    generate_audio,
 )
 
-def run_text_chat():
+
+def run_chat():
     db = VocabDB()
 
     with st.sidebar:
@@ -58,7 +63,7 @@ def run_text_chat():
                 min_font_size=20,
                 max_font_size=20,
                 random_state=42).generate_from_frequencies(remaining_words)
-            st.sidebar.image(remaining_word_wordcloud.to_image(), use_container_width=True)
+            st.sidebar.image(remaining_word_wordcloud.to_image(), width='stretch')
 
         st.sidebar.write("**Palavras corretas**")
 
@@ -74,13 +79,13 @@ def run_text_chat():
                 min_font_size=5,
                 max_font_size=100,
                 random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
-            st.sidebar.image(correct_word_wordcloud.to_image(), use_container_width=True)
+            st.sidebar.image(correct_word_wordcloud.to_image(), width='stretch')
 
-        st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_button)
-        if st.session_state.clicked:
+        st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_save_button)
+        if st.session_state.save_clicked:
             db.save_progress(st.session_state.username, topic_submission, st.session_state.correct_count, st.session_state.last_correct_word)
             st.sidebar.write("Guardado!")
-            reset_button()
+            reset_save_button()
 
     st.write("## Fala Português!")
 
@@ -97,22 +102,38 @@ def run_text_chat():
                 st.markdown(f"<div class='student-correction-style'>{st.session_state.student_correction_messages[i]}</div>", unsafe_allow_html=True)
             with chat_area.chat_message(name="tutor", avatar="🤖"):
                 st.markdown(f"<div class='tutor-style'>{st.session_state.tutor_messages[i]}</div>", unsafe_allow_html=True)
-                if i == len(st.session_state.student_messages) - 1:
+                if i == len(st.session_state.tutor_messages) - 1:
                     if st.session_state.clicked_translate:
                         st.markdown(f"""<div class='tutor-translate-style'>{st.session_state.last_tutor_message_translated}</div>""", unsafe_allow_html=True)
                         reset_translate_button()
                     else:
                         st.button(label="Traduzir última", key='translate', type="secondary", on_click=translate_last)
 
-    if prompt := st.chat_input("Fala aqui..."):
+                    if st.session_state.chat_mode == "audio":
+                        st.audio(data=st.session_state.last_generated_audio, autoplay=True)    
+
+    user_input = None
+    
+    if st.session_state.chat_mode == "text":
+        user_input = st.chat_input(placeholder="Fala aqui...")
+    elif st.session_state.chat_mode == "audio":
+        st.session_state.recording = st.audio_input(label="Fala aqui...")
+        if st.session_state.recording:
+            current_file_id = st.session_state.recording.file_id
+            if current_file_id != st.session_state.last_processed_file_id:
+                record_audio(st.session_state.recording, 'pt_tutor/data/audio/question.wav')
+                user_input = transcribe_audio('pt_tutor/data/audio/question.wav')
+                st.session_state.last_processed_file_id = current_file_id
+
+    if user_input:
         with chat_area.chat_message(name="student", avatar="😊"):
-            st.markdown(f"<div class='student-style'>{prompt}</div>", unsafe_allow_html=True)
-            st.session_state.student_messages.append(prompt)
+            st.markdown(f"<div class='student-style'>{user_input}</div>", unsafe_allow_html=True)
+            st.session_state.student_messages.append(user_input)
 
             response = graph.invoke(
                 {
-                    "messages": [prompt], 
-                    "core_convo": [prompt],
+                    "messages": [user_input],
+                    "core_convo": [user_input],
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
                     "topic": topic
@@ -123,15 +144,16 @@ def run_text_chat():
             )
             student_correction = response["corrections"][-1].content
             st.session_state.student_correction_messages.append(student_correction)
-            st.markdown(f"""<div class='student-correction-style'>{student_correction}</div>""", unsafe_allow_html=True)
 
-        with chat_area.chat_message(name="tutor", avatar="🤖"):
             tutor_response = response["core_convo"][-1].content
             st.session_state.tutor_messages.append(tutor_response)
-            st.markdown(f"<div class='tutor-style'>{tutor_response}</div>", unsafe_allow_html=True)
+            if st.session_state.chat_mode == "audio":
+                generate_audio(tutor_response, 'pt_tutor/data/audio/response.mp3')
+                st.session_state.last_generated_audio = 'pt_tutor/data/audio/response.mp3'
 
-            st.session_state.correct_count = response["correct_count"]
             if response["last_correct_word"] != st.session_state.last_correct_word:
                 st.session_state.last_correct_word = response["last_correct_word"]
-
-            st.rerun()
+                st.session_state.correct_count = response["correct_count"]
+                
+        st.rerun() # if recording accepted
+            
