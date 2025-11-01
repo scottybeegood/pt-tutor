@@ -8,7 +8,7 @@ Specific instructions:
 3) Ensure each vocab word is a single word.
 """
 
-
+# TODO: introduce verbalized sampling, asking for a dictionary of 3 low-prob samples
 chatbot_instructions = """
 You are a conversational chatbot.
 
