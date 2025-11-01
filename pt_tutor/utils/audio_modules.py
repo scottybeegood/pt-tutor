@@ -34,6 +34,11 @@ def transcribe_audio(filepath):
     return transcription
 
 
+def refine_transcription(transcription):
+    print(f'TK: {transcription}')
+    # TODO: create call to LLM to convert transcription text to nearest PT sentence.
+
+
 def generate_audio(text, filepath):
     response = tts_client.synthesize_speech(
         input=texttospeech.SynthesisInput(

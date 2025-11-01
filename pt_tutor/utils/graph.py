@@ -57,6 +57,7 @@ def chatbot(state: State):
                                                  all_vocab=all_vocab,
                                                  correct_vocab=correct_vocab)
     response = llm.invoke([SystemMessage(content=system_message)]+state["messages"])
+    # TODO: randomly select one of the values from the response dictionary
 
     state["messages"] = [response]
     state["core_convo"] = [response] 
