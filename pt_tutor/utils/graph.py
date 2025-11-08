@@ -69,9 +69,10 @@ def chatbot(state: State):
     response_list = response["responses"]
     selected_response = random.choice(response_list)
     selected_text = selected_response["text"]
+    selected_text_ai_message = AIMessage(content=selected_text)
 
-    state["messages"] = [selected_text]
-    state["core_convo"] = [selected_text]
+    state["messages"] = [selected_text_ai_message]
+    state["core_convo"] = [selected_text_ai_message]
 
     return state
 
