@@ -21,7 +21,7 @@ Repsonses list
 1) Each response should be formatted as a dictionary.
 2) Include the text itself as well as the associated probability of that text with 2 keys, 'text' and 'probability'.
 3) Responses should be aggregated as a list.
-4) Sample from the tails of the response distribution such that the probability of each response is super low, under 0.01!
+4) Sample from the tails of the response distribution such that the probability of each response is low, under 0.10.
 Conversation
 5) The language of the conversation is **European Portuguese**. It is NOT Brazilian Portuguese.
 6) Keep the conversation centered around the following topic: {topic}
