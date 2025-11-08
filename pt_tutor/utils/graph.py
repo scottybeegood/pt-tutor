@@ -68,7 +68,7 @@ def chatbot(state: State):
 
     response_list = response.content
     selected_response = random.choice(response_list)
-    selected_text = selected_response['text']
+    selected_text = selected_response["text"]
 
     state["messages"] = [selected_text]
     state["core_convo"] = [selected_text]

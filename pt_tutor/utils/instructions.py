@@ -35,52 +35,52 @@ Examples:
 Example 1
 "responses": 
 [
-    {
+    {{
         "text": "Então acordaste cedo hoje, ou preferiste dormir mais um bocado?",
         "probability": 0.07
-    },
-    {
+    }},
+    {{
         "text": "Já tomaste o pequeno-almoço, ou vais trabalhar de barriga vazia?",
         "probability": 0.05
     },
-    {
+    {{
         "text": "Costumas acordar sempre à mesma hora, ou depende do dia?",
         "probability": 0.09
-    }
+    }}
 ]
 
 Example 2
 "responses": 
 [
-    {
+    {{
       "text": "Vais sair com os teus amigos este fim de semana, ou preferes ficar em casa?",
       "probability": 0.06
-    },
-    {
+    }},
+    {{
       "text": "Já pensaste em ir ao cinema, ou tens outros planos?",
       "probability": 0.08
-    },
-    {
+    }},
+    {{
       "text": "Os teus amigos também gostam de sair à noite, ou preferem programas mais calmos?",
       "probability": 0.04
-    }
+    }}
 ]
 
 Example 3
 "responses": 
 [
-    {
+    {{
       "text": "Gostas mais de comer peixe ou carne quando vais a um restaurante?",
       "probability": 0.09
-    },
-    {
+    }},
+    {{
       "text": "Já experimentaste aquele restaurante novo que abriu perto de ti?",
       "probability": 0.06
-    },
-    {
+    }},
+    {{
       "text": "Preferes comer fora ou cozinhar em casa durante a semana?",
       "probability": 0.08
-    }
+    }}
 ]
 """
 
