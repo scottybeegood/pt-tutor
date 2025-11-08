@@ -61,7 +61,6 @@ def chatbot(state: State):
     correct_vocab = {word for word, count in state["correct_count"].items() if count > 0}
 
     system_message = chatbot_instructions.format(topic=topic, 
-                                                 all_vocab=all_vocab,
                                                  correct_vocab=correct_vocab)
     structured_llm = llm.with_structured_output(ResponseDict)
     response = structured_llm.invoke([SystemMessage(content=system_message)]+state["messages"])
