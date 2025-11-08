@@ -118,6 +118,7 @@ Instructions:
 1) Refine the transcript so that all words are in Portuguese
 2) Any words that aren't in Portuguese should be changed to its phonetically-nearest word
 3) Use the European dialect of Portuguese
+4) Return **only** the refined version of the transcript - DO NOT include any other text!
 
 Transcription: 
 {transcription}
