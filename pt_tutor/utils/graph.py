@@ -57,7 +57,6 @@ class ResponseDict(TypedDict):
 
 def chatbot(state: State):
     topic = state["topic"]
-    all_vocab = set(state["correct_count"].keys())
     correct_vocab = {word for word, count in state["correct_count"].items() if count > 0}
 
     system_message = chatbot_instructions.format(topic=topic, 
