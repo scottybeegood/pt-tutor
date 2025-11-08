@@ -42,7 +42,7 @@ Example 1
     {{
         "text": "Já tomaste o pequeno-almoço, ou vais trabalhar de barriga vazia?",
         "probability": 0.05
-    },
+    }},
     {{
         "text": "Costumas acordar sempre à mesma hora, ou depende do dia?",
         "probability": 0.09
