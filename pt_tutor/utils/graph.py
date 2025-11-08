@@ -37,7 +37,7 @@ llm = ChatOpenAI(
     api_key=openai_api_key,
     organization=openai_org_id,
     model="gpt-4o-mini",
-    temperature=0.7,
+    temperature=1.0,
 )
 
 class State(TypedDict):
