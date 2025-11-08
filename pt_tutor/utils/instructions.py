@@ -115,10 +115,17 @@ Portuguese. Due to audio recording issues and imperfect pronounciation, the tran
 words that are not in Portuguese. 
 
 Instructions:
+Phase 1: Portuguese word conversion
 1) Refine the transcript so that all words are in Portuguese
 2) Any words that aren't in Portuguese should be changed to its phonetically-nearest word
-3) Use the European dialect of Portuguese
-4) Return **only** the refined version of the transcript - DO NOT include any other text!
+
+Phase 2: Creating semantic meaning
+3) Construct a final response that gives logic, natural semantic meaning to the transcript.
+4) Choose the most likely response as given by the words in the refined transcript and common Portuguese conversation.
+5) Use the European dialect of Portuguese when constructing the final response
+
+Formatting:
+6) Return **only** the refined version of the transcript - DO NOT include any other text!
 
 Transcription: 
 {transcription}
