@@ -78,7 +78,7 @@ def run_chat():
                 background_color='white',
                 min_font_size=5,
                 max_font_size=100,
-                random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
+                random_state=42).generate_from_frequencies(mastered_words)
             st.sidebar.image(correct_word_wordcloud.to_image(), width='stretch')
 
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_save_button)
@@ -156,4 +156,3 @@ def run_chat():
                 st.session_state.correct_count = response["correct_count"]
                 
         st.rerun() # if recording accepted
-            
