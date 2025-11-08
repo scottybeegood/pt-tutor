@@ -136,7 +136,7 @@ def run_chat():
                     "core_convo": [user_input],
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
-                    "topic": topic
+                    "topic": topic_submission
                 },
                 config = {
                     "configurable": {"thread_id": 42},
