@@ -64,8 +64,9 @@ def chatbot(state: State):
                                                  all_vocab=all_vocab,
                                                  correct_vocab=correct_vocab)
     structured_llm = llm.with_structured_output(ResponseDict)
-    response_list = structured_llm.invoke([SystemMessage(content=system_message)]+state["messages"])
+    response = structured_llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
+    response_list = response["responses"]
     selected_response = random.choice(response_list)
     selected_text = selected_response["text"]
 
