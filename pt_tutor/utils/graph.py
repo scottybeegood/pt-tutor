@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import random
 
 from dotenv import load_dotenv
 from typing import Annotated
@@ -47,6 +48,12 @@ class State(TypedDict):
     last_correct_word: str
     topic: str 
 
+class ResponseDict(TypedDict):
+    """
+    A structured list of dictionaries representing the alternative chatbot responses 
+    """
+    responses: list[dict]
+
 
 def chatbot(state: State):
     topic = state["topic"]
@@ -56,11 +63,15 @@ def chatbot(state: State):
     system_message = chatbot_instructions.format(topic=topic, 
                                                  all_vocab=all_vocab,
                                                  correct_vocab=correct_vocab)
-    response = llm.invoke([SystemMessage(content=system_message)]+state["messages"])
-    # TODO: randomly select one of the values from the response dictionary
+    structured_llm = llm.with_structured_output(ResponseDict)
+    response = structured_llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
-    state["messages"] = [response]
-    state["core_convo"] = [response] 
+    response_list = response.content
+    selected_response = random.choice(response_list)
+    selected_text = selected_response['text']
+
+    state["messages"] = [selected_text]
+    state["core_convo"] = [selected_text]
 
     return state
 

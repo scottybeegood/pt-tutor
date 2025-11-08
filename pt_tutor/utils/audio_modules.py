@@ -1,14 +1,32 @@
+import os
 import streamlit as st
+
+from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
 from google.cloud import (
     speech, 
     texttospeech
 )
 from google.oauth2 import service_account
+from langchain_core.messages import SystemMessage
+
+from utils.instructions import transcript_refiner_instructions
 
 
 credentials = service_account.Credentials.from_service_account_info(dict(st.secrets["google_cloud"]))
 stt_client = speech.SpeechClient(credentials=credentials)
 tts_client = texttospeech.TextToSpeechClient(credentials=credentials)
+
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY")
+openai_org_id = os.getenv("OPENAI_ORG_ID") or st.secrets.get("OPENAI_ORG_ID")
+
+llm = ChatOpenAI(
+    api_key=openai_api_key,
+    organization=openai_org_id,
+    model="gpt-4o-mini",
+    temperature=0.7,
+)
 
 
 def record_audio(audio_recording, filepath): 
@@ -16,7 +34,7 @@ def record_audio(audio_recording, filepath):
         f.write(audio_recording.getvalue())
 
 
-def transcribe_audio(filepath):
+def transcribe_and_refine_audio(filepath):
     with open(filepath, 'rb') as f:
         audio_content = f.read()
 
@@ -31,12 +49,11 @@ def transcribe_audio(filepath):
 
     transcription = " ".join([result.alternatives[0].transcript for result in response.results])
 
-    return transcription
+    system_message = transcript_refiner_instructions.format(transcription=transcription)
+    response = llm.invoke([SystemMessage(content=system_message)])
+    transcription_refined = response.content 
 
-
-def refine_transcription(transcription):
-    print(f'TK: {transcription}')
-    # TODO: create call to LLM to convert transcription text to nearest PT sentence.
+    return transcription_refined
 
 
 def generate_audio(text, filepath):
