@@ -115,7 +115,7 @@ def run_chat():
     user_input = None
     
     if st.session_state.chat_mode == "text":
-        user_input = st.chat_input(placeholder="Fala aqui...")
+        user_input = st.chat_input(placeholder="Escreve aqui ('Olá', 'Bom dia!', 'Tudo bem?')...")
     elif st.session_state.chat_mode == "audio":
         st.session_state.recording = st.audio_input(label="Fala aqui...")
         if st.session_state.recording:
