@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import random
 
 from dotenv import load_dotenv
 from typing import Annotated
@@ -36,7 +37,7 @@ llm = ChatOpenAI(
     api_key=openai_api_key,
     organization=openai_org_id,
     model="gpt-4o-mini",
-    temperature=0.7,
+    temperature=1.0,
 )
 
 class State(TypedDict):
@@ -47,19 +48,29 @@ class State(TypedDict):
     last_correct_word: str
     topic: str 
 
+class ResponseDict(TypedDict):
+    """
+    A structured list of dictionaries representing the alternative chatbot responses 
+    """
+    responses: list[dict]
+
 
 def chatbot(state: State):
     topic = state["topic"]
-    all_vocab = set(state["correct_count"].keys())
     correct_vocab = {word for word, count in state["correct_count"].items() if count > 0}
 
     system_message = chatbot_instructions.format(topic=topic, 
-                                                 all_vocab=all_vocab,
                                                  correct_vocab=correct_vocab)
-    response = llm.invoke([SystemMessage(content=system_message)]+state["messages"])
+    structured_llm = llm.with_structured_output(ResponseDict)
+    response = structured_llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
-    state["messages"] = [response]
-    state["core_convo"] = [response] 
+    response_list = response["responses"]
+    selected_response = random.choice(response_list)
+    selected_text = selected_response["text"]
+    selected_text_ai_message = AIMessage(content=selected_text)
+
+    state["messages"] = [selected_text_ai_message]
+    state["core_convo"] = [selected_text_ai_message]
 
     return state
 

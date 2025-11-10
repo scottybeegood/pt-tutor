@@ -13,7 +13,7 @@ from utils.functions import (
 )
 from utils.audio_modules import (
     record_audio,
-    transcribe_audio,
+    transcribe_and_refine_audio,
     generate_audio,
 )
 
@@ -78,7 +78,7 @@ def run_chat():
                 background_color='white',
                 min_font_size=5,
                 max_font_size=100,
-                random_state=42).generate_from_frequencies(mastered_words) # mastered_words replaces st.session_state.correct_count
+                random_state=42).generate_from_frequencies(mastered_words)
             st.sidebar.image(correct_word_wordcloud.to_image(), width='stretch')
 
         st.sidebar.button(label="GUARDAR", key='launch', type="primary", on_click=click_save_button)
@@ -115,14 +115,14 @@ def run_chat():
     user_input = None
     
     if st.session_state.chat_mode == "text":
-        user_input = st.chat_input(placeholder="Fala aqui...")
+        user_input = st.chat_input(placeholder="Escreve aqui...")
     elif st.session_state.chat_mode == "audio":
         st.session_state.recording = st.audio_input(label="Fala aqui...")
         if st.session_state.recording:
             current_file_id = st.session_state.recording.file_id
             if current_file_id != st.session_state.last_processed_file_id:
                 record_audio(st.session_state.recording, 'pt_tutor/data/audio/question.wav')
-                user_input = transcribe_audio('pt_tutor/data/audio/question.wav')
+                user_input = transcribe_and_refine_audio('pt_tutor/data/audio/question.wav')
                 st.session_state.last_processed_file_id = current_file_id
 
     if user_input:
@@ -136,7 +136,7 @@ def run_chat():
                     "core_convo": [user_input],
                     "correct_count": st.session_state.correct_count,
                     "last_correct_word": st.session_state.last_correct_word,
-                    "topic": topic
+                    "topic": topic_submission
                 },
                 config = {
                     "configurable": {"thread_id": 42},
@@ -156,4 +156,3 @@ def run_chat():
                 st.session_state.correct_count = response["correct_count"]
                 
         st.rerun() # if recording accepted
-            
