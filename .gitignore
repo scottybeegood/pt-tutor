@@ -4,7 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
-pt_tutor/data/.streamlit/secrets.toml
+pt_tutor/.streamlit/secrets.toml
 *.db
 .DS_Store
 **/.DS_Store
