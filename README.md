@@ -4,10 +4,12 @@ Welcome to `pt-tutor`, the repository powering the Fala Português app!
 # About Fala Português! 
 Fala Português is a Portuguese tutoring platform designed with the following principles:
 1. Real-time feedback is super valuable _during_ foreign language conversations
-2. New vocabulary should be introduced gradually, with emphasis dedicated to previously 
+2. Translating a message hot off the press drives comprehension
+3. New vocabulary should be introduced gradually, with emphasis dedicated to previously 
 used vocabulary so that learning is re-enforced
-3. Language learning is most effective when it's categorized to real life circumstances
-4. Eeryone loves a good little progress bar 
+4. Language learning is most effective when it's categorized to real life circumstances
+5. Everyone loves a good little game 
+6. Audio (listening, speaking) is essential
 
 # Configuring the app
 
