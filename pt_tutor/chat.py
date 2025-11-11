@@ -29,11 +29,12 @@ def run_chat():
         ]
         all_topic_options = preset_topic_options + user_generated_topic_options
 
-        topic = st.sidebar.radio(
-            "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
-            key="topic",
-            options=all_topic_options,
-        )
+        with main_container.expander("**Escolhe o tema que queres discutir e diz as palavras abaixo:**", expanded=False):
+            topic = st.sidebar.radio(
+                "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
+                key="topic",
+                options=all_topic_options,
+            )
         if topic == "Outra tema ⁉️":
             topic_submission = st.text_input("Escreve o teu tema aqui:", key="custom_topic", value="opening a new bank account")
         else:   
