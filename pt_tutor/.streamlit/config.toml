@@ -1,7 +1,5 @@
 [theme]
-base="dark"
 primaryColor="darkgreen"
 
 [theme.sidebar]
-base="dark"
 primaryColor="darkgreen"
