@@ -29,7 +29,7 @@ def run_chat():
         ]
         all_topic_options = preset_topic_options + user_generated_topic_options
 
-        with st.sidebar.expander("**Escolhe o tema que queres discutir e diz as palavras abaixo:**", expanded=False):
+        with st.expander("**Escolhe o tema que queres discutir e diz as palavras abaixo:**", expanded=False):
             topic = st.sidebar.radio(
                 "**Escolhe o tema que queres discutir e diz as palavras abaixo:**",
                 key="topic",
