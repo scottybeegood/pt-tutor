@@ -1,2 +1,5 @@
 [theme]
-primaryColor="darkGoldrod"
+primaryColor="darkgreen"
+
+[theme.sidebar]
+primaryColor="darkgreen"
