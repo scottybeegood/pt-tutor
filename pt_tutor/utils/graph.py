@@ -84,7 +84,7 @@ def corrector(state: State):
     system_message = corrector_instructions.format(user_message=user_message)
     response = llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
-    state["messages"] = [response]
+    # state["messages"] = [response]
     state["corrections"] = [response]
 
     return state
