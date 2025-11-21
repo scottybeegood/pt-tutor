@@ -116,9 +116,12 @@ graph_builder.add_node("corrector", corrector)
 graph_builder.add_node("scorer", scorer)
 
 graph_builder.add_edge(START, "chatbot")
-graph_builder.add_edge("chatbot", "corrector")
+graph_builder.add_edge(START, "corrector")
+
 graph_builder.add_edge("corrector", "scorer")
+
 graph_builder.add_edge("chatbot", END)
+graph_builder.add_edge("scorer", END)
 
 memory = MemorySaver()
 graph = graph_builder.compile(checkpointer=memory)
