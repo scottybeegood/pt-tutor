@@ -69,10 +69,10 @@ def chatbot(state: State):
     selected_text = selected_response["text"]
     selected_text_ai_message = AIMessage(content=selected_text)
 
-    state["messages"] = [selected_text_ai_message]
-    state["core_convo"] = [selected_text_ai_message]
-
-    return state
+    return {
+        "messages": [selected_text_ai_message],
+        "core_convo": [selected_text_ai_message]
+    }
 
 
 def corrector(state: State):
@@ -84,10 +84,9 @@ def corrector(state: State):
     system_message = corrector_instructions.format(user_message=user_message)
     response = llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
-    state["messages"] = [response]
-    state["corrections"] = [response]
-
-    return state
+    return {
+        "corrections": [response]
+    }
 
 
 def scorer(state: State):
@@ -102,12 +101,18 @@ def scorer(state: State):
     )
     corrector_message = clean_message(corrector_message)
 
+    updated_correct_count = state["correct_count"].copy() # dicts are mutable
+    updated_last_correct_word = state["last_correct_word"]
+
     for user_word in corrector_message.split():
-        if user_word in user_message.split() and user_word in state["correct_count"].keys():
-            state["correct_count"][user_word] += 1
-            state["last_correct_word"] = user_word
- 
-    return state
+        if user_word in user_message.split() and user_word in updated_correct_count.keys():
+            updated_correct_count[user_word] += 1
+            updated_last_correct_word = user_word
+
+    return {
+        "correct_count": updated_correct_count,
+        "last_correct_word": updated_last_correct_word
+    }
 
 
 graph_builder = StateGraph(State)
@@ -116,9 +121,12 @@ graph_builder.add_node("corrector", corrector)
 graph_builder.add_node("scorer", scorer)
 
 graph_builder.add_edge(START, "chatbot")
-graph_builder.add_edge("chatbot", "corrector")
+graph_builder.add_edge(START, "corrector")
+
 graph_builder.add_edge("corrector", "scorer")
+
 graph_builder.add_edge("chatbot", END)
+graph_builder.add_edge("scorer", END)
 
 memory = MemorySaver()
 graph = graph_builder.compile(checkpointer=memory)
