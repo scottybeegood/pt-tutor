@@ -101,7 +101,7 @@ def scorer(state: State):
     )
     corrector_message = clean_message(corrector_message)
 
-    updated_correct_count = state["correct_count"].copy()  # Make a copy
+    updated_correct_count = state["correct_count"].copy() # dicts are mutable
     updated_last_correct_word = state["last_correct_word"]
 
     for user_word in corrector_message.split():
@@ -109,7 +109,6 @@ def scorer(state: State):
             updated_correct_count[user_word] += 1
             updated_last_correct_word = user_word
 
-    # Return updates instead of modifying state directly
     return {
         "correct_count": updated_correct_count,
         "last_correct_word": updated_last_correct_word
