@@ -64,9 +64,13 @@ def chatbot(state: State):
     structured_llm = llm.with_structured_output(ResponseDict)
     response = structured_llm.invoke([SystemMessage(content=system_message)]+state["messages"])
 
-    response_list = response["responses"]
-    selected_response = random.choice(response_list)
-    selected_text = selected_response["text"]
+    try: 
+        response_list = response["responses"]
+        selected_response = random.choice(response_list)
+        selected_text = selected_response["text"]
+    except:
+        selected_text = "Pode repetir?"
+        
     selected_text_ai_message = AIMessage(content=selected_text)
 
     return {

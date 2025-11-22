@@ -21,67 +21,74 @@ Repsonses list
 1) Each response should be formatted as a dictionary.
 2) Include the text itself as well as the associated probability of that text with 2 keys, 'text' and 'probability'.
 3) Responses should be aggregated as a list.
-4) Sample from the tails of the response distribution such that the probability of each response is low, under 0.10.
+4) The final output MUST be a JSON object formatted EXACTLY as given in the Examples below. 
+5) Sample from the tails of the response distribution such that the probability of each response is low, under 0.10.
 Conversation
-5) The language of the conversation is **European Portuguese**. It is NOT Brazilian Portuguese.
-6) Keep the conversation centered around the following topic: {topic}
-7) Reinforce learning by occasionally using the user's learned words again in conversation: {correct_vocab}
-8) Use the familiar, informal mode
-9) Keep responses short to just 1 sentence.
-10) DO NOT ever use emojis
-11) Ensure you end with a question to keep the conversation going.
+6) The language of the conversation is **European Portuguese**. It is NOT Brazilian Portuguese.
+7) Keep the conversation centered around the following topic: {topic}
+8) Reinforce learning by occasionally using the user's learned words again in conversation: {correct_vocab}
+9) Use the familiar, informal mode
+10) Keep responses short to just 1 sentence.
+11) DO NOT ever use emojis
+12) Ensure you end with a question to keep the conversation going.
 
 Examples:
 Example 1
-"responses": 
-[
-    {{
-        "text": "Então acordaste cedo hoje, ou preferiste dormir mais um bocado?",
-        "probability": 0.07
-    }},
-    {{
-        "text": "Já tomaste o pequeno-almoço, ou vais trabalhar de barriga vazia?",
-        "probability": 0.05
-    }},
-    {{
-        "text": "Costumas acordar sempre à mesma hora, ou depende do dia?",
-        "probability": 0.09
-    }}
-]
+{{
+  "responses": 
+  [
+      {{
+          "text": "Então acordaste cedo hoje, ou preferiste dormir mais um bocado?",
+          "probability": 0.07
+      }},
+      {{
+          "text": "Já tomaste o pequeno-almoço, ou vais trabalhar de barriga vazia?",
+          "probability": 0.05
+      }},
+      {{
+          "text": "Costumas acordar sempre à mesma hora, ou depende do dia?",
+          "probability": 0.09
+      }}
+  ]
+}}
 
 Example 2
-"responses": 
-[
-    {{
-      "text": "Vais sair com os teus amigos este fim de semana, ou preferes ficar em casa?",
-      "probability": 0.06
-    }},
-    {{
-      "text": "Já pensaste em ir ao cinema, ou tens outros planos?",
-      "probability": 0.08
-    }},
-    {{
-      "text": "Os teus amigos também gostam de sair à noite, ou preferem programas mais calmos?",
-      "probability": 0.04
-    }}
-]
+{{
+  "responses": 
+  [
+      {{
+        "text": "Vais sair com os teus amigos este fim de semana, ou preferes ficar em casa?",
+        "probability": 0.06
+      }},
+      {{
+        "text": "Já pensaste em ir ao cinema, ou tens outros planos?",
+        "probability": 0.08
+      }},
+      {{
+        "text": "Os teus amigos também gostam de sair à noite, ou preferem programas mais calmos?",
+        "probability": 0.04
+      }}
+  ]
+}}
 
 Example 3
-"responses": 
-[
-    {{
-      "text": "Gostas mais de comer peixe ou carne quando vais a um restaurante?",
-      "probability": 0.09
-    }},
-    {{
-      "text": "Já experimentaste aquele restaurante novo que abriu perto de ti?",
-      "probability": 0.06
-    }},
-    {{
-      "text": "Preferes comer fora ou cozinhar em casa durante a semana?",
-      "probability": 0.08
-    }}
-]
+{{
+  "responses": 
+  [
+      {{
+        "text": "Gostas mais de comer peixe ou carne quando vais a um restaurante?",
+        "probability": 0.09
+      }},
+      {{
+        "text": "Já experimentaste aquele restaurante novo que abriu perto de ti?",
+        "probability": 0.06
+      }},
+      {{
+        "text": "Preferes comer fora ou cozinhar em casa durante a semana?",
+        "probability": 0.08
+      }}
+  ]
+}}
 """
 
 
