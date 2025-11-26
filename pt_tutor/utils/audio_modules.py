@@ -46,6 +46,8 @@ def transcribe_and_refine_audio(filepath):
             model="default",
         ),
     )
+    if not response.results:
+        return "Desculpa, não te consigo ouvir."
 
     transcription = " ".join([result.alternatives[0].transcript for result in response.results])
 
