@@ -53,7 +53,7 @@ def transcribe_and_refine_audio(filepath):
     response = llm.invoke([SystemMessage(content=system_message)])
     transcription_refined = response.content 
 
-    return transcription_refined
+    return transcription # transcription_refined (TODO: fix refinement, getting system message about data training cutoff date - try Claude)
 
 
 def generate_audio(text, filepath):
