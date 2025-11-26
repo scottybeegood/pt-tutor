@@ -46,6 +46,8 @@ def transcribe_and_refine_audio(filepath):
             model="default",
         ),
     )
+    if not response.results:
+        return "Desculpa, não te consigo ouvir."
 
     transcription = " ".join([result.alternatives[0].transcript for result in response.results])
 
@@ -53,7 +55,7 @@ def transcribe_and_refine_audio(filepath):
     response = llm.invoke([SystemMessage(content=system_message)])
     transcription_refined = response.content 
 
-    return transcription # transcription_refined (TODO: fix refinement, getting system message about data training cutoff date - try Claude)
+    return transcription_refined 
 
 
 def generate_audio(text, filepath):
