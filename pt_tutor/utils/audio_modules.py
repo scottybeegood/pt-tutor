@@ -24,7 +24,7 @@ openai_org_id = os.getenv("OPENAI_ORG_ID") or st.secrets.get("OPENAI_ORG_ID")
 llm = ChatOpenAI(
     api_key=openai_api_key,
     organization=openai_org_id,
-    model="gpt-3.5-turbo",
+    model="gpt-4o-mini",
     temperature=1.0,
 )
 
