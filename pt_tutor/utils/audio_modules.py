@@ -55,7 +55,7 @@ def transcribe_and_refine_audio(filepath):
     response = llm.invoke([SystemMessage(content=system_message)])
     transcription_refined = response.content 
 
-    return transcription_refined 
+    return transcription_refined
 
 
 def generate_audio(text, filepath):
